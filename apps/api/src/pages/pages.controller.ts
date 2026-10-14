@@ -59,6 +59,7 @@ export class PagesController {
 <li>Un compte invité, créé automatiquement : un identifiant aléatoire et un secret, dont nous ne gardons qu’une empreinte (Argon2).</li>
 <li>Ton journal d’apprentissage : leçons terminées, XP, précision, durée des leçons, vies perdues, cauris gagnés, avec leur date.</li>
 <li>Ton pseudo, tiré au hasard dans une liste de mots (il est impossible d’en écrire un).</li>
+<li>Si tu affiches ton code de récupération : une empreinte de ce code (HMAC), jamais le code lui-même. Il sert seulement à retrouver ta progression sur un autre téléphone.</li>
 <li>Les dates de création du compte et de ta dernière connexion.</li>
 </ul>
 <p>Nous n’enregistrons ni ta position, ni tes contacts, ni tes photos, ni le son de ton micro. Il n’y a pas de publicité.</p>

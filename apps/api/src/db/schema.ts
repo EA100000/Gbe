@@ -23,6 +23,11 @@ export const users = pgTable('users', {
   lastSeenAt: timestamp('last_seen_at', { withTimezone: true }).notNull().defaultNow(),
   /** Pseudo de la Ligue, tiré au hasard par l'appli dans des listes fixes (jamais saisi). */
   pseudo: text('pseudo'),
+  /**
+   * Empreinte HMAC du code de récupération (jamais le code lui-même).
+   * Déterministe pour retrouver le compte à partir du code seul ; `null` tant qu'aucun code n'a été créé.
+   */
+  recoveryKey: text('recovery_key').unique('users_recovery_key_unique'),
 });
 
 /**
