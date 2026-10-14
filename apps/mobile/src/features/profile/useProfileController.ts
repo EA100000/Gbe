@@ -6,6 +6,7 @@ import { Linking } from 'react-native';
 import { useProgressStore, useProgressView } from '../../core/progress/progressStore';
 import { useEnsurePseudo } from '../../core/progress/useEnsurePseudo';
 import { appApiClient } from '../../core/sync/backgroundSync';
+import { useServer } from '../../core/sync/serverContext';
 import { useNow } from '../../core/useNow';
 
 /**
@@ -27,6 +28,7 @@ export function useProfileController() {
   const rerollPseudo = useProgressStore((s) => s.rerollPseudo);
   const setDailyGoal = useProgressStore((s) => s.setDailyGoal);
   const [editingGoal, setEditingGoal] = useState(false);
+  const server = useServer();
 
   useEnsurePseudo();
 
@@ -60,5 +62,7 @@ export function useProfileController() {
     backedUp: appApiClient() !== null,
     openPrivacy: privacy === null ? null : () => void Linking.openURL(privacy),
     askDelete: () => router.push('/supprimer-compte'),
+    /** Code de récupération : seulement si la progression est sauvegardée sur un serveur. */
+    openRecoveryCode: server === null ? null : () => router.push('/code-recuperation'),
   };
 }

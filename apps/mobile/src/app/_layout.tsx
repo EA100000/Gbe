@@ -45,6 +45,8 @@ export default function RootLayout() {
               <Stack.Screen name="histoire/[lessonId]" />
               <Stack.Screen name="fin" options={{ gestureEnabled: false }} />
               <Stack.Screen name="supprimer-compte" />
+              <Stack.Screen name="recuperer" />
+              <Stack.Screen name="code-recuperation" />
             </Stack>
           </AppBootstrap>
         </PersistenceProvider>

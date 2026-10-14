@@ -37,6 +37,20 @@ const ICONS = {
   arrowUp: stroke('M12 19V5M6 11l6-6 6 6', 2.6),
   leagueShield: `<svg viewBox="0 0 24 26"><path d="M12 1l9 3.5v7c0 6-4 10-9 13-5-3-9-7-9-13v-7z" fill="${colors.yellow}" stroke="${colors.yellowShadow}" stroke-width="1.2"/><ellipse cx="12" cy="12" rx="4" ry="5.5" fill="${colors.white}"/><path d="M12 8v8M10.6 10h1.4M10.6 12h1.4M10.6 14h1.4M12 11h1.4M12 13h1.4" stroke="${colors.ink}" stroke-width="0.8" fill="none"/></svg>`,
   shield: stroke('M12 2.5l8 3v6c0 5-3.4 8.6-8 10-4.6-1.4-8-5-8-10v-6zM9 12l2 2 4-4'),
+  chevronLeft: stroke('M15 5l-7 7 7 7', 2.6),
+  key: stroke('M11.5 11.5L20 3M16.5 6.5l3 3M14 9l2 2').replace(
+    '</svg>',
+    '<circle cx="8" cy="15" r="4.5" fill="none" stroke="currentColor" stroke-width="2.2"/></svg>',
+  ),
+  copy: stroke(
+    'M9 11.5A2.5 2.5 0 0 1 11.5 9h7a2.5 2.5 0 0 1 2.5 2.5v7a2.5 2.5 0 0 1-2.5 2.5h-7A2.5 2.5 0 0 1 9 18.5zM15 9V5.5A2.5 2.5 0 0 0 12.5 3h-7A2.5 2.5 0 0 0 3 5.5v7A2.5 2.5 0 0 0 5.5 15H9',
+  ),
+  pencil: stroke('M4 20h4L19 9l-4-4L4 16zM13.5 6.5l4 4'),
+  warning: stroke('M12 3.5l9.5 16.5h-19zM12 10v4.5M12 17.2v.01', 2.4),
+  offline: stroke(
+    'M3 3l18 18M8.5 16.5a5 5 0 0 1 7 0M5 12.8a10 10 0 0 1 4.6-2.5M14.6 10.3a10 10 0 0 1 4.4 2.5M2 9a15 15 0 0 1 4.3-2.7M10.5 5.1A15 15 0 0 1 22 9M12 20v.01',
+    2.4,
+  ),
   speaker:
     '<svg viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9.5h3.5L12 5.5v13l-4.5-4H4z"/><path d="M15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11"/></g></svg>',
   play: '<svg viewBox="0 0 24 24"><path d="M8 5.5v13l10.5-6.5z" fill="currentColor"/></svg>',

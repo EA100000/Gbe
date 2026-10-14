@@ -32,6 +32,8 @@ jest.mock('expo-router', () => ({
     navigate: jest.fn(),
     dismissTo: jest.fn(),
     canGoBack: jest.fn(() => true),
+    canDismiss: jest.fn(() => true),
+    dismissAll: jest.fn(),
   },
   useLocalSearchParams: jest.fn(() => ({})),
   // Écran toujours « au premier plan » dans les tests.
@@ -59,3 +61,6 @@ jest.mock('expo-secure-store', () => {
     }),
   };
 });
+
+// Presse-papiers simulé.
+jest.mock('expo-clipboard', () => ({ setStringAsync: jest.fn(async () => true) }));

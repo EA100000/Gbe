@@ -23,6 +23,7 @@ function fakeEngine(): SyncEngine & { sync: jest.Mock } {
   return {
     sync: jest.fn(async () => ({ status: 'synced' as const, sent: 0 })),
     withAccessToken: (call) => call('jeton'),
+    forgetToken: jest.fn(),
   };
 }
 

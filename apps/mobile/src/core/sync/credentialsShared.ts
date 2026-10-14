@@ -21,3 +21,10 @@ export function parseCredentials(raw: string | null): GuestCredentials | null {
     return null;
   }
 }
+
+/** Petit texte gardé dans le coffre-fort du téléphone (code de récupération). */
+export interface SecretTextStore {
+  load(): Promise<string | null>;
+  save(value: string): Promise<void>;
+  clear(): Promise<void>;
+}

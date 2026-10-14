@@ -154,6 +154,47 @@ export const fr = {
   // Provisoire : états non dessinés dans la maquette.
   'delete.working': 'Suppression…',
   'delete.error': 'La suppression n’a pas abouti. Réessaie.',
+
+  // Écrans 13 et 14 (proposition validée le 14/10/2026) : code de récupération du compte.
+  'profile.recoveryCode': 'Code de récupération',
+  'recoveryCode.back': 'Retour au profil',
+  'recoveryCode.title': 'Ton code de récupération',
+  'recoveryCode.body':
+    'Sur un nouveau téléphone, touche « J’ai déjà un compte » et tape ce code : tu retrouves ta progression.',
+  'recoveryCode.spoken': 'Code : {letters}',
+  'recoveryCode.copy': 'Copier le code',
+  'recoveryCode.copied': 'Code copié',
+  'recoveryCode.tip.write': 'Note-le sur papier ou fais une capture d’écran.',
+  'recoveryCode.tip.secret': 'Garde-le pour toi : il ouvre ta progression.',
+  'recoveryCode.tip.noEmail':
+    'Sans ce code, impossible de retrouver ton compte : nous ne gardons ni e-mail ni numéro.',
+  'recoveryCode.done': 'C’est noté',
+  // Provisoire : états non dessinés dans la maquette.
+  'recoveryCode.loading': 'Création de ton code…',
+  'recoveryCode.offline': 'Il faut une connexion internet pour créer ton code.',
+
+  'recover.link': 'J’ai déjà un compte',
+  'recover.back': 'Retour à l’accueil',
+  'recover.greeting': 'Content de te revoir ! Donne-moi ton code, je retrouve tout.',
+  'recover.title': 'Retrouve ta progression',
+  'recover.body': 'Ton code est sur ton ancien téléphone, dans Profil › Code de récupération.',
+  'recover.label': 'Code de récupération',
+  'recover.placeholder': 'XXXX-XXXX-XXXX',
+  'recover.help': '12 lettres et chiffres, tirets facultatifs.',
+  'recover.unknown': 'Ce code ne correspond à aucun compte. Vérifie chaque caractère.',
+  'recover.offline': 'Pas de connexion. Il en faut une pour retrouver ton compte.',
+  'recover.submit': 'Retrouver ma progression',
+  'recover.noCode':
+    'Pas de code ? Sans lui, impossible de retrouver un compte : nous ne gardons ni e-mail ni numéro.',
+  'recover.startFresh': 'Commencer à zéro',
+  'recover.found.title': 'Te revoilà, {pseudo} !',
+  'recover.found.body': 'Ta progression est de retour sur ce téléphone.',
+  'recover.found.xp': 'XP',
+  'recover.found.lessons': 'Leçons',
+  // Provisoire : états non dessinés dans la maquette.
+  'recover.working': 'Recherche…',
+  'recover.invalid': 'Ce code n’a pas la bonne forme : 12 lettres et chiffres.',
+  'recover.busy': 'Le serveur ne répond pas pour l’instant. Réessaie dans une minute.',
 } as const;
 
 export type TranslationKey = keyof typeof fr;
