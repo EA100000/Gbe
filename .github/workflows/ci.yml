@@ -1,0 +1,75 @@
+# Intégration continue : rien n'est fusionné si une étape échoue.
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  verifier:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    # Base PostgreSQL jetable pour les tests de l'API (détruite à la fin du job).
+    services:
+      postgres:
+        image: postgres:17
+        env:
+          POSTGRES_DB: gbe_test
+          POSTGRES_USER: gbe
+          # Base éphémère, inaccessible hors du job : ce n'est pas un secret.
+          POSTGRES_PASSWORD: gbe-ci
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U gbe -d gbe_test"
+          --health-interval 5s
+          --health-timeout 3s
+          --health-retries 10
+    env:
+      TEST_DATABASE_URL: postgresql://gbe:gbe-ci@localhost:5432/gbe_test
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - run: npm ci
+      - name: Formatage
+        run: npm run format:check
+      - name: Lint
+        run: npm run lint
+      - name: Types
+        run: npm run typecheck
+      - name: Tests et couverture (dont l'API sur PostgreSQL)
+        run: npm run test:coverage
+      - name: Packs de contenu (bloquant)
+        run: npm run content:validate
+      - name: Build de l'API
+        run: npm run api:build
+      - name: Bundle Android
+        working-directory: apps/mobile
+        run: npx expo export --platform android --output-dir /tmp/export-android
+
+  image-api:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - name: Construire l'image Docker de l'API
+        run: docker build -f infra/api.Dockerfile -t gbe-api:ci .
+      - name: Démarrer l'image avec une base et vérifier /v1/health
+        run: |
+          docker network create gbe
+          docker run -d --name db --network gbe -e POSTGRES_USER=gbe -e POSTGRES_PASSWORD=gbe-ci -e POSTGRES_DB=gbe postgres:17
+          for i in $(seq 1 30); do docker exec db pg_isready -U gbe -d gbe && break; sleep 1; done
+          docker run -d --name api --network gbe -p 3000:3000 \
+            -e DATABASE_URL=postgresql://gbe:gbe-ci@db:5432/gbe \
+            -e JWT_SECRET="$(openssl rand -base64 48)" gbe-api:ci
+          for i in $(seq 1 30); do curl -fsS http://localhost:3000/v1/health && exit 0; sleep 1; done
+          docker logs api
+          exit 1

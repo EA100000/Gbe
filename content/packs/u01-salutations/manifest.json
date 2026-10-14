@@ -1,0 +1,162 @@
+{
+  "formatVersion": 1,
+  "packId": "u01-salutations",
+  "version": 1,
+  "files": [
+    {
+      "path": "pack.json",
+      "sha256": "cb42046138d5fba5b84754f04a7ba73fa0bafe22c0026fda99dce53add8428a0",
+      "bytes": 22015
+    },
+    {
+      "path": "audio/sin-n.m4a",
+      "sha256": "18ef4ad50ad7191940ebe8397266195089a698b1d794c0cad644e101aabb18c9",
+      "bytes": 5998
+    },
+    {
+      "path": "audio/sin-l.m4a",
+      "sha256": "330f4338b342148f82ef53e5240e78c639fc52c7d5e0ce538de11053d4b3e87e",
+      "bytes": 8119
+    },
+    {
+      "path": "audio/hwe-n.m4a",
+      "sha256": "dea648af4c5421b0ed46dd30db6cc799b8ead74936bbd1123468f91623bdf0c5",
+      "bytes": 6044
+    },
+    {
+      "path": "audio/hwe-l.m4a",
+      "sha256": "ed39e2b0f2b3f58a2aa988185cdd316fc2530ec583f6ad144b6c0fc451b16cf4",
+      "bytes": 8091
+    },
+    {
+      "path": "audio/xwe-n.m4a",
+      "sha256": "23d375851ff1f745e345812045d49db614947b982f35a566b3f37a9790f4ab9e",
+      "bytes": 6059
+    },
+    {
+      "path": "audio/xwe-l.m4a",
+      "sha256": "be74e0d063bea0e91068892621c07d4822dc574c5ec00bc8860cd44e91214301",
+      "bytes": 8113
+    },
+    {
+      "path": "audio/kwe-n.m4a",
+      "sha256": "174e695b8d46a1dd0f8387ef93e2585a49d1307012e1f4c6c86214db59c48310",
+      "bytes": 5867
+    },
+    {
+      "path": "audio/kwe-l.m4a",
+      "sha256": "dd18f71415c538c0b556415c833a48b739c3450c575ce4104a73c97e2c841663",
+      "bytes": 8177
+    },
+    {
+      "path": "audio/n1-n.m4a",
+      "sha256": "6418d9673e0097dff9642bf174992b1bb60727a8f1b300480eb8b78168f3f68c",
+      "bytes": 6973
+    },
+    {
+      "path": "audio/n2-n.m4a",
+      "sha256": "212b7e575a01354f459ba8f88eb02eaaab25fc4856fcee90372c5f1f93eddb47",
+      "bytes": 5316
+    },
+    {
+      "path": "audio/n3-n.m4a",
+      "sha256": "c968231a301ea0a4aa4907facf91ce497b217963d60df042cfa403655fac16e1",
+      "bytes": 6932
+    },
+    {
+      "path": "audio/n4-n.m4a",
+      "sha256": "61e59a2f3f6b25f40f12e9ecdac1297101811879f5cd13b30b1e3edef3d15883",
+      "bytes": 7002
+    },
+    {
+      "path": "audio/n5-n.m4a",
+      "sha256": "ee93754eefd7d37da122a09e182a41482b65f2d0b43904001cb01265cf0b6bb7",
+      "bytes": 7721
+    },
+    {
+      "path": "audio/kwabo-n.m4a",
+      "sha256": "b4385e3a152202a3992d728ffcefd00ca16ff2cdab2dc7ab16271138cc97e19a",
+      "bytes": 6977
+    },
+    {
+      "path": "audio/merci-n.m4a",
+      "sha256": "94384d96d2081871206793429cca6000056af88e4958fd9ffe59ad58349c3978",
+      "bytes": 8568
+    },
+    {
+      "path": "audio/aurevoir-n.m4a",
+      "sha256": "ea9c730dc0b5f91289e486d71c05716ac730e34948f6c4669329af5222d9a044",
+      "bytes": 9399
+    },
+    {
+      "path": "audio/combien-n.m4a",
+      "sha256": "c60d15fe87594812066de15cbc8de9b8fa9ee3352a579c50ce21c99d11e4bb1b",
+      "bytes": 9383
+    },
+    {
+      "path": "audio/combien-l.m4a",
+      "sha256": "53e08b0c1bbfcf644898e4eac43d175c65a0c1d14239ba81ff7505607cfc574a",
+      "bytes": 13259
+    },
+    {
+      "path": "audio/story-1.m4a",
+      "sha256": "960617f835bf2ad86e083d0df42774ecd6ad21ae3a690a60786f41a28228ff89",
+      "bytes": 11793
+    },
+    {
+      "path": "audio/story-2.m4a",
+      "sha256": "368d9ab6d41f54807335d26c315adf0d1e9840673a3650931283b6cb62128714",
+      "bytes": 12725
+    },
+    {
+      "path": "audio/story-3.m4a",
+      "sha256": "cbe30f5e0031abaf4f2ffdea5b2b12b57a2cc4a068271efd7026b8dc5699fdc4",
+      "bytes": 16009
+    },
+    {
+      "path": "audio/story-4.m4a",
+      "sha256": "48865291f6506310eb28a8a291641dd6054406347981afca0ca5e80f9c0290da",
+      "bytes": 9381
+    },
+    {
+      "path": "audio/gbe-n.m4a",
+      "sha256": "33032a0c723ee3e9aad3040f54a5307c9f85fb376022b5a4c736c772623b6823",
+      "bytes": 6019
+    },
+    {
+      "path": "audio/kpon-n.m4a",
+      "sha256": "4c4ec971f7cc1fefcc0df0ce90c143a304d11dbabd88c5bf28fcecf9c568879c",
+      "bytes": 6042
+    },
+    {
+      "path": "audio/nyi-n.m4a",
+      "sha256": "792a8e4c14ac09072362b8b97511cb1ff09ef51f8e49ebb0aea43e0ffef6fbe0",
+      "bytes": 6089
+    },
+    {
+      "path": "audio/nasal-an.m4a",
+      "sha256": "d8043a878f3b18165173ce42fa6637d046854c1d78b4c0f7adfebdf749420e27",
+      "bytes": 5335
+    },
+    {
+      "path": "audio/nasal-en.m4a",
+      "sha256": "3316961e9d1417c5aaa68f0a7cfae58c57002cf9aa6e52194d6f4140082a6015",
+      "bytes": 5198
+    },
+    {
+      "path": "audio/nasal-in.m4a",
+      "sha256": "61f7703b7f5609ef329943ff0d296169aa1326110dc3371b6cc96ef6f1fd635d",
+      "bytes": 5162
+    },
+    {
+      "path": "audio/nasal-on.m4a",
+      "sha256": "768d5c830429baaba4b71e2ae4b206c7ae9f552e97fa9ff4bcfb1bd999180bcd",
+      "bytes": 5234
+    },
+    {
+      "path": "audio/nasal-un.m4a",
+      "sha256": "a65e4a62a646a05e5bd5e730f2bff7e6749ceb65585b6e7868d0651976689c66",
+      "bytes": 5266
+    }
+  ]
+}

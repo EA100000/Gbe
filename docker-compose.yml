@@ -1,0 +1,51 @@
+# Services locaux : base PostgreSQL, stockage compatible S3 et API Gbè.
+# Les mots de passe et secrets viennent du fichier .env (jamais commité) ; voir .env.example.
+#   docker compose up -d postgres     # base seule (développement de l'API avec npm run dev)
+#   docker compose up -d --build      # tout, API comprise (http://localhost:3000/v1/health)
+services:
+  postgres:
+    image: postgres:17
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-gbe}
+      POSTGRES_USER: ${POSTGRES_USER:-gbe}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Définis POSTGRES_PASSWORD dans .env}
+    ports:
+      - '5432:5432'
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}']
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+  minio:
+    image: minio/minio:latest
+    command: server /data --console-address ":9001"
+    environment:
+      MINIO_ROOT_USER: ${MINIO_ROOT_USER:-gbe}
+      MINIO_ROOT_PASSWORD: ${MINIO_ROOT_PASSWORD:?Définis MINIO_ROOT_PASSWORD dans .env}
+    ports:
+      - '9000:9000'
+      - '9001:9001'
+    volumes:
+      - minio-data:/data
+
+  api:
+    build:
+      context: .
+      dockerfile: infra/api.Dockerfile
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      DATABASE_URL: postgresql://${POSTGRES_USER:-gbe}:${POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB:-gbe}
+      JWT_SECRET: ${JWT_SECRET:?Définis JWT_SECRET dans .env (32 caractères minimum)}
+      CORS_ORIGINS: ${CORS_ORIGINS:-}
+      AUTH_RATE_LIMIT_PER_MINUTE: ${AUTH_RATE_LIMIT_PER_MINUTE:-10}
+    ports:
+      - '3000:3000'
+
+volumes:
+  postgres-data:
+  minio-data:

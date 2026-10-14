@@ -1,0 +1,17 @@
+{
+  "name": "@gbe/domain",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Règles du jeu de Gbè : correction, XP, série, vies, normalisation du fon. Aucun import React.",
+  "main": "src/index.ts",
+  "types": "src/index.ts",
+  "scripts": {
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "test": "jest",
+    "test:coverage": "jest --coverage"
+  },
+  "dependencies": {
+    "@gbe/content-schema": "*",
+    "zod": "^4.1.0"
+  }
+}

@@ -1,0 +1,48 @@
+{
+  "name": "gbe",
+  "private": true,
+  "description": "Gbè — application d'apprentissage du fongbè (monorepo)",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit -p scripts/tsconfig.json && npm run typecheck --workspaces --if-present",
+    "test": "npm run test --workspaces --if-present",
+    "test:coverage": "npm run test:coverage --workspaces --if-present",
+    "lint": "eslint .",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "content:validate": "tsx scripts/validate-content.ts",
+    "audio:placeholders": "tsx scripts/make-placeholder-audio.ts",
+    "check": "npm run format:check && npm run lint && npm run typecheck && npm run test && npm run content:validate",
+    "content:build": "tsx scripts/build-packs.ts",
+    "demo:web": "tsx scripts/build-web-demo.ts",
+    "api:dev": "npm run dev --workspace apps/api",
+    "api:build": "npm run build --workspace apps/api",
+    "db:migrate": "npm run db:migrate --workspace apps/api"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.26.0",
+    "@babel/preset-env": "^7.26.0",
+    "@babel/preset-typescript": "^7.26.0",
+    "@eslint/js": "^9.39.0",
+    "@types/jest": "^29.5.14",
+    "@types/node": "^22.18.0",
+    "babel-jest": "^29.7.0",
+    "eslint": "^9.39.0",
+    "eslint-config-expo": "~57.0.2",
+    "eslint-config-prettier": "^10.1.0",
+    "eslint-plugin-react-hooks": "^7.1.1",
+    "fast-check": "^4.10.0",
+    "globals": "^16.0.0",
+    "jest": "^29.7.0",
+    "prettier": "^3.6.0",
+    "tsx": "^4.20.0",
+    "typescript": "~6.0.3",
+    "typescript-eslint": "^8.71.0"
+  }
+}

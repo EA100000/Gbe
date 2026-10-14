@@ -1,0 +1,13 @@
+node_modules
+coverage
+dist
+.expo
+package-lock.json
+apps/mobile/assets
+content/packs/**/*.m4a
+docs/adr/*.md
+apps/mobile/src/content/bundled-packs.generated.ts
+dist-demo
+
+# Généré par drizzle-kit
+database/migrations/meta/

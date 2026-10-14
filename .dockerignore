@@ -1,0 +1,12 @@
+# Contexte envoyé à `docker build` : le strict nécessaire, jamais de secret.
+.git
+.env
+.env.*
+**/node_modules
+**/dist
+**/coverage
+**/.expo
+dist-demo
+content/masters
+apps/mobile/android
+apps/mobile/ios

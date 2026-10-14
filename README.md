@@ -1,0 +1,108 @@
+# Gbè — apprendre le fongbè
+
+Application pour francophones qui apprennent le fon. Android d'abord, puis iOS et web, une seule base de code.
+L'audio enregistré par deux locuteurs natifs est le cœur du produit ; tout fonctionne hors-ligne.
+
+> **État : jalon J3 « Progression sauvegardée sur un serveur ».** Les écrans 1 à 8 de la maquette
+> sont jouables sans réseau avec un pack de test de l'unité 1 ; quand une API est configurée, la
+> progression part sur le serveur (compte invité automatique, sans donnée personnelle).
+> **Le contenu fon n'est pas encore validé par les experts** et les audios sont des bips provisoires :
+> l'appli l'affiche dans un bandeau.
+
+## Démarrer
+
+Prérequis : Node 22 (`.nvmrc`), npm 10. Pour régénérer les audios provisoires : ffmpeg.
+
+```bash
+npm install          # installe tout le monorepo
+npm run check        # ce que vérifie la CI : formatage, lint, types, tests, packs
+cd apps/mobile
+npx expo start       # puis scanner le QR code avec Expo Go (SDK 57) sur Android
+```
+
+## Lancer l'API (facultatif)
+
+Sans API, l'appli marche entièrement hors-ligne. Pour tester la sauvegarde sur serveur (Docker requis) :
+
+```bash
+cp .env.example .env                 # puis remplacer les valeurs « a-remplacer »
+docker compose up -d --build         # PostgreSQL + MinIO + API sur http://localhost:3000
+curl http://localhost:3000/v1/health # {"status":"ok"}
+echo "EXPO_PUBLIC_API_URL=http://<IP-de-ton-poste>:3000" > apps/mobile/.env
+```
+
+Avec Expo Go, l'adresse doit être celle du poste sur le Wi-Fi (pas `localhost`). Un APK de test
+(build « release ») refuse le HTTP non chiffré : il lui faut une API en HTTPS.
+
+Développer l'API sans Docker pour elle : `docker compose up -d postgres`, puis `npm run api:dev`.
+Tests de l'API : créer une base jetable (`docker compose exec postgres createdb -U gbe gbe_test`), puis
+`TEST_DATABASE_URL=postgresql://gbe:<mot-de-passe>@localhost:5432/gbe_test npm test`.
+
+| Route                  | Rôle                                                      |
+| ---------------------- | --------------------------------------------------------- |
+| `POST /v1/auth/guest`  | crée un compte invité, rend identifiant + secret + jeton  |
+| `POST /v1/auth/token`  | échange identifiant + secret contre un jeton d'une heure  |
+| `POST /v1/sync/events` | reçoit jusqu'à 500 événements ; les doublons sont ignorés |
+| `GET /v1/progress`     | progression recalculée côté serveur (contrôle)            |
+| `DELETE /v1/account`   | supprime le compte et tout son journal                    |
+| `GET /v1/health`       | état du service et de la base                             |
+
+Pour un APK à installer sur des téléphones de test : `npx eas-cli build --profile preview --platform android`
+(compte Expo gratuit nécessaire). Pour le Play Store : profil `production` (fichier `.aab`).
+
+## Organisation
+
+```
+apps/mobile/              appli Expo (React Native, Expo Router)
+  src/app/                routes : (tabs)/index = chemin, (tabs)/sons, bienvenue, lecon/[id], histoire/[id], fin
+  src/features/           un dossier par fonctionnalité : onboarding, path, lesson, story, sounds
+  src/core/               contenu, base SQLite, journal d'événements, audio, synchro, traductions (fr.ts)
+apps/api/                 API NestJS : comptes invités, synchronisation du journal, suppression du compte
+database/migrations/      migrations SQL de PostgreSQL (Drizzle)
+infra/                    Dockerfile de l'API
+packages/domain/          règles du jeu pures : correction, XP, vies, série, objectif, session, chemin
+packages/content-schema/  format des packs (Zod) et validation (NFC, références, empreintes)
+packages/ui/              design system : couleurs, polices, boutons, cases, Galet, vendeuse, icônes
+content/packs/            sources des leçons : pack.json, audios, manifest.json
+scripts/                  validation et préparation des packs, audios provisoires
+docs/adr/                 décisions d'architecture (dont les écarts à la maquette)
+```
+
+## Comment ça marche
+
+- **Contenu = données.** Une unité est un _pack_ (`pack.json` + audios + `manifest.json`).
+  Il est validé par Zod au chargement ; aucun mot fon n'est écrit dans le code.
+- **Le téléphone fait foi.** Chaque fait de jeu (leçon terminée, vie perdue, calebasse ouverte)
+  devient un événement à identifiant unique, enregistré dans SQLite. La progression est recalculée
+  à partir de ce journal : le rejouer, même avec des doublons, donne le même résultat.
+  Ce journal est envoyé à l'API par lots, au démarrage, au retour dans l'appli et après chaque
+  leçon ; le serveur ignore les doublons. Hors-ligne, rien ne change pour l'apprenant.
+- **Règles pures.** Les écrans affichent et délèguent ; toute décision (juste/faux, XP, vies, série)
+  vient de `packages/domain`, testé à 100 % des lignes.
+
+## Remplacer le contenu de test
+
+1. Les experts valident chaque mot et chaque phrase (orthographe, tons, variété de fon).
+2. Remplacer les fichiers de `content/packs/u01-salutations/audio/` par les enregistrements
+   (AAC `.m4a`, mono, environ 64 kbit/s), en gardant les mêmes noms, ou mettre à jour `pack.json`.
+3. Passer `"validated": true`, augmenter `"version"`.
+4. `npm run content:build` puis `npm run content:validate`.
+
+## Tests
+
+| Où                        | Quoi                                                 | Nombre |
+| ------------------------- | ---------------------------------------------------- | ------ |
+| `packages/domain`         | règles du jeu, dont tests de propriétés (fast-check) | 145    |
+| `packages/content-schema` | schémas et validation des packs                      | 58     |
+| `apps/mobile`             | réducteurs, écrans, parcours d'une leçon, synchro    | 85     |
+| `apps/api`                | comptes, synchro, isolation, limites (PostgreSQL)    | 26     |
+
+## Ce qui reste (plan de développement)
+
+- **J4** : premier vrai pack validé et enregistré, téléchargement des packs avec vérification d'empreinte.
+- **J5** : unités 2 et 3, profil, écran de suppression du compte (exigé par Google Play), Sentry.
+- **J6–J7** : bêta fermée (12 testeurs, 14 jours), puis publication.
+
+Les règles provisoires (vies, XP, cauris) et les écarts à la maquette sont listés dans
+`docs/adr/0003` et `docs/adr/0004` ; les choix de l'API (Drizzle au lieu de Prisma, comptes invités)
+dans `docs/adr/0005` et `docs/adr/0006`.

@@ -1,0 +1,555 @@
+{
+  "formatVersion": 1,
+  "id": "u01-salutations",
+  "version": 1,
+  "validated": false,
+  "uiFon": {
+    "greeting": "Kwabɔ !",
+    "approval": "Ɛɛn !"
+  },
+  "unit": {
+    "id": "u01",
+    "order": 1,
+    "title": "Salutations",
+    "subtitle": "Dire bonjour, merci et au revoir",
+    "lessons": [
+      {
+        "id": "u01-l01",
+        "kind": "standard",
+        "title": "Premiers mots",
+        "summaryFr": "Tu sais dire eau, soleil, maison et argent en fon.",
+        "exercises": [
+          {
+            "id": "u01-l01-e01",
+            "type": "image_choice",
+            "tag": { "kind": "new", "labelFr": "Nouveau mot" },
+            "promptFr": "Lequel veut dire « eau » ?",
+            "choices": ["hwe", "sin", "xwe", "kwe"],
+            "answer": "sin"
+          },
+          {
+            "id": "u01-l01-e02",
+            "type": "image_choice",
+            "tag": { "kind": "new", "labelFr": "Nouveau mot" },
+            "promptFr": "Lequel veut dire « soleil » ?",
+            "choices": ["sin", "kwe", "hwe", "xwe"],
+            "answer": "hwe"
+          },
+          {
+            "id": "u01-l01-e03",
+            "type": "image_choice",
+            "tag": { "kind": "new", "labelFr": "Nouveau mot" },
+            "promptFr": "Lequel veut dire « maison » ?",
+            "choices": ["kwe", "xwe", "sin", "hwe"],
+            "answer": "xwe"
+          },
+          {
+            "id": "u01-l01-e04",
+            "type": "image_choice",
+            "tag": { "kind": "new", "labelFr": "Nouveau mot" },
+            "promptFr": "Lequel veut dire « argent » ?",
+            "choices": ["xwe", "hwe", "kwe", "sin"],
+            "answer": "kwe"
+          },
+          {
+            "id": "u01-l01-e05",
+            "type": "match_pairs",
+            "tag": { "kind": "review", "labelFr": "Révision · les premiers mots" },
+            "promptFr": "Associe les paires",
+            "pairs": [
+              { "fon": "sin", "fr": "eau", "audio": "sin-n" },
+              { "fon": "hwè", "fr": "soleil", "audio": "hwe-n" },
+              { "fon": "xwé", "fr": "maison", "audio": "xwe-n" },
+              { "fon": "kwɛ́", "fr": "argent", "audio": "kwe-n" }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "u01-l02",
+        "kind": "standard",
+        "title": "Compter jusqu’à cinq",
+        "summaryFr": "Tu comptes jusqu’à cinq en fon.",
+        "exercises": [
+          {
+            "id": "u01-l02-e01",
+            "type": "match_pairs",
+            "tag": { "kind": "new", "labelFr": "Nouveaux mots · les nombres" },
+            "promptFr": "Associe les paires",
+            "pairs": [
+              { "fon": "ɖokpó", "fr": "un", "audio": "n1-n" },
+              { "fon": "wè", "fr": "deux", "audio": "n2-n" },
+              { "fon": "atɔn", "fr": "trois", "audio": "n3-n" }
+            ]
+          },
+          {
+            "id": "u01-l02-e02",
+            "type": "match_pairs",
+            "tag": { "kind": "new", "labelFr": "Nouveaux mots · les nombres" },
+            "promptFr": "Associe les paires",
+            "pairs": [
+              { "fon": "ɛnɛ", "fr": "quatre", "audio": "n4-n" },
+              { "fon": "atɔɔn", "fr": "cinq", "audio": "n5-n" },
+              { "fon": "ɖokpó", "fr": "un", "audio": "n1-n" }
+            ]
+          },
+          {
+            "id": "u01-l02-e03",
+            "type": "match_pairs",
+            "tag": { "kind": "review", "labelFr": "Révision · les nombres" },
+            "promptFr": "Associe les paires",
+            "noteFr": "Tu comptes jusqu’à cinq en fon.",
+            "pairs": [
+              { "fon": "ɖokpó", "fr": "un", "audio": "n1-n" },
+              { "fon": "wè", "fr": "deux", "audio": "n2-n" },
+              { "fon": "atɔn", "fr": "trois", "audio": "n3-n" },
+              { "fon": "ɛnɛ", "fr": "quatre", "audio": "n4-n" },
+              { "fon": "atɔɔn", "fr": "cinq", "audio": "n5-n" }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "u01-l03",
+        "kind": "standard",
+        "title": "Merci, au revoir, combien ?",
+        "summaryFr": "Tu sais dire merci, au revoir et demander un prix en fon.",
+        "exercises": [
+          {
+            "id": "u01-l03-e01",
+            "type": "build_sentence",
+            "tag": { "kind": "new", "labelFr": "Nouvelle phrase" },
+            "promptFr": "Traduis en fon",
+            "sentenceFr": "Merci",
+            "solution": ["A", "wà", "nǔ"],
+            "answerFon": "A wà nǔ",
+            "distractors": ["wá", "sin"],
+            "audio": "merci-n"
+          },
+          {
+            "id": "u01-l03-e02",
+            "type": "build_sentence",
+            "tag": { "kind": "new", "labelFr": "Nouvelle phrase" },
+            "promptFr": "Traduis en fon",
+            "sentenceFr": "Au revoir",
+            "solution": ["Bo", "yi", "bo", "wá"],
+            "answerFon": "Bo yi bo wá",
+            "distractors": ["nyí", "sin"],
+            "audio": "aurevoir-n"
+          },
+          {
+            "id": "u01-l03-e03",
+            "type": "build_sentence",
+            "tag": { "kind": "new", "labelFr": "Nouvelle phrase" },
+            "promptFr": "Traduis en fon",
+            "sentenceFr": "Combien ça coûte ?",
+            "solution": ["Bì", "nyí", "nabí"],
+            "answerFon": "Bì nyí nabí ?",
+            "distractors": ["wá", "sin", "ganji"],
+            "audio": "combien-n",
+            "noteFr": "Indispensable au marché."
+          },
+          {
+            "id": "u01-l03-e04",
+            "type": "image_choice",
+            "tag": { "kind": "review", "labelFr": "Révision" },
+            "promptFr": "Lequel veut dire « eau » ?",
+            "choices": ["hwe", "sin", "xwe", "kwe"],
+            "answer": "sin"
+          },
+          {
+            "id": "u01-l03-e05",
+            "type": "match_pairs",
+            "tag": { "kind": "review", "labelFr": "Révision · les nombres" },
+            "promptFr": "Associe les paires",
+            "noteFr": "Tu comptes jusqu’à cinq en fon.",
+            "pairs": [
+              { "fon": "ɖokpó", "fr": "un", "audio": "n1-n" },
+              { "fon": "wè", "fr": "deux", "audio": "n2-n" },
+              { "fon": "atɔn", "fr": "trois", "audio": "n3-n" },
+              { "fon": "ɛnɛ", "fr": "quatre", "audio": "n4-n" },
+              { "fon": "atɔɔn", "fr": "cinq", "audio": "n5-n" }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "u01-l04",
+        "kind": "standard",
+        "title": "Révision de l’unité",
+        "summaryFr": "Tu as révisé toute l’unité 1.",
+        "exercises": [
+          {
+            "id": "u01-l04-e01",
+            "type": "match_pairs",
+            "tag": { "kind": "review", "labelFr": "Révision · les phrases" },
+            "promptFr": "Associe les paires",
+            "pairs": [
+              { "fon": "Kwabɔ !", "fr": "bienvenue", "audio": "kwabo-n" },
+              { "fon": "A wà nǔ", "fr": "merci", "audio": "merci-n" },
+              { "fon": "Bo yi bo wá", "fr": "au revoir", "audio": "aurevoir-n" },
+              { "fon": "Bì nyí nabí ?", "fr": "combien ça coûte ?", "audio": "combien-n" }
+            ]
+          },
+          {
+            "id": "u01-l04-e02",
+            "type": "build_sentence",
+            "tag": { "kind": "review", "labelFr": "Révision" },
+            "promptFr": "Traduis en fon",
+            "sentenceFr": "Combien ça coûte ?",
+            "solution": ["Bì", "nyí", "nabí"],
+            "answerFon": "Bì nyí nabí ?",
+            "distractors": ["wá", "sin", "ganji"],
+            "audio": "combien-n",
+            "noteFr": "Indispensable au marché."
+          },
+          {
+            "id": "u01-l04-e03",
+            "type": "image_choice",
+            "tag": { "kind": "review", "labelFr": "Révision" },
+            "promptFr": "Lequel veut dire « maison » ?",
+            "choices": ["sin", "hwe", "kwe", "xwe"],
+            "answer": "xwe"
+          }
+        ]
+      },
+      {
+        "id": "u01-histoire",
+        "kind": "story",
+        "title": "Au marché Dantokpa",
+        "exercises": [
+          {
+            "id": "u01-histoire-e01",
+            "type": "story",
+            "title": "Acheter du poisson",
+            "setting": "Dantokpa",
+            "lines": [
+              {
+                "speaker": "vendor",
+                "fon": "Kwabɔ ! A fɔn à ?",
+                "fr": "Bienvenue ! Bien réveillé·e ?",
+                "audio": "story-1"
+              },
+              {
+                "speaker": "learner",
+                "fon": "Ɛɛn ! Bì nyí nabí ?",
+                "fr": "Oui ! Combien ça coûte ?",
+                "audio": "story-2"
+              },
+              {
+                "speaker": "vendor",
+                "audio": "story-3",
+                "audioOnly": true,
+                "hintFr": "Écoute d’abord : quel prix annonce-t-elle ?"
+              },
+              {
+                "speaker": "learner",
+                "fon": "E v’axi dín !",
+                "fr": "C’est trop cher !",
+                "audio": "story-4"
+              }
+            ],
+            "question": {
+              "promptFr": "Que réponds-tu pour négocier ?",
+              "successFr": "Bien négocié !",
+              "choices": [
+                {
+                  "fon": "A wà nǔ",
+                  "correct": false,
+                  "explanation": [
+                    { "fon": "A wà nǔ" },
+                    { "fr": ", c’est « merci » : garde-le pour la fin de l’échange." }
+                  ]
+                },
+                {
+                  "fon": "Sà nú mì ganji",
+                  "correct": true,
+                  "explanation": [
+                    { "fon": "Sà nú mì ganji" },
+                    { "fr": " : littéralement « vends-moi bien »." }
+                  ]
+                },
+                {
+                  "fon": "Bo yi bo wá",
+                  "correct": false,
+                  "explanation": [
+                    { "fon": "Bo yi bo wá" },
+                    { "fr": ", c’est « au revoir » : pas encore, la négociation continue !" }
+                  ]
+                }
+              ]
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "items": [
+    {
+      "id": "sin",
+      "fon": "sin",
+      "fr": "eau",
+      "illustration": "ill-sin",
+      "audio": { "normal": "sin-n", "slow": "sin-l" }
+    },
+    {
+      "id": "hwe",
+      "fon": "hwè",
+      "fr": "soleil",
+      "illustration": "ill-hwe",
+      "audio": { "normal": "hwe-n", "slow": "hwe-l" }
+    },
+    {
+      "id": "xwe",
+      "fon": "xwé",
+      "fr": "maison",
+      "illustration": "ill-xwe",
+      "audio": { "normal": "xwe-n", "slow": "xwe-l" }
+    },
+    {
+      "id": "kwe",
+      "fon": "kwɛ́",
+      "fr": "argent",
+      "note": "les cauris servaient de monnaie",
+      "illustration": "ill-kwe",
+      "audio": { "normal": "kwe-n", "slow": "kwe-l" }
+    },
+    { "id": "n1", "fon": "ɖokpó", "fr": "un", "audio": { "normal": "n1-n" } },
+    { "id": "n2", "fon": "wè", "fr": "deux", "audio": { "normal": "n2-n" } },
+    { "id": "n3", "fon": "atɔn", "fr": "trois", "audio": { "normal": "n3-n" } },
+    { "id": "n4", "fon": "ɛnɛ", "fr": "quatre", "audio": { "normal": "n4-n" } },
+    { "id": "n5", "fon": "atɔɔn", "fr": "cinq", "audio": { "normal": "n5-n" } },
+    { "id": "kwabo", "fon": "Kwabɔ !", "fr": "bienvenue", "audio": { "normal": "kwabo-n" } },
+    { "id": "merci", "fon": "A wà nǔ", "fr": "merci", "audio": { "normal": "merci-n" } },
+    {
+      "id": "aurevoir",
+      "fon": "Bo yi bo wá",
+      "fr": "au revoir",
+      "audio": { "normal": "aurevoir-n" }
+    },
+    {
+      "id": "combien",
+      "fon": "Bì nyí nabí ?",
+      "fr": "combien ça coûte ?",
+      "audio": { "normal": "combien-n", "slow": "combien-l" }
+    }
+  ],
+  "audios": [
+    {
+      "id": "sin-n",
+      "file": "audio/sin-n.m4a",
+      "voice": "A",
+      "speed": "normal",
+      "durationMs": 600
+    },
+    { "id": "sin-l", "file": "audio/sin-l.m4a", "voice": "A", "speed": "slow", "durationMs": 1000 },
+    {
+      "id": "hwe-n",
+      "file": "audio/hwe-n.m4a",
+      "voice": "A",
+      "speed": "normal",
+      "durationMs": 600
+    },
+    { "id": "hwe-l", "file": "audio/hwe-l.m4a", "voice": "A", "speed": "slow", "durationMs": 1000 },
+    {
+      "id": "xwe-n",
+      "file": "audio/xwe-n.m4a",
+      "voice": "A",
+      "speed": "normal",
+      "durationMs": 600
+    },
+    { "id": "xwe-l", "file": "audio/xwe-l.m4a", "voice": "A", "speed": "slow", "durationMs": 1000 },
+    {
+      "id": "kwe-n",
+      "file": "audio/kwe-n.m4a",
+      "voice": "A",
+      "speed": "normal",
+      "durationMs": 600
+    },
+    { "id": "kwe-l", "file": "audio/kwe-l.m4a", "voice": "A", "speed": "slow", "durationMs": 1000 },
+    { "id": "n1-n", "file": "audio/n1-n.m4a", "voice": "B", "speed": "normal", "durationMs": 700 },
+    { "id": "n2-n", "file": "audio/n2-n.m4a", "voice": "B", "speed": "normal", "durationMs": 500 },
+    { "id": "n3-n", "file": "audio/n3-n.m4a", "voice": "B", "speed": "normal", "durationMs": 700 },
+    { "id": "n4-n", "file": "audio/n4-n.m4a", "voice": "B", "speed": "normal", "durationMs": 700 },
+    { "id": "n5-n", "file": "audio/n5-n.m4a", "voice": "B", "speed": "normal", "durationMs": 800 },
+    {
+      "id": "kwabo-n",
+      "file": "audio/kwabo-n.m4a",
+      "voice": "B",
+      "speed": "normal",
+      "durationMs": 700
+    },
+    {
+      "id": "merci-n",
+      "file": "audio/merci-n.m4a",
+      "voice": "A",
+      "speed": "normal",
+      "durationMs": 900
+    },
+    {
+      "id": "aurevoir-n",
+      "file": "audio/aurevoir-n.m4a",
+      "voice": "A",
+      "speed": "normal",
+      "durationMs": 1000
+    },
+    {
+      "id": "combien-n",
+      "file": "audio/combien-n.m4a",
+      "voice": "A",
+      "speed": "normal",
+      "durationMs": 1000
+    },
+    {
+      "id": "combien-l",
+      "file": "audio/combien-l.m4a",
+      "voice": "A",
+      "speed": "slow",
+      "durationMs": 1600
+    },
+    {
+      "id": "story-1",
+      "file": "audio/story-1.m4a",
+      "voice": "B",
+      "speed": "normal",
+      "durationMs": 1300
+    },
+    {
+      "id": "story-2",
+      "file": "audio/story-2.m4a",
+      "voice": "A",
+      "speed": "normal",
+      "durationMs": 1400
+    },
+    {
+      "id": "story-3",
+      "file": "audio/story-3.m4a",
+      "voice": "B",
+      "speed": "normal",
+      "durationMs": 1800
+    },
+    {
+      "id": "story-4",
+      "file": "audio/story-4.m4a",
+      "voice": "A",
+      "speed": "normal",
+      "durationMs": 1000
+    },
+    {
+      "id": "gbe-n",
+      "file": "audio/gbe-n.m4a",
+      "voice": "A",
+      "speed": "normal",
+      "durationMs": 600
+    },
+    {
+      "id": "kpon-n",
+      "file": "audio/kpon-n.m4a",
+      "voice": "A",
+      "speed": "normal",
+      "durationMs": 600
+    },
+    {
+      "id": "nyi-n",
+      "file": "audio/nyi-n.m4a",
+      "voice": "A",
+      "speed": "normal",
+      "durationMs": 600
+    },
+    {
+      "id": "nasal-an",
+      "file": "audio/nasal-an.m4a",
+      "voice": "B",
+      "speed": "normal",
+      "durationMs": 500
+    },
+    {
+      "id": "nasal-en",
+      "file": "audio/nasal-en.m4a",
+      "voice": "B",
+      "speed": "normal",
+      "durationMs": 500
+    },
+    {
+      "id": "nasal-in",
+      "file": "audio/nasal-in.m4a",
+      "voice": "B",
+      "speed": "normal",
+      "durationMs": 500
+    },
+    {
+      "id": "nasal-on",
+      "file": "audio/nasal-on.m4a",
+      "voice": "B",
+      "speed": "normal",
+      "durationMs": 500
+    },
+    {
+      "id": "nasal-un",
+      "file": "audio/nasal-un.m4a",
+      "voice": "B",
+      "speed": "normal",
+      "durationMs": 500
+    }
+  ],
+  "illustrations": [
+    {
+      "id": "ill-hwe",
+      "svg": "<svg viewBox=\"0 0 100 100\" xmlns=\"http://www.w3.org/2000/svg\"><polygon points=\"96,50 81.9,58.5 89.8,73 73.3,73.3 73,89.8 58.5,81.9 50,96 41.5,81.9 27,89.8 26.7,73.3 10.2,73 18.1,58.5 4,50 18.1,41.5 10.2,27 26.7,26.7 27,10.2 41.5,18.1 50,4 58.5,18.1 73,10.2 73.3,26.7 89.8,27 81.9,41.5\" fill=\"#F2B33D\"/><polygon points=\"96,50 81.9,58.5 89.8,73 73.3,73.3 73,89.8 58.5,81.9 50,96 41.5,81.9 27,89.8 26.7,73.3 10.2,73 18.1,58.5 4,50 18.1,41.5 10.2,27 26.7,26.7 27,10.2 41.5,18.1 50,4 58.5,18.1 73,10.2 73.3,26.7 89.8,27 81.9,41.5\" fill=\"#E0583A\" transform=\"rotate(15 50 50) translate(50 50) scale(0.74) translate(-50 -50)\"/><circle cx=\"50\" cy=\"50\" r=\"22\" fill=\"#F2B33D\"/><circle cx=\"50\" cy=\"50\" r=\"17\" fill=\"none\" stroke=\"#C98A12\" stroke-width=\"1.6\" stroke-dasharray=\"3 3\"/><circle cx=\"50\" cy=\"50\" r=\"8\" fill=\"#FDF1D8\"/></svg>"
+    },
+    {
+      "id": "ill-sin",
+      "svg": "<svg viewBox=\"0 0 100 100\" xmlns=\"http://www.w3.org/2000/svg\"><path d=\"M50 4C50 4 35 25 35 35A15 15 0 0 0 65 35C65 25 50 4 50 4Z\" fill=\"#2F5BB7\"/><ellipse cx=\"44\" cy=\"34\" rx=\"3\" ry=\"6\" fill=\"#BFD3F5\" transform=\"rotate(-15 44 34)\"/><circle cx=\"27\" cy=\"48\" r=\"3\" fill=\"#5B82D6\"/><circle cx=\"74\" cy=\"46\" r=\"2.5\" fill=\"#5B82D6\"/><path d=\"M12 62Q50 110 88 62Z\" fill=\"#E0583A\"/><path d=\"M18 72Q50 98 82 72\" fill=\"none\" stroke=\"#F2B33D\" stroke-width=\"4\"/><path d=\"M26 80Q50 96 74 80\" fill=\"none\" stroke=\"#FDF1D8\" stroke-width=\"1.6\" stroke-dasharray=\"3 3\"/><ellipse cx=\"50\" cy=\"62\" rx=\"38\" ry=\"8\" fill=\"#B83F24\"/><ellipse cx=\"50\" cy=\"62\" rx=\"32\" ry=\"5.5\" fill=\"#5B82D6\"/><path d=\"M38 61q6 -3 12 0t12 0\" fill=\"none\" stroke=\"#BFD3F5\" stroke-width=\"2\" stroke-linecap=\"round\"/></svg>"
+    },
+    {
+      "id": "ill-xwe",
+      "svg": "<svg viewBox=\"0 0 100 100\" xmlns=\"http://www.w3.org/2000/svg\"><ellipse cx=\"50\" cy=\"91\" rx=\"46\" ry=\"5\" fill=\"#EFEAE2\"/><path d=\"M86 90C85 76 87 66 84 54\" fill=\"none\" stroke=\"#9A6408\" stroke-width=\"4\" stroke-linecap=\"round\"/><path d=\"M84 54C76 46 68 48 64 52C72 52 78 54 84 56Z\" fill=\"#4E9A5B\"/><path d=\"M84 54C88 44 95 42 99 46C93 48 89 52 86 56Z\" fill=\"#3E7F4A\"/><path d=\"M84 54C82 44 76 38 70 38C76 44 80 50 82 56Z\" fill=\"#3E7F4A\"/><rect x=\"14\" y=\"50\" width=\"48\" height=\"40\" fill=\"#E0583A\"/><path d=\"M14 70h48\" stroke=\"#B83F24\" stroke-width=\"2\" stroke-dasharray=\"3 3\"/><polygon points=\"4,56 38,16 72,56\" fill=\"#F2B33D\"/><path d=\"M20 44L16 56M31 31L27 56M45 31L49 56M56 44L60 56\" stroke=\"#C98A12\" stroke-width=\"3\"/><rect x=\"31\" y=\"64\" width=\"14\" height=\"26\" rx=\"7\" fill=\"#211D18\"/><circle cx=\"22\" cy=\"64\" r=\"4\" fill=\"#FDF1D8\"/></svg>"
+    },
+    {
+      "id": "ill-kwe",
+      "svg": "<svg viewBox=\"0 0 100 100\" xmlns=\"http://www.w3.org/2000/svg\"><path d=\"M8 30Q50 70 92 30\" fill=\"none\" stroke=\"#9A6408\" stroke-width=\"3\" stroke-linecap=\"round\"/><circle cx=\"8\" cy=\"30\" r=\"4\" fill=\"#E0583A\"/><circle cx=\"92\" cy=\"30\" r=\"4\" fill=\"#E0583A\"/><g transform=\"translate(21 54) rotate(14)\"><ellipse rx=\"9\" ry=\"12.5\" fill=\"#FDF1D8\" stroke=\"#C98A12\" stroke-width=\"2\"/><path d=\"M0 -8V8M-3.5 -5H0M-3.5 0H0M-3.5 5H0M0 -2.5H3.5M0 2.5H3.5\" stroke=\"#211D18\" stroke-width=\"1.6\" fill=\"none\"/></g><g transform=\"translate(40 62) rotate(4)\"><ellipse rx=\"9\" ry=\"12.5\" fill=\"#F2B33D\" stroke=\"#C98A12\" stroke-width=\"2\"/><path d=\"M0 -8V8M-3.5 -5H0M-3.5 0H0M-3.5 5H0M0 -2.5H3.5M0 2.5H3.5\" stroke=\"#211D18\" stroke-width=\"1.6\" fill=\"none\"/></g><g transform=\"translate(60 62) rotate(-4)\"><ellipse rx=\"9\" ry=\"12.5\" fill=\"#FDF1D8\" stroke=\"#C98A12\" stroke-width=\"2\"/><path d=\"M0 -8V8M-3.5 -5H0M-3.5 0H0M-3.5 5H0M0 -2.5H3.5M0 2.5H3.5\" stroke=\"#211D18\" stroke-width=\"1.6\" fill=\"none\"/></g><g transform=\"translate(79 54) rotate(-14)\"><ellipse rx=\"9\" ry=\"12.5\" fill=\"#F2B33D\" stroke=\"#C98A12\" stroke-width=\"2\"/><path d=\"M0 -8V8M-3.5 -5H0M-3.5 0H0M-3.5 5H0M0 -2.5H3.5M0 2.5H3.5\" stroke=\"#211D18\" stroke-width=\"1.6\" fill=\"none\"/></g><g transform=\"translate(50 86)\"><ellipse rx=\"8\" ry=\"10\" fill=\"#FDF1D8\" stroke=\"#C98A12\" stroke-width=\"2\"/><path d=\"M0 -6V6\" stroke=\"#211D18\" stroke-width=\"1.6\"/></g></svg>"
+    }
+  ],
+  "sounds": {
+    "letters": [
+      { "symbol": "ɖ", "exampleFon": "ɖokpó", "exampleFr": "un", "audio": "n1-n" },
+      { "symbol": "ɛ", "exampleFon": "ɛnɛ", "exampleFr": "quatre", "audio": "n4-n" },
+      { "symbol": "ɔ", "exampleFon": "atɔn", "exampleFr": "trois", "audio": "n3-n" },
+      { "symbol": "gb", "exampleFon": "gbè", "exampleFr": "langue, voix", "audio": "gbe-n" },
+      { "symbol": "kp", "exampleFon": "kpɔn", "exampleFr": "regarder", "audio": "kpon-n" },
+      { "symbol": "ny", "exampleFon": "nyí", "exampleFr": "être, s’appeler", "audio": "nyi-n" },
+      { "symbol": "x", "exampleFon": "xwé", "exampleFr": "maison", "audio": "xwe-n" },
+      { "symbol": "hw", "exampleFon": "hwè", "exampleFr": "soleil", "audio": "hwe-n" }
+    ],
+    "lettersTip": [
+      { "fon": "gb" },
+      { "fr": " et " },
+      { "fon": "kp" },
+      {
+        "fr": " se prononcent d’un seul coup : les lèvres et l’arrière de la langue se ferment en même temps."
+      }
+    ],
+    "nasals": [
+      { "symbol": "an", "audio": "nasal-an" },
+      { "symbol": "ɛn", "audio": "nasal-en" },
+      { "symbol": "in", "audio": "nasal-in" },
+      { "symbol": "ɔn", "audio": "nasal-on" },
+      { "symbol": "un", "audio": "nasal-un" }
+    ],
+    "nasalExamples": [
+      { "fon": "sin", "fr": "eau" },
+      { "fon": "fɔn", "fr": "se réveiller" },
+      { "fon": "un", "fr": "je" }
+    ],
+    "tones": [
+      { "mark": "á", "nameFr": "haut", "contour": "high" },
+      { "mark": "à", "nameFr": "bas", "contour": "low" },
+      { "mark": "ǎ", "nameFr": "montant", "contour": "rising" },
+      { "mark": "â", "nameFr": "descendant", "contour": "falling" }
+    ],
+    "funFact": [
+      { "fon": "sɔ" },
+      { "fr": " veut dire « hier » comme « demain » : c’est le reste de la phrase qui tranche." }
+    ]
+  }
+}

@@ -1,0 +1,36 @@
+# Dépendances
+node_modules/
+
+# Expo / React Native
+.expo/
+dist/
+web-build/
+expo-env.d.ts
+apps/mobile/ios/
+apps/mobile/android/
+*.jks
+*.p8
+*.p12
+*.key
+*.mobileprovision
+*.orig.*
+
+# Tests et couverture
+coverage/
+*.tsbuildinfo
+
+# Secrets : jamais dans le dépôt
+.env
+.env.*
+!.env.example
+
+# Audio : les masters WAV restent hors du dépôt (stockage dédié)
+content/masters/
+
+# Divers
+.DS_Store
+npm-debug.*
+*.log
+
+# Démo web en un fichier (npm run demo:web)
+dist-demo/
