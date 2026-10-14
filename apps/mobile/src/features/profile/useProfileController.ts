@@ -1,7 +1,8 @@
 import { DAILY_GOALS, goalMinutes, type DailyGoalId } from '@gbe/domain';
+import Constants from 'expo-constants';
 import { router } from 'expo-router';
 import { useCallback, useState } from 'react';
-import { Linking } from 'react-native';
+import { Linking, Platform } from 'react-native';
 
 import { useProgressStore, useProgressView } from '../../core/progress/progressStore';
 import { reminderNotifier } from '../../core/reminders/notifier';
@@ -11,6 +12,7 @@ import { useEnsurePseudo } from '../../core/progress/useEnsurePseudo';
 import { appApiClient } from '../../core/sync/backgroundSync';
 import { useServer } from '../../core/sync/serverContext';
 import { useNow } from '../../core/useNow';
+import { contactEmail, describeSystem, isBeta, problemReportUrl } from './problemReport';
 
 /**
  * Adresse de la politique de confidentialité (`EXPO_PUBLIC_PRIVACY_URL`).
@@ -44,6 +46,8 @@ export function useProfileController() {
   );
 
   const privacy = privacyUrl();
+  const email = contactEmail();
+  const appVersion = Constants.expoConfig?.version ?? '0.0.0';
   return {
     pseudo: settings.pseudo,
     stats: {
@@ -65,6 +69,22 @@ export function useProfileController() {
     backedUp: appApiClient() !== null,
     openPrivacy: privacy === null ? null : () => void Linking.openURL(privacy),
     askDelete: () => router.push('/supprimer-compte'),
+    /** « Signaler un problème » : e-mail pré-rempli, seulement si une adresse est configurée. */
+    report:
+      email === null
+        ? null
+        : () => {
+            const url = problemReportUrl({
+              email,
+              appVersion,
+              system: describeSystem(Platform.OS, Platform.Version),
+            });
+            // Sans appli de messagerie, le lien ne s'ouvre pas : rien d'autre à faire.
+            Linking.openURL(url).catch(() => undefined);
+          },
+    version: t(isBeta(appVersion) ? 'profile.versionBeta' : 'profile.version', {
+      version: appVersion,
+    }),
     /** Rappel quotidien : seulement là où les notifications existent (pas sur le web). */
     reminder: reminderNotifier.supported
       ? {

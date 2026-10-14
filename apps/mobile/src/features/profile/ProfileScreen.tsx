@@ -35,6 +35,7 @@ function StatTile({
 function AccountRow({
   icon,
   label,
+  hint,
   onPress,
   danger = false,
   divider = false,
@@ -42,6 +43,8 @@ function AccountRow({
 }: {
   icon: IconName;
   label: string;
+  /** Précision sous le libellé (lue avec lui). */
+  hint?: string;
   onPress: () => void;
   danger?: boolean;
   /** Trait de séparation au-dessus (toutes les lignes sauf la première). */
@@ -52,18 +55,21 @@ function AccountRow({
   return (
     <Pressable
       accessibilityRole={danger ? 'button' : 'link'}
-      accessibilityLabel={label}
+      accessibilityLabel={hint === undefined ? label : `${label}. ${hint}`}
       onPress={onPress}
       style={[styles.row, divider ? styles.divider : null]}
       testID={testID}>
       <Icon name={icon} size={22} color={danger ? colors.redText : colors.inkMuted} />
-      <UiText
-        size={16}
-        weight={danger ? 'extrabold' : 'bold'}
-        color={color}
-        style={styles.rowLabel}>
-        {label}
-      </UiText>
+      <View style={styles.rowLabel}>
+        <UiText size={16} weight={danger ? 'extrabold' : 'bold'} color={color}>
+          {label}
+        </UiText>
+        {hint === undefined ? null : (
+          <UiText size={13} weight="semibold" color={colors.inkMuted}>
+            {hint}
+          </UiText>
+        )}
+      </View>
       <Icon name="chevronRight" size={20} color={danger ? colors.redText : colors.inkSoft} />
     </Pressable>
   );
@@ -205,15 +211,28 @@ export function ProfileScreen() {
                 divider={c.openRecoveryCode !== null}
               />
             )}
+            {c.report === null ? null : (
+              <AccountRow
+                icon="message"
+                label={t('profile.report')}
+                hint={t('profile.reportHint')}
+                onPress={c.report}
+                divider={c.openPrivacy !== null || c.openRecoveryCode !== null}
+                testID="profile-report"
+              />
+            )}
             <AccountRow
               icon="trash"
               label={t('profile.delete')}
               onPress={c.askDelete}
               danger
-              divider={c.openPrivacy !== null || c.openRecoveryCode !== null}
+              divider={c.openPrivacy !== null || c.openRecoveryCode !== null || c.report !== null}
               testID="profile-delete"
             />
           </View>
+          <UiText size={13} color={colors.inkMuted} style={styles.version} testID="profile-version">
+            {c.version}
+          </UiText>
         </View>
       </ScrollView>
     </SafeAreaView>
@@ -267,6 +286,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 14,
   },
   divider: { borderTopWidth: 2, borderTopColor: colors.borderSoft },
-  rowLabel: { flex: 1 },
+  rowLabel: { flex: 1, paddingVertical: 6 },
+  version: { textAlign: 'center', marginTop: 6 },
   reminder: { borderRadius: 16, borderWidth: 2, borderColor: colors.border },
 });

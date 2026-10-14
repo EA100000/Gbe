@@ -70,6 +70,8 @@ Dans `apps/mobile/.env` (ou dans les variables d'environnement du projet sur exp
 EXPO_PUBLIC_API_URL=https://api.<domaine>
 EXPO_PUBLIC_PACKS_URL=https://packs.<domaine>
 EXPO_PUBLIC_PRIVACY_URL=https://api.<domaine>/confidentialite
+# « Signaler un problème » dans le Profil (la même adresse que CONTACT_EMAIL de l'API, en général)
+EXPO_PUBLIC_CONTACT_EMAIL=<adresse-de-contact>
 # Facultatif, rapports de plantage : voir docs/adr/0008
 # EXPO_PUBLIC_SENTRY_DSN=
 ```
