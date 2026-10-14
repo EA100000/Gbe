@@ -103,6 +103,11 @@ npm run packs:upload                          # envoie sur S3 (variables S3_* du
 Pour modifier un pack déjà publié : changer ses fichiers, **augmenter `version`** dans `pack.json`,
 puis `content:build`, `packs:publish` et `packs:upload`. L'envoi refuse de réécrire une version en ligne.
 
+Côté appli, `EXPO_PUBLIC_PACKS_URL` (dans `apps/mobile/.env`) désigne le dossier du catalogue. Au
+démarrage et à chaque retour dans l'appli, elle télécharge les versions plus récentes, vérifie chaque
+empreinte, puis les utilise au prochain passage sur le chemin des leçons (jamais en pleine leçon).
+Sans cette variable, ou sur le web, l'appli garde le pack embarqué.
+
 ## Tests
 
 | Où                        | Quoi                                                 | Nombre |

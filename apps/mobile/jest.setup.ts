@@ -12,6 +12,16 @@ jest.mock('expo-crypto', () => ({
     mockUuidCounter += 1;
     return `test-uuid-${mockUuidCounter}`;
   },
+  CryptoDigestAlgorithm: { SHA256: 'SHA-256' },
+  // Empreintes réelles, calculées par Node.
+  digest: async (_algorithm: string, data: Uint8Array) => {
+    const hash = jest
+      .requireActual<typeof import('node:crypto')>('node:crypto')
+      .createHash('sha256')
+      .update(data)
+      .digest();
+    return hash.buffer.slice(hash.byteOffset, hash.byteOffset + hash.byteLength);
+  },
 }));
 
 jest.mock('expo-router', () => ({
@@ -24,6 +34,9 @@ jest.mock('expo-router', () => ({
     canGoBack: jest.fn(() => true),
   },
   useLocalSearchParams: jest.fn(() => ({})),
+  // Écran toujours « au premier plan » dans les tests.
+  useFocusEffect: (effect: () => void | (() => void)) =>
+    jest.requireActual<typeof import('react')>('react').useEffect(effect, [effect]),
   Redirect: () => null,
 }));
 

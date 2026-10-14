@@ -92,6 +92,9 @@ npm run test:coverage            # idem avec couverture (domain ≥ 90 %)
 npm run content:validate         # contrôle bloquant des packs (schéma, NFC, audios, empreintes)
 npm run content:build            # réécrit les manifestes et la liste des packs embarqués
 npm run audio:placeholders       # bips de remplacement pour les audios manquants (ffmpeg)
+npm run packs:publish            # dist-packs/ : packs validés (+ --allow-unvalidated pour la bêta)
+npm run packs:serve              # sert dist-packs/ en local (port 8090)
+npm run packs:upload             # envoie dist-packs/ sur le stockage S3 (variables S3_*)
 
 npm run api:dev                  # API en local (lit le .env racine ; base : docker compose up -d postgres)
 npm run api:build                # API en un fichier : apps/api/dist/main.js
@@ -105,7 +108,8 @@ cd apps/mobile && npx expo export --platform android     # vérifier le bundle A
 
 Tests de l'API : exporter `TEST_DATABASE_URL` (base jetable, vidée à chaque test). Sans elle, les tests
 sur base sont sautés en local et la CI échoue. Synchronisation de l'appli : `EXPO_PUBLIC_API_URL` dans
-`apps/mobile/.env` (vide = appli 100 % hors-ligne).
+`apps/mobile/.env` (vide = appli 100 % hors-ligne). Mise à jour des packs : `EXPO_PUBLIC_PACKS_URL`
+(vide = pack embarqué seulement). Une version publiée ne change jamais : augmenter `version` (ADR 0007).
 
 Après toute modification d'un `pack.json` : `npm run content:build`, puis `npm run content:validate`.
 Les modules natifs utilisés (SQLite, audio, SVG) font partie d'Expo Go : on peut tester avec Expo Go

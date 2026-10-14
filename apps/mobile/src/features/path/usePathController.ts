@@ -1,8 +1,8 @@
 import { buildUnitPath, CHEST_CAURIS, chestsToOpen, type PathLessonNode } from '@gbe/domain';
-import { router } from 'expo-router';
+import { router, useFocusEffect } from 'expo-router';
 import { useCallback, useEffect, useMemo } from 'react';
 
-import { useContent } from '../../core/content/contentStore';
+import { useContent, useContentStore } from '../../core/content/contentStore';
 import { chestOpenedEvent } from '../../core/progress/eventFactory';
 import { useProgressStore, useProgressView } from '../../core/progress/progressStore';
 import { useNow } from '../../core/useNow';
@@ -15,6 +15,17 @@ export function usePathController() {
   const now = useNow();
   const { progress, hearts, streak } = useProgressView(now);
   const unit = content.pack.unit;
+
+  // Une nouvelle version de pack téléchargée s'applique ici : sur le chemin, aucune leçon n'est en cours.
+  useFocusEffect(
+    useCallback(() => {
+      const store = useContentStore;
+      store.getState().applyPending();
+      return store.subscribe((state) => {
+        if (state.pending !== null) state.applyPending();
+      });
+    }, []),
+  );
 
   const nodes = useMemo(
     () => buildUnitPath(unit, progress.completedLessons),
