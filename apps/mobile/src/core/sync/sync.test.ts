@@ -61,6 +61,7 @@ function fakeApi(overrides: Partial<ApiClient> = {}) {
       received.push(...events);
       return { accepted: events.length, duplicates: 0 };
     }),
+    deleteAccount: jest.fn(async () => undefined),
     ...overrides,
   };
   return { api, received };
@@ -271,6 +272,19 @@ describe('client de l’API', () => {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', Authorization: 'Bearer jeton' },
       body: JSON.stringify({ events }),
+    });
+  });
+
+  it('supprime le compte sans attendre de corps de réponse', async () => {
+    const fetchImpl: FetchLike = jest.fn(async () => new Response(null, { status: 204 }));
+    const client = createApiClient('https://api', fetchImpl);
+
+    await client.deleteAccount('jeton');
+
+    expect(fetchImpl).toHaveBeenCalledWith('https://api/v1/account', {
+      method: 'DELETE',
+      headers: { 'Content-Type': 'application/json', Authorization: 'Bearer jeton' },
+      body: undefined,
     });
   });
 

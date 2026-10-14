@@ -3,30 +3,34 @@ import { parseCredentials, type CredentialStore, type GuestCredentials } from '.
 
 export type { CredentialStore, GuestCredentials };
 
-const KEY = 'gbe.v1.guest';
 const storage = browserStorage();
 
 /** Web : stockage du navigateur (pas de coffre-fort chiffré disponible). */
-export const credentialStore: CredentialStore = {
-  async load() {
-    try {
-      return parseCredentials(storage.getItem(KEY));
-    } catch {
-      return null;
-    }
-  },
-  async save(credentials) {
-    try {
-      storage.setItem(KEY, JSON.stringify(credentials));
-    } catch (error) {
-      console.warn('Enregistrement du compte impossible', error);
-    }
-  },
-  async clear() {
-    try {
-      storage.setItem(KEY, '');
-    } catch {
-      // Rien à effacer.
-    }
-  },
-};
+function createCredentialStore(key: string): CredentialStore {
+  return {
+    async load() {
+      try {
+        return parseCredentials(storage.getItem(key));
+      } catch {
+        return null;
+      }
+    },
+    async save(credentials) {
+      try {
+        storage.setItem(key, JSON.stringify(credentials));
+      } catch (error) {
+        console.warn('Enregistrement du compte impossible', error);
+      }
+    },
+    async clear() {
+      try {
+        storage.setItem(key, '');
+      } catch {
+        // Rien à effacer.
+      }
+    },
+  };
+}
+
+export const credentialStore = createCredentialStore('gbe.v1.guest');
+export const pendingDeletionStore = createCredentialStore('gbe.v1.pendingDeletion');

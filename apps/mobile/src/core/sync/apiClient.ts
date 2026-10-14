@@ -41,17 +41,18 @@ export interface ApiClient {
   createGuest(): Promise<GuestAccount>;
   token(userId: string, secret: string): Promise<AccessToken>;
   sendEvents(accessToken: string, events: readonly GameEvent[]): Promise<SyncResult>;
+  /** Supprime le compte et tout son journal sur le serveur. */
+  deleteAccount(accessToken: string): Promise<void>;
 }
 
 /** Client HTTP de l'API Gbè. Toute réponse est validée par Zod avant usage. */
 export function createApiClient(baseUrl: string, fetchImpl: FetchLike = fetch): ApiClient {
   const root = baseUrl.replace(/\/+$/, '');
 
-  async function call<S extends z.ZodType>(
+  async function send(
     path: string,
-    schema: S,
     init: { method: string; body?: unknown; token?: string },
-  ): Promise<z.infer<S>> {
+  ): Promise<Response> {
     let response: Response;
     try {
       response = await fetchImpl(`${root}/v1${path}`, {
@@ -66,6 +67,15 @@ export function createApiClient(baseUrl: string, fetchImpl: FetchLike = fetch): 
       throw new OfflineError(error);
     }
     if (!response.ok) throw new ApiError(response.status, `Erreur ${response.status} sur ${path}`);
+    return response;
+  }
+
+  async function call<S extends z.ZodType>(
+    path: string,
+    schema: S,
+    init: { method: string; body?: unknown; token?: string },
+  ): Promise<z.infer<S>> {
+    const response = await send(path, init);
     let json: unknown;
     try {
       json = await response.json();
@@ -87,5 +97,8 @@ export function createApiClient(baseUrl: string, fetchImpl: FetchLike = fetch): 
         body: { events },
         token: accessToken,
       }),
+    deleteAccount: async (accessToken) => {
+      await send('/account', { method: 'DELETE', token: accessToken });
+    },
   };
 }

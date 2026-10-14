@@ -8,6 +8,8 @@ import { bundledPacks } from '../../content/bundled-packs.generated';
 import { setupStores } from '../../test-utils/fixtures';
 import { bundledPackJson } from '../../test-utils/packFixtures';
 import { LessonEndScreen } from '../lesson/LessonEndScreen';
+import { DeleteAccountScreen } from '../profile/DeleteAccountScreen';
+import { ProfileScreen } from '../profile/ProfileScreen';
 import { WelcomeScreen } from '../onboarding/WelcomeScreen';
 import { PathScreen } from '../path/PathScreen';
 import { SoundsScreen } from '../sounds/SoundsScreen';
@@ -38,7 +40,11 @@ describe('Bienvenue', () => {
     await fireEvent.press(screen.getByTestId('goal-serious'));
     await fireEvent.press(screen.getByTestId('welcome-start'));
 
-    expect(useProgressStore.getState().settings).toEqual({ onboarded: true, dailyGoal: 'serious' });
+    expect(useProgressStore.getState().settings).toEqual({
+      onboarded: true,
+      dailyGoal: 'serious',
+      pseudo: expect.stringMatching(/^\S+ \S+$/),
+    });
     expect(router.replace).toHaveBeenCalledWith('/');
   });
 });
@@ -144,5 +150,94 @@ describe('Les sons du fon', () => {
     expect(screen.getByText('Lettres propres au fon')).toBeOnTheScreen();
     expect(screen.getByLabelText('Écouter ɖokpó : un')).toBeOnTheScreen();
     expect(screen.getByLabelText('á : haut')).toBeOnTheScreen();
+  });
+});
+
+describe('Profil', () => {
+  async function onboarded(events = [completed('u01-l01', 'a'), completed('u01-l02', 'b')]) {
+    await setupStores({ events });
+    await useProgressStore.getState().completeOnboarding('regular');
+  }
+
+  it('affiche le pseudo et les progrès de l’apprenant', async () => {
+    // Préparer
+    await onboarded();
+    // Agir
+    await render(<ProfileScreen />);
+    // Vérifier
+    const pseudo = useProgressStore.getState().settings.pseudo ?? 'absent';
+    expect(screen.getByTestId('profile-pseudo')).toHaveTextContent(pseudo);
+    expect(screen.getByLabelText('XP au total : 30')).toBeOnTheScreen();
+    expect(screen.getByLabelText('Leçons terminées : 2')).toBeOnTheScreen();
+    expect(screen.getByLabelText('Série : 1 jour')).toBeOnTheScreen();
+  });
+
+  it('tire un autre pseudo à la demande', async () => {
+    await onboarded();
+    const before = useProgressStore.getState().settings.pseudo;
+    await render(<ProfileScreen />);
+
+    await fireEvent.press(screen.getByTestId('profile-reroll'));
+
+    const after = useProgressStore.getState().settings.pseudo;
+    expect(after).not.toBe(before);
+    expect(screen.getByTestId('profile-pseudo')).toHaveTextContent(after ?? 'absent');
+  });
+
+  it('donne un pseudo à un apprenant arrivé avant les pseudos', async () => {
+    await setupStores();
+    await useProgressStore
+      .getState()
+      .saveSettings({ onboarded: true, dailyGoal: 'regular', pseudo: null });
+
+    await render(<ProfileScreen />);
+
+    expect(await screen.findByTestId('profile-pseudo')).toHaveTextContent(/\S+ \S+/);
+  });
+
+  it('change l’objectif du jour', async () => {
+    await onboarded();
+    await render(<ProfileScreen />);
+
+    await fireEvent.press(screen.getByTestId('profile-goal'));
+    await fireEvent.press(screen.getByTestId('goal-intense'));
+
+    expect(useProgressStore.getState().settings.dailyGoal).toBe('intense');
+    expect(screen.getByLabelText('Objectif : Intense, 20 min / jour. Changer')).toBeOnTheScreen();
+  });
+
+  it('ouvre la confirmation de suppression', async () => {
+    await onboarded();
+    await render(<ProfileScreen />);
+
+    await fireEvent.press(screen.getByTestId('profile-delete'));
+
+    expect(router.push).toHaveBeenCalledWith('/supprimer-compte');
+  });
+});
+
+describe('Suppression du compte', () => {
+  it('efface toute la progression puis revient à l’accueil', async () => {
+    await setupStores({ events: [completed('u01-l01', 'a')] });
+    await useProgressStore.getState().completeOnboarding('serious');
+    await render(<DeleteAccountScreen />);
+
+    await fireEvent.press(screen.getByTestId('delete-confirm'));
+
+    const state = useProgressStore.getState();
+    expect(state.events).toEqual([]);
+    expect(state.settings).toEqual({ onboarded: false, dailyGoal: 'regular', pseudo: null });
+    expect(await state.repositories?.events.all()).toEqual([]);
+    expect(router.dismissTo).toHaveBeenCalledWith('/');
+  });
+
+  it('ne touche à rien quand on garde son compte', async () => {
+    await setupStores({ events: [completed('u01-l01', 'a')] });
+    await render(<DeleteAccountScreen />);
+
+    await fireEvent.press(screen.getByTestId('delete-keep'));
+
+    expect(useProgressStore.getState().events).toHaveLength(1);
+    expect(router.back).toHaveBeenCalled();
   });
 });

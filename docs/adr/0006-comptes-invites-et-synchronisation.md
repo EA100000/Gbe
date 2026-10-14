@@ -32,10 +32,17 @@ progression, préparer le changement de téléphone et mesurer l'usage de la bê
 - Pas de friction à l'arrivée, conforme à la maquette.
 - **Désinstaller l'appli = perdre le lien avec le compte** (le secret disparaît). Retrouver sa
   progression sur un autre téléphone demandera un vrai rattachement (e-mail ou code), à concevoir.
-- **Suppression du compte** : l'API la permet (`DELETE /v1/account`), mais l'appli n'a pas encore
-  d'écran pour la demander. Les règles de Google Play exigent ce chemin (dans l'appli et par une
-  page web) pour toute appli qui crée des comptes : à prévoir en J5, avec un écran à ajouter à la
-  maquette.
+- **Suppression du compte** (exigée par Google Play) : Profil → Supprimer mon compte (écrans 11 et
+  12, ajoutés à la maquette et validés le 14/10/2026). Le serveur est appelé d'abord ; hors-ligne,
+  le téléphone est effacé tout de suite et la suppression serveur est retentée avant chaque
+  synchronisation. Page web publique : `/suppression-du-compte`.
+- **Conservation limitée** : un compte sans connexion depuis 365 jours (`INACTIVE_ACCOUNT_DAYS`) est
+  supprimé avec son journal, chaque jour par l'API. Personne ne peut réclamer un compte invité sans
+  l'appli : c'est la seule façon de ne rien garder indéfiniment.
+- **Pseudo** : tiré au hasard dans des listes de mots (`packages/domain/src/pseudo.ts`), jamais
+  saisi : rien à modérer. « Changer de pseudo » refait un tirage.
+- **Pages publiques** : `/confidentialite` et `/suppression-du-compte`, servies par l'API. Leurs
+  textes engagent l'éditeur : **à faire relire avant la publication**.
 - Formulaire « Sécurité des données » de Google Play : déclarer la progression (activité dans
   l'appli) liée à un identifiant pseudonyme, chiffrée en transit.
 - Cas limite connu : si Android restaure la base de l'appli depuis une sauvegarde sans le secret,

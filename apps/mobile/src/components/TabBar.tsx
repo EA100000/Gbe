@@ -7,6 +7,7 @@ import { t } from '../core/i18n';
 const TABS: Record<string, { icon: IconName; label: string }> = {
   index: { icon: 'tabPath', label: t('tabs.learn') },
   sons: { icon: 'tabSounds', label: t('tabs.sounds') },
+  profil: { icon: 'tabProfile', label: t('tabs.profile') },
 };
 
 /** Barre de navigation du bas, comme dans la maquette (onglet actif encadré de jaune). */

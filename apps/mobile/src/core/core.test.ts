@@ -52,13 +52,33 @@ describe('dépôt des événements', () => {
 describe('dépôt des réglages', () => {
   it('rend les réglages par défaut au premier lancement', async () => {
     const repo = createSettingsRepository(memoryDatabase());
-    expect(await repo.load()).toEqual({ onboarded: false, dailyGoal: 'regular' });
+    expect(await repo.load()).toEqual({ onboarded: false, dailyGoal: 'regular', pseudo: null });
   });
 
-  it('relit l’objectif enregistré', async () => {
+  it('relit l’objectif et le pseudo enregistrés', async () => {
     const repo = createSettingsRepository(memoryDatabase());
-    await repo.save({ onboarded: true, dailyGoal: 'intense' });
-    expect(await repo.load()).toEqual({ onboarded: true, dailyGoal: 'intense' });
+    await repo.save({ onboarded: true, dailyGoal: 'intense', pseudo: 'Lion sage' });
+    expect(await repo.load()).toEqual({
+      onboarded: true,
+      dailyGoal: 'intense',
+      pseudo: 'Lion sage',
+    });
+  });
+
+  it('ignore un pseudo stocké qui ne vient pas des listes', async () => {
+    const db = memoryDatabase();
+    const repo = createSettingsRepository(db);
+    await db.runAsync('INSERT INTO settings (key, value) VALUES (?, ?)', 'pseudo', 'Insulte');
+    expect((await repo.load()).pseudo).toBeNull();
+  });
+
+  it('revient aux réglages du premier lancement', async () => {
+    const repo = createSettingsRepository(memoryDatabase());
+    await repo.save({ onboarded: true, dailyGoal: 'intense', pseudo: 'Lion sage' });
+    await repo.save({ onboarded: true, dailyGoal: 'intense', pseudo: null });
+    expect((await repo.load()).pseudo).toBeNull();
+    await repo.clear();
+    expect(await repo.load()).toEqual({ onboarded: false, dailyGoal: 'regular', pseudo: null });
   });
 });
 

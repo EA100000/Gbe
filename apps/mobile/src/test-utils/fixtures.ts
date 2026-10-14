@@ -50,6 +50,12 @@ export function memoryDatabase(): Database & {
       } else if (source.startsWith('INSERT INTO settings')) {
         const [key, value] = params as [string, string];
         settings.set(key, value);
+      } else if (source === 'DELETE FROM events') {
+        rows.splice(0, rows.length);
+      } else if (source === 'DELETE FROM settings') {
+        settings.clear();
+      } else if (source.startsWith('DELETE FROM settings WHERE key')) {
+        settings.delete(String(params[0]));
       }
       return undefined;
     },

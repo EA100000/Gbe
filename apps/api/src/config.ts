@@ -19,6 +19,10 @@ const ConfigSchema = z.object({
     .enum(['true', 'false'])
     .default('true')
     .transform((v) => v === 'true'),
+  /** Adresse de contact affichée sur les pages Confidentialité et Suppression du compte. */
+  CONTACT_EMAIL: z.union([z.literal(''), z.email()]).default(''),
+  /** Un compte sans connexion depuis ce nombre de jours est supprimé avec son journal. */
+  INACTIVE_ACCOUNT_DAYS: z.coerce.number().int().positive().default(365),
 });
 
 export interface AppConfig {
@@ -30,6 +34,10 @@ export interface AppConfig {
   authRateLimitPerMinute: number;
   /** Durée de validité d'un jeton d'accès, en secondes. */
   accessTokenTtlSeconds: number;
+  contactEmail: string | null;
+  inactiveAccountDays: number;
+  /** Intervalle du ménage des comptes inactifs ; 0 = jamais automatiquement (tests). */
+  retentionIntervalMs: number;
 }
 
 export function loadConfig(env: NodeJS.ProcessEnv): AppConfig {
@@ -49,5 +57,8 @@ export function loadConfig(env: NodeJS.ProcessEnv): AppConfig {
     runMigrations: c.RUN_MIGRATIONS,
     authRateLimitPerMinute: c.AUTH_RATE_LIMIT_PER_MINUTE,
     accessTokenTtlSeconds: 3600,
+    contactEmail: c.CONTACT_EMAIL === '' ? null : c.CONTACT_EMAIL,
+    inactiveAccountDays: c.INACTIVE_ACCOUNT_DAYS,
+    retentionIntervalMs: 24 * 60 * 60_000,
   };
 }

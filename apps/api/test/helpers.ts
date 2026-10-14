@@ -30,6 +30,9 @@ export function testConfig(overrides: Partial<AppConfig> = {}): AppConfig {
     runMigrations: true,
     authRateLimitPerMinute: 1000,
     accessTokenTtlSeconds: 3600,
+    contactEmail: 'contact@gbe.test',
+    inactiveAccountDays: 365,
+    retentionIntervalMs: 0,
     ...overrides,
   };
 }

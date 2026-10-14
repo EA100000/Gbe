@@ -57,6 +57,8 @@ services:
       JWT_SECRET: ${JWT_SECRET:?Définis JWT_SECRET dans .env (32 caractères minimum)}
       CORS_ORIGINS: ${CORS_ORIGINS:-}
       AUTH_RATE_LIMIT_PER_MINUTE: ${AUTH_RATE_LIMIT_PER_MINUTE:-10}
+      CONTACT_EMAIL: ${CONTACT_EMAIL:-}
+      INACTIVE_ACCOUNT_DAYS: ${INACTIVE_ACCOUNT_DAYS:-365}
     ports:
       - '3000:3000'
 
