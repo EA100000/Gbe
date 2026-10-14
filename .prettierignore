@@ -11,3 +11,4 @@ dist-demo
 
 # Généré par drizzle-kit
 database/migrations/meta/
+dist-packs/

@@ -21,11 +21,15 @@
     "check": "npm run format:check && npm run lint && npm run typecheck && npm run test && npm run content:validate",
     "content:build": "tsx scripts/build-packs.ts",
     "demo:web": "tsx scripts/build-web-demo.ts",
+    "packs:publish": "tsx scripts/publish-packs.ts",
+    "packs:upload": "tsx --env-file-if-exists=.env scripts/upload-packs.ts",
+    "packs:serve": "tsx scripts/serve-packs.ts",
     "api:dev": "npm run dev --workspace apps/api",
     "api:build": "npm run build --workspace apps/api",
     "db:migrate": "npm run db:migrate --workspace apps/api"
   },
   "devDependencies": {
+    "@aws-sdk/client-s3": "^3.1151.0",
     "@babel/core": "^7.26.0",
     "@babel/preset-env": "^7.26.0",
     "@babel/preset-typescript": "^7.26.0",

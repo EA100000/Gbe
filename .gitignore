@@ -34,3 +34,6 @@ npm-debug.*
 
 # Démo web en un fichier (npm run demo:web)
 dist-demo/
+
+# Packs prêts à publier (npm run packs:publish)
+dist-packs/

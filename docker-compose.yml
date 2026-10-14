@@ -31,6 +31,20 @@ services:
     volumes:
       - minio-data:/data
 
+  # Crée le seau des packs, lisible par tous (comme un CDN) ; ne tourne qu'une fois.
+  minio-init:
+    image: minio/mc:latest
+    depends_on:
+      - minio
+    environment:
+      MINIO_ROOT_USER: ${MINIO_ROOT_USER:-gbe}
+      MINIO_ROOT_PASSWORD: ${MINIO_ROOT_PASSWORD}
+    entrypoint: >
+      /bin/sh -c "
+      until mc alias set local http://minio:9000 $$MINIO_ROOT_USER $$MINIO_ROOT_PASSWORD; do sleep 1; done;
+      mc mb --ignore-existing local/gbe-packs;
+      mc anonymous set download local/gbe-packs"
+
   api:
     build:
       context: .
