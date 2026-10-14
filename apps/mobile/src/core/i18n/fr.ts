@@ -38,6 +38,8 @@ export const fr = {
   'path.hearts': '{n} vies',
   'path.unit': 'Unité {n} · {title}',
   'path.unitGuide': 'Guide de l’unité',
+  // Provisoire : l'unité verrouillée n'est pas dessinée dans la maquette (une seule unité).
+  'path.unitLocked': 'Unité {n} · {title}, verrouillée : termine d’abord l’unité {previous}',
   'path.start': 'Commencer',
   'path.lesson.done': 'Leçon {n}, terminée : la refaire',
   'path.lesson.current': 'Leçon {n} : commencer',

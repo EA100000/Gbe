@@ -34,8 +34,13 @@ export const CHEST_CAURIS = 20;
 
 export const chestIdFor = (unitId: string): string => `${unitId}-calebasse`;
 
-export function buildUnitPath(unit: PathUnit, completed: ReadonlySet<string>): PathNode[] {
-  let currentFound = false;
+export function buildUnitPath(
+  unit: PathUnit,
+  completed: ReadonlySet<string>,
+  options: { locked?: boolean } = {},
+): PathNode[] {
+  // Une unité verrouillée n'a aucune leçon « en cours » : tout attend la fin de la précédente.
+  let currentFound = options.locked === true;
   const nodes: PathNode[] = unit.lessons.map((lesson, index) => {
     let status: LessonNodeStatus = 'locked';
     if (completed.has(lesson.id)) status = 'done';
@@ -50,10 +55,39 @@ export function buildUnitPath(unit: PathUnit, completed: ReadonlySet<string>): P
       status,
     };
   });
-  const unitDone = unit.lessons.every((l) => completed.has(l.id));
+  const unitDone = isUnitDone(unit, completed);
   nodes.push({ kind: 'chest', id: chestIdFor(unit.id), open: unitDone });
   nodes.push({ kind: 'trophy', id: `${unit.id}-trophee`, open: unitDone });
   return nodes;
+}
+
+/** Toutes les leçons de l'unité sont terminées. */
+export function isUnitDone(unit: PathUnit, completed: ReadonlySet<string>): boolean {
+  return unit.lessons.every((l) => completed.has(l.id));
+}
+
+export interface CourseSection {
+  unitId: string;
+  /** Vrai tant que l'unité précédente n'est pas terminée. */
+  locked: boolean;
+  nodes: PathNode[];
+}
+
+/**
+ * Chemin complet du cours : les unités à la suite, dans l'ordre reçu.
+ * Une unité se débloque quand toutes les leçons de la précédente sont terminées
+ * (règle provisoire, voir docs/adr/0010). Une leçon déjà terminée reste toujours rejouable.
+ */
+export function buildCoursePath(
+  units: readonly PathUnit[],
+  completed: ReadonlySet<string>,
+): CourseSection[] {
+  let previousDone = true;
+  return units.map((unit) => {
+    const locked = !previousDone;
+    previousDone = isUnitDone(unit, completed);
+    return { unitId: unit.id, locked, nodes: buildUnitPath(unit, completed, { locked }) };
+  });
 }
 
 export function isLessonPlayable(nodes: readonly PathNode[], lessonId: string): boolean {

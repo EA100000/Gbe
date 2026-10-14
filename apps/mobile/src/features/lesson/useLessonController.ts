@@ -13,7 +13,7 @@ import { AccessibilityInfo } from 'react-native';
 import { preloadAudio, stopAudio } from '../../core/audio/audioService';
 import { useClipPlayer } from '../../core/audio/useClipPlayer';
 import { lessonAudioIds } from '../../core/content/content';
-import { useContent } from '../../core/content/contentStore';
+import { useContentForLesson } from '../../core/content/contentStore';
 import { t } from '../../core/i18n';
 import { heartLostEvent, lessonCompletedEvent } from '../../core/progress/eventFactory';
 import { useProgressStore, useProgressView } from '../../core/progress/progressStore';
@@ -30,7 +30,7 @@ const isLessonExercise = (e: Exercise): e is LessonExercise =>
  * d'événements, l'audio et la navigation. Les composants ne font qu'afficher.
  */
 export function useLessonController(lessonId: string) {
-  const content = useContent();
+  const content = useContentForLesson(lessonId);
   const lesson = content.lessonsById.get(lessonId);
   const clock = useProgressStore((s) => s.clock);
   const record = useProgressStore((s) => s.record);
@@ -41,7 +41,7 @@ export function useLessonController(lessonId: string) {
   const start = useLessonStore((s) => s.start);
   const dispatch = useLessonStore((s) => s.dispatch);
   const reset = useLessonStore((s) => s.reset);
-  const playClip = useClipPlayer();
+  const playClip = useClipPlayer(content);
 
   const exercises = useMemo(() => lesson?.exercises.filter(isLessonExercise) ?? [], [lesson]);
 
