@@ -1,7 +1,12 @@
 import { browserStorage } from '../db/webStorageRepositories';
-import { parseCredentials, type CredentialStore, type GuestCredentials } from './credentialsShared';
+import {
+  parseCredentials,
+  type CredentialStore,
+  type GuestCredentials,
+  type SecretTextStore,
+} from './credentialsShared';
 
-export type { CredentialStore, GuestCredentials };
+export type { CredentialStore, GuestCredentials, SecretTextStore };
 
 const storage = browserStorage();
 
@@ -34,3 +39,29 @@ function createCredentialStore(key: string): CredentialStore {
 
 export const credentialStore = createCredentialStore('gbe.v1.guest');
 export const pendingDeletionStore = createCredentialStore('gbe.v1.pendingDeletion');
+
+/** Code de récupération (web : stockage du navigateur). */
+export const recoveryCodeStore: SecretTextStore = {
+  async load() {
+    try {
+      const value = storage.getItem('gbe.v1.recoveryCode');
+      return value === null || value.length === 0 ? null : value;
+    } catch {
+      return null;
+    }
+  },
+  async save(value) {
+    try {
+      storage.setItem('gbe.v1.recoveryCode', value);
+    } catch (error) {
+      console.warn('Enregistrement du code impossible', error);
+    }
+  },
+  async clear() {
+    try {
+      storage.setItem('gbe.v1.recoveryCode', '');
+    } catch {
+      // Rien à effacer.
+    }
+  },
+};

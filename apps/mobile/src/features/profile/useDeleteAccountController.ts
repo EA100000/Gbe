@@ -4,7 +4,11 @@ import { useCallback, useState } from 'react';
 import { deleteAccount } from '../../core/account/accountDeletion';
 import { useProgressStore } from '../../core/progress/progressStore';
 import { appApiClient } from '../../core/sync/backgroundSync';
-import { credentialStore, pendingDeletionStore } from '../../core/sync/credentials';
+import {
+  credentialStore,
+  pendingDeletionStore,
+  recoveryCodeStore,
+} from '../../core/sync/credentials';
 
 type Status = 'idle' | 'working' | 'error';
 
@@ -20,7 +24,10 @@ export function useDeleteAccountController() {
         api: appApiClient(),
         credentials: credentialStore,
         pendingDeletion: pendingDeletionStore,
-        resetLocal: reset,
+        resetLocal: async () => {
+          await reset();
+          await recoveryCodeStore.clear();
+        },
       });
       // Progression effacée : la racine renvoie vers l'accueil, comme au premier lancement.
       router.dismissTo('/');

@@ -1,4 +1,4 @@
-import type { GameEvent } from '@gbe/domain';
+import { parseGameEvent, type GameEvent } from '@gbe/domain';
 import { z } from 'zod';
 
 /** Le serveur a répondu par une erreur (4xx, 5xx). */
@@ -30,6 +30,12 @@ const GuestSchema = AccessTokenSchema.extend({
   secret: z.string().min(20),
 });
 const SyncResultSchema = z.object({ accepted: z.number(), duplicates: z.number() });
+const RecoveryCodeSchema = z.object({ code: z.string().min(12).max(20) });
+const RecoveredSchema = GuestSchema.extend({ pseudo: z.string().nullable() });
+const EventsPageSchema = z.object({
+  events: z.array(z.unknown()),
+  nextCursor: z.string().min(1).nullable(),
+});
 const LeagueSchema = z.object({
   weekKey: z.string(),
   endsAt: z.number(),
@@ -49,6 +55,11 @@ export type AccessToken = z.infer<typeof AccessTokenSchema>;
 export type GuestAccount = z.infer<typeof GuestSchema>;
 export type SyncResult = z.infer<typeof SyncResultSchema>;
 export type League = z.infer<typeof LeagueSchema>;
+export type RecoveredAccount = z.infer<typeof RecoveredSchema>;
+export interface EventsPage {
+  events: GameEvent[];
+  nextCursor: string | null;
+}
 export type LeagueMember = League['members'][number];
 
 export type FetchLike = (url: string, init: RequestInit) => Promise<Response>;
@@ -63,6 +74,12 @@ export interface ApiClient {
   setPseudo(accessToken: string, pseudo: string): Promise<void>;
   /** Groupe de la Ligue de la semaine, classé. */
   league(accessToken: string): Promise<League>;
+  /** Crée le code de récupération du compte (rendu une seule fois ; remplace le précédent). */
+  createRecoveryCode(accessToken: string): Promise<string>;
+  /** Retrouve un compte avec son code : nouveau secret, jeton et pseudo. */
+  recover(code: string): Promise<RecoveredAccount>;
+  /** Une page du journal du compte (`cursor` : `null` pour la première). */
+  events(accessToken: string, cursor: string | null): Promise<EventsPage>;
 }
 
 /** Client HTTP de l'API Gbè. Toute réponse est validée par Zod avant usage. */
@@ -124,5 +141,27 @@ export function createApiClient(baseUrl: string, fetchImpl: FetchLike = fetch): 
       await send('/me', { method: 'PUT', body: { pseudo }, token: accessToken });
     },
     league: (accessToken) => call('/league', LeagueSchema, { method: 'GET', token: accessToken }),
+    createRecoveryCode: async (accessToken) =>
+      (
+        await call('/account/recovery-code', RecoveryCodeSchema, {
+          method: 'POST',
+          token: accessToken,
+        })
+      ).code,
+    recover: (code) => call('/auth/recover', RecoveredSchema, { method: 'POST', body: { code } }),
+    events: async (accessToken, cursor) => {
+      const query = cursor === null ? '' : `?cursor=${encodeURIComponent(cursor)}`;
+      const page = await call(`/sync/events${query}`, EventsPageSchema, {
+        method: 'GET',
+        token: accessToken,
+      });
+      // Chaque événement est revalidé ; une entrée illisible est ignorée, jamais devinée.
+      return {
+        events: page.events
+          .map(parseGameEvent)
+          .filter((event): event is GameEvent => event !== null),
+        nextCursor: page.nextCursor,
+      };
+    },
   };
 }

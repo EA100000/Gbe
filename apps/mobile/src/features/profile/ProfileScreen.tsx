@@ -172,15 +172,28 @@ export function ProfileScreen() {
             {c.backedUp ? t('profile.accountBody') : t('profile.accountBodyLocal')}
           </UiText>
           <View style={styles.rows}>
+            {c.openRecoveryCode === null ? null : (
+              <AccountRow
+                icon="key"
+                label={t('profile.recoveryCode')}
+                onPress={c.openRecoveryCode}
+                testID="profile-recovery-code"
+              />
+            )}
             {c.openPrivacy === null ? null : (
-              <AccountRow icon="shield" label={t('profile.privacy')} onPress={c.openPrivacy} />
+              <AccountRow
+                icon="shield"
+                label={t('profile.privacy')}
+                onPress={c.openPrivacy}
+                divider={c.openRecoveryCode !== null}
+              />
             )}
             <AccountRow
               icon="trash"
               label={t('profile.delete')}
               onPress={c.askDelete}
               danger
-              divider={c.openPrivacy !== null}
+              divider={c.openPrivacy !== null || c.openRecoveryCode !== null}
               testID="profile-delete"
             />
           </View>

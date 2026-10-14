@@ -1,8 +1,8 @@
 import type { DailyGoalId } from '@gbe/domain';
-import { ChunkyButton, FonText, Galet, Illustration, UiText, colors } from '@gbe/ui';
+import { ChunkyButton, FonText, Galet, Illustration, MIN_TOUCH, UiText, colors } from '@gbe/ui';
 import { router } from 'expo-router';
 import { useState } from 'react';
-import { ScrollView, StyleSheet, View } from 'react-native';
+import { Pressable, ScrollView, StyleSheet, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { GoalPicker } from '../../components/GoalPicker';
@@ -10,6 +10,7 @@ import { SpeechBubble } from '../../components/SpeechBubble';
 import { useContent } from '../../core/content/contentStore';
 import { t } from '../../core/i18n';
 import { useProgressStore } from '../../core/progress/progressStore';
+import { useServer } from '../../core/sync/serverContext';
 
 /** Écran 1 de la maquette : accueil du Galet et choix de l'objectif quotidien. */
 export function WelcomeScreen() {
@@ -17,6 +18,8 @@ export function WelcomeScreen() {
   const initialGoal = useProgressStore((s) => s.settings.dailyGoal);
   const completeOnboarding = useProgressStore((s) => s.completeOnboarding);
   const [goal, setGoal] = useState<DailyGoalId>(initialGoal);
+  // Retrouver un compte demande le serveur : sans API configurée, le lien n'apparaît pas.
+  const canRecover = useServer() !== null;
 
   const start = async () => {
     await completeOnboarding(goal);
@@ -59,6 +62,17 @@ export function WelcomeScreen() {
       </ScrollView>
       <View style={styles.footer}>
         <ChunkyButton label={t('welcome.start')} onPress={start} highlight testID="welcome-start" />
+        {canRecover ? (
+          <Pressable
+            accessibilityRole="link"
+            onPress={() => router.push('/recuperer')}
+            style={styles.recover}
+            testID="welcome-recover">
+            <UiText size={15} weight="bold" color={colors.blue}>
+              {t('recover.link')}
+            </UiText>
+          </Pressable>
+        ) : null}
       </View>
     </SafeAreaView>
   );
@@ -84,5 +98,6 @@ const styles = StyleSheet.create({
   },
   bubble: { flex: 1, marginBottom: 14 },
   goals: { paddingTop: 18, paddingHorizontal: 20, gap: 12 },
-  footer: { paddingHorizontal: 20, paddingTop: 8, paddingBottom: 12 },
+  footer: { paddingHorizontal: 20, paddingTop: 8, paddingBottom: 12, gap: 8 },
+  recover: { minHeight: MIN_TOUCH, alignItems: 'center', justifyContent: 'center' },
 });

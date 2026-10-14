@@ -16,6 +16,8 @@ export interface SyncEngine {
    * Un jeton refusé est renouvelé une fois. Les erreurs (hors-ligne…) remontent à l'appelant.
    */
   withAccessToken<T>(call: (accessToken: string) => Promise<T>): Promise<T>;
+  /** Oublie le jeton en mémoire (le compte du téléphone vient de changer). */
+  forgetToken(): void;
 }
 
 interface Deps {
@@ -92,6 +94,9 @@ export function createSyncEngine({ api, credentials, events, now }: Deps): SyncE
 
   return {
     withAccessToken,
+    forgetToken() {
+      token = null;
+    },
     sync() {
       inFlight ??= run()
         .catch((error: unknown): SyncOutcome => {

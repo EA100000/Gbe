@@ -64,6 +64,9 @@ function fakeApi(overrides: Partial<ApiClient> = {}) {
     deleteAccount: jest.fn(async () => undefined),
     setPseudo: jest.fn(async () => undefined),
     league: jest.fn(),
+    createRecoveryCode: jest.fn(),
+    recover: jest.fn(),
+    events: jest.fn(),
     ...overrides,
   };
   return { api, received };

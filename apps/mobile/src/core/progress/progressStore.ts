@@ -4,6 +4,7 @@ import {
   computeStreak,
   dedupeEvents,
   generatePseudo,
+  isValidPseudo,
   type DailyGoalId,
   type GameEvent,
   type HeartsState,
@@ -45,10 +46,18 @@ interface ProgressState {
   setDailyGoal: (goal: DailyGoalId) => Promise<void>;
   /** Tire un nouveau pseudo, différent du précédent. */
   rerollPseudo: () => Promise<void>;
+  /**
+   * Remplace la progression du téléphone par celle d'un compte retrouvé : journal déjà reçu par le
+   * serveur (marqué synchronisé), accueil passé, pseudo du compte (ou un nouveau s'il n'en a pas).
+   */
+  restore: (events: readonly GameEvent[], pseudo: string | null) => Promise<void>;
   /** Oublie toute la progression (après suppression du compte) : retour au premier lancement. */
   reset: () => Promise<void>;
   setLastSummary: (summary: LessonEndSummary | null) => void;
 }
+
+/** Événements recopiés par lot lors d'une récupération de compte. */
+const RESTORE_BATCH = 500;
 
 export const useProgressStore = create<ProgressState>((set, get) => ({
   ready: false,
@@ -98,6 +107,27 @@ export const useProgressStore = create<ProgressState>((set, get) => ({
   rerollPseudo: async () => {
     const { settings, saveSettings } = get();
     await saveSettings({ ...settings, pseudo: generatePseudo(freshRng(), settings.pseudo) });
+  },
+
+  restore: async (events, pseudo) => {
+    const { repositories, settings } = get();
+    if (repositories === null) throw new Error('Progression non chargée');
+    const journal = dedupeEvents(events);
+    await repositories.events.clear();
+    for (let i = 0; i < journal.length; i += RESTORE_BATCH) {
+      const batch = journal.slice(i, i + RESTORE_BATCH);
+      await repositories.events.append(batch);
+      await repositories.events.markSynced(batch.map((event) => event.id));
+    }
+    const next: Settings = {
+      ...settings,
+      onboarded: true,
+      pseudo: isValidPseudo(pseudo)
+        ? pseudo.normalize('NFC')
+        : (settings.pseudo ?? generatePseudo(freshRng())),
+    };
+    await repositories.settings.save(next);
+    set({ events: journal, settings: next, lastSummary: null });
   },
 
   reset: async () => {
