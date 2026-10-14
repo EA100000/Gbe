@@ -13,8 +13,10 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 import { AppBootstrap } from '../core/AppBootstrap';
 import { PersistenceProvider } from '../core/db/PersistenceProvider';
+import { initMonitoring } from '../core/monitoring/monitoring';
 import { queryClient } from '../core/query/queryClient';
 
+initMonitoring();
 void SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {

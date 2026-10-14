@@ -95,6 +95,7 @@ npm run audio:placeholders       # bips de remplacement pour les audios manquant
 npm run packs:publish            # dist-packs/ : packs validés (+ --allow-unvalidated pour la bêta)
 npm run packs:serve              # sert dist-packs/ en local (port 8090)
 npm run packs:upload             # envoie dist-packs/ sur le stockage S3 (variables S3_*)
+npm run e2e:web                  # parcours complets Playwright sur l'export web de l'appli
 
 npm run api:dev                  # API en local (lit le .env racine ; base : docker compose up -d postgres)
 npm run api:build                # API en un fichier : apps/api/dist/main.js

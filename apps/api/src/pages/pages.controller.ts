@@ -68,6 +68,7 @@ export class PagesController {
 <li>Afficher la Ligue de la semaine : les apprenants de ton groupe voient ton pseudo et tes XP de la semaine.</li>
 <li>Améliorer les leçons grâce à des statistiques d’ensemble.</li>
 </ul>
+<p>Si l’application plante, un rapport technique peut être envoyé à notre service de suivi des erreurs (Sentry) : modèle et système du téléphone, version de l’application, détail de l’erreur. Il ne contient ni ton identifiant de compte, ni ton pseudo.</p>
 <p>Ton adresse IP sert seulement à limiter les abus (nombre de demandes par minute) ; l’application ne l’enregistre pas. Notre hébergeur peut garder des journaux techniques de connexion pendant une durée limitée.</p>
 <h2>Partage</h2>
 <p>Nous ne vendons ni ne partageons tes données. Elles sont stockées chez notre hébergeur et chiffrées pendant leur transport (HTTPS).</p>

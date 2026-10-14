@@ -55,11 +55,40 @@ jobs:
         working-directory: apps/mobile
         run: npx expo export --platform android --output-dir /tmp/export-android
 
+  parcours-web:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - run: npm ci
+      - name: Navigateur de test
+        run: npx playwright install --with-deps chromium
+      - name: Parcours complets (Playwright, appli web)
+        run: npm run e2e:web
+      - name: Traces en cas d'échec
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: traces-playwright
+          path: e2e/test-results/
+          retention-days: 7
+
   image-api:
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
       - uses: actions/checkout@v4
+      - name: Vérifier la configuration de production (Compose et Caddy)
+        run: |
+          cp infra/production/.env.production.example /tmp/env.production
+          docker compose -f infra/production/docker-compose.yml --env-file /tmp/env.production config -q
+          docker run --rm -e API_DOMAIN=api.exemple.bj -e PACKS_DOMAIN=packs.exemple.bj \
+            -v "$PWD/infra/production/Caddyfile:/etc/caddy/Caddyfile:ro" caddy:2 \
+            caddy validate --config /etc/caddy/Caddyfile --adapter caddyfile
       - name: Construire l'image Docker de l'API
         run: docker build -f infra/api.Dockerfile -t gbe-api:ci .
       - name: Démarrer l'image avec une base et vérifier /v1/health

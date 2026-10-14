@@ -110,14 +110,20 @@ démarrage et à chaque retour dans l'appli, elle télécharge les versions plus
 empreinte, puis les utilise au prochain passage sur le chemin des leçons (jamais en pleine leçon).
 Sans cette variable, ou sur le web, l'appli garde le pack embarqué.
 
+## Mettre en ligne
+
+Le guide pas à pas (serveur, HTTPS, packs, sauvegardes, APK de test, fiche Google Play) est dans
+[`docs/DEPLOIEMENT.md`](docs/DEPLOIEMENT.md).
+
 ## Tests
 
-| Où                        | Quoi                                                 | Nombre |
-| ------------------------- | ---------------------------------------------------- | ------ |
-| `packages/domain`         | règles du jeu, dont tests de propriétés (fast-check) | 145    |
-| `packages/content-schema` | schémas et validation des packs                      | 58     |
-| `apps/mobile`             | réducteurs, écrans, parcours d'une leçon, synchro    | 85     |
-| `apps/api`                | comptes, synchro, isolation, limites (PostgreSQL)    | 26     |
+| Où                        | Quoi                                                  | Nombre |
+| ------------------------- | ----------------------------------------------------- | ------ |
+| `packages/domain`         | règles du jeu, dont tests de propriétés (fast-check)  | 145    |
+| `packages/content-schema` | schémas et validation des packs                       | 58     |
+| `apps/mobile`             | réducteurs, écrans, parcours d'une leçon, synchro     | 85     |
+| `apps/api`                | comptes, synchro, isolation, limites (PostgreSQL)     | 26     |
+| `e2e/` (Playwright)       | parcours complets sur l'appli web (`npm run e2e:web`) | 4      |
 
 ## Ce qui reste (plan de développement)
 
