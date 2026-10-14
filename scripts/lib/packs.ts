@@ -15,6 +15,9 @@ export const MOBILE_BUNDLE_FILE = join(
   'bundled-packs.generated.ts',
 );
 
+/** Présent dans dist-packs/ quand il contient une version de test : packs:upload refuse alors d'envoyer. */
+export const TEST_MARKER_FILE = '.version-de-test';
+
 /** Dossiers de packs : un sous-dossier de content/packs contenant un pack.json. */
 export function listPackDirs(): string[] {
   if (!existsSync(PACKS_DIR)) return [];

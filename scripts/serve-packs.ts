@@ -2,6 +2,7 @@
  * Sert dist-packs/ en local, pour tester le téléchargement des packs sans stockage S3.
  * Sur un téléphone (Expo Go), mettre dans apps/mobile/.env :
  *   EXPO_PUBLIC_PACKS_URL=http://<adresse-IP-du-poste>:8090
+ * Chaque demande est affichée : on voit le téléphone lire le catalogue et télécharger les fichiers.
  *
  * Usage : npm run packs:serve [-- --port 8090 --dir dist-packs]
  */
@@ -26,7 +27,13 @@ createServer((req, res) => {
   const path = normalize(decodeURIComponent((req.url ?? '/').split('?')[0] ?? '/'));
   const file = join(root, path);
   // Refuse tout chemin qui sortirait du dossier servi.
-  if (!file.startsWith(root + sep) || !existsSync(file) || !statSync(file).isFile()) {
+  const found = file.startsWith(root + sep) && existsSync(file) && statSync(file).isFile();
+  // Journal des demandes : on voit ce que le téléphone télécharge (catalogue, manifeste, fichiers).
+  const time = new Date().toLocaleTimeString('fr-FR');
+  console.log(
+    `${time}  ${found ? 200 : 404}  ${req.method ?? 'GET'} ${path}  (${req.socket.remoteAddress ?? '?'})`,
+  );
+  if (!found) {
     res.writeHead(404).end();
     return;
   }

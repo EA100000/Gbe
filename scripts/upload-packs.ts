@@ -21,7 +21,7 @@ import {
 } from '@aws-sdk/client-s3';
 import { CATALOG_FILE, planUpload } from '@gbe/content-schema';
 
-import { ROOT, sha256File } from './lib/packs';
+import { ROOT, sha256File, TEST_MARKER_FILE } from './lib/packs';
 
 const { values } = parseArgs({
   options: {
@@ -70,6 +70,9 @@ async function main(): Promise<void> {
   const files = listFiles(dir);
   if (!files.includes(CATALOG_FILE))
     throw new Error(`${CATALOG_FILE} absent : lance npm run packs:publish`);
+  if (files.includes(TEST_MARKER_FILE)) {
+    throw new Error('Ce dossier contient une version de test (--test-version) : envoi refusé.');
+  }
 
   const bucket = requireEnv('S3_BUCKET');
   const client = new S3Client({

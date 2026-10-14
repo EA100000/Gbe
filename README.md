@@ -103,6 +103,7 @@ npm run packs:publish                         # dist-packs/ : packs validés par
 npm run packs:publish -- --allow-unvalidated  # tests et bêta : publie aussi le pack de test
 npm run packs:serve                           # sert dist-packs/ sur le port 8090 (test local)
 npm run packs:upload                          # envoie sur S3 (variables S3_* du .env)
+npm run packs:publish -- --allow-unvalidated --test-version 2  # test sur téléphone (jamais envoyé)
 ```
 
 Pour modifier un pack déjà publié : changer ses fichiers, **augmenter `version`** dans `pack.json`,
