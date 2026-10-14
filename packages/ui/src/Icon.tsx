@@ -27,6 +27,14 @@ const ICONS = {
     '<circle cx="6" cy="18" r="2.5" fill="none" stroke="currentColor" stroke-width="2.2"/><circle cx="18" cy="6" r="2.5" fill="none" stroke="currentColor" stroke-width="2.2"/></svg>',
   ),
   tabSounds: stroke('M4 10v4M8 7v10M12 4v16M16 8v8M20 10.5v3'),
+  tabLeague: stroke(
+    'M8 4h8v5a4 4 0 0 1-8 0zM8 6H5.5a2.5 2.5 0 0 0 2.5 4M16 6h2.5a2.5 2.5 0 0 1-2.5 4M12 13v4M8.5 20h7',
+  ),
+  tabProfile: stroke(
+    'M5 20c1-3.8 3.8-5.5 7-5.5s6 1.7 7 5.5M15.5 8.5a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0',
+  ),
+  trash: stroke('M4 7h16M9 7V4.5h6V7M6.5 7l1 13h9l1-13M10 11v6M14 11v6'),
+  shield: stroke('M12 2.5l8 3v6c0 5-3.4 8.6-8 10-4.6-1.4-8-5-8-10v-6zM9 12l2 2 4-4'),
   speaker:
     '<svg viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9.5h3.5L12 5.5v13l-4.5-4H4z"/><path d="M15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11"/></g></svg>',
   play: '<svg viewBox="0 0 24 24"><path d="M8 5.5v13l10.5-6.5z" fill="currentColor"/></svg>',

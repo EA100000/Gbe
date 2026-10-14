@@ -3,6 +3,8 @@ import {
   computeHearts,
   computeStreak,
   dedupeEvents,
+  generatePseudo,
+  type DailyGoalId,
   type GameEvent,
   type HeartsState,
   type Progress,
@@ -14,6 +16,7 @@ import { create } from 'zustand';
 import { dayKeyAt, systemClock, type Clock } from '../clock';
 import type { Repositories, Settings } from '../db/repositories';
 import { DEFAULT_SETTINGS } from '../db/repositories';
+import { freshRng } from '../random';
 
 /** Bilan affiché par l'écran « Leçon terminée ». */
 export interface LessonEndSummary {
@@ -37,6 +40,13 @@ interface ProgressState {
   /** Enregistre des événements : d'abord sur le téléphone, puis dans l'état affiché. */
   record: (events: readonly GameEvent[]) => Promise<void>;
   saveSettings: (settings: Settings) => Promise<void>;
+  /** Fin de l'accueil : objectif choisi, et premier pseudo tiré s'il n'existe pas encore. */
+  completeOnboarding: (goal: DailyGoalId) => Promise<void>;
+  setDailyGoal: (goal: DailyGoalId) => Promise<void>;
+  /** Tire un nouveau pseudo, différent du précédent. */
+  rerollPseudo: () => Promise<void>;
+  /** Oublie toute la progression (après suppression du compte) : retour au premier lancement. */
+  reset: () => Promise<void>;
   setLastSummary: (summary: LessonEndSummary | null) => void;
 }
 
@@ -68,6 +78,34 @@ export const useProgressStore = create<ProgressState>((set, get) => ({
     if (repositories === null) throw new Error('Progression non chargée');
     await repositories.settings.save(settings);
     set({ settings });
+  },
+
+  completeOnboarding: async (goal) => {
+    const { settings, saveSettings } = get();
+    await saveSettings({
+      ...settings,
+      onboarded: true,
+      dailyGoal: goal,
+      pseudo: settings.pseudo ?? generatePseudo(freshRng()),
+    });
+  },
+
+  setDailyGoal: async (goal) => {
+    const { settings, saveSettings } = get();
+    await saveSettings({ ...settings, dailyGoal: goal });
+  },
+
+  rerollPseudo: async () => {
+    const { settings, saveSettings } = get();
+    await saveSettings({ ...settings, pseudo: generatePseudo(freshRng(), settings.pseudo) });
+  },
+
+  reset: async () => {
+    const repositories = get().repositories;
+    if (repositories === null) throw new Error('Progression non chargée');
+    await repositories.events.clear();
+    await repositories.settings.clear();
+    set({ events: [], settings: DEFAULT_SETTINGS, lastSummary: null });
   },
 
   setLastSummary: (lastSummary) => set({ lastSummary }),

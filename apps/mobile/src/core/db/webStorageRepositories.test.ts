@@ -40,9 +40,19 @@ describe('stockage web de la progression', () => {
 
   it('enregistre et relit les réglages', async () => {
     const repos = createWebStorageRepositories(memoryStorage());
-    expect(await repos.settings.load()).toEqual({ onboarded: false, dailyGoal: 'regular' });
-    await repos.settings.save({ onboarded: true, dailyGoal: 'relaxed' });
-    expect(await repos.settings.load()).toEqual({ onboarded: true, dailyGoal: 'relaxed' });
+    expect(await repos.settings.load()).toEqual({
+      onboarded: false,
+      dailyGoal: 'regular',
+      pseudo: null,
+    });
+    await repos.settings.save({ onboarded: true, dailyGoal: 'relaxed', pseudo: 'Tortue calme' });
+    expect(await repos.settings.load()).toEqual({
+      onboarded: true,
+      dailyGoal: 'relaxed',
+      pseudo: 'Tortue calme',
+    });
+    await repos.settings.clear();
+    expect((await repos.settings.load()).onboarded).toBe(false);
   });
 
   it('continue de fonctionner quand le navigateur refuse l’écriture', async () => {

@@ -7,12 +7,14 @@ import type { NestExpressApplication } from '@nestjs/platform-express';
 import { ThrottlerModule } from '@nestjs/throttler';
 import helmet from 'helmet';
 
+import { RetentionService } from './account/retention.service';
 import { AuthController } from './auth/auth.controller';
 import { AuthGuard } from './auth/auth.guard';
 import { AuthService } from './auth/auth.service';
 import type { AppConfig } from './config';
 import type { Database } from './db/database';
 import { HealthController } from './health/health.controller';
+import { PagesController, PUBLIC_PAGES } from './pages/pages.controller';
 import { SyncController } from './sync/sync.controller';
 import { SyncService } from './sync/sync.service';
 import { CLOCK, CONFIG, DATABASE, systemClock, type Clock } from './tokens';
@@ -31,7 +33,7 @@ export function createAppModule(deps: AppDependencies) {
       // Limite appliquée aux routes de comptes (ThrottlerGuard), par route et par adresse IP.
       ThrottlerModule.forRoot([{ ttl: 60_000, limit: deps.config.authRateLimitPerMinute }]),
     ],
-    controllers: [AuthController, SyncController, HealthController],
+    controllers: [AuthController, SyncController, HealthController, PagesController],
     providers: [
       { provide: CONFIG, useValue: deps.config },
       { provide: DATABASE, useValue: deps.db },
@@ -39,6 +41,7 @@ export function createAppModule(deps: AppDependencies) {
       AuthService,
       SyncService,
       AuthGuard,
+      RetentionService,
     ],
   })
   class AppModule {}
@@ -54,7 +57,7 @@ export async function createApp(
   });
   app.useBodyParser('json', { limit: '1mb' });
   app.use(helmet());
-  app.setGlobalPrefix('v1');
+  app.setGlobalPrefix('v1', { exclude: [...PUBLIC_PAGES] });
   if (deps.config.corsOrigins.length > 0) {
     app.enableCors({ origin: deps.config.corsOrigins });
   }

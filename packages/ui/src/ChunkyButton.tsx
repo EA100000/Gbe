@@ -3,13 +3,21 @@ import { Pressable, StyleSheet, View, type StyleProp, type ViewStyle } from 'rea
 import { UiText } from './Typography';
 import { colors, radii } from './tokens';
 
-export type ChunkyVariant = 'primary' | 'blue' | 'danger';
+export type ChunkyVariant = 'primary' | 'blue' | 'danger' | 'dangerOutline';
 
-const VARIANTS: Record<ChunkyVariant, { bg: string; shadow: string; fg: string }> = {
-  primary: { bg: colors.yellow, shadow: colors.yellowShadow, fg: colors.ink },
-  blue: { bg: colors.blue, shadow: colors.blueShadow, fg: colors.white },
-  danger: { bg: colors.redDark, shadow: colors.redShadow, fg: colors.white },
-};
+const VARIANTS: Record<ChunkyVariant, { bg: string; shadow: string; fg: string; border?: string }> =
+  {
+    primary: { bg: colors.yellow, shadow: colors.yellowShadow, fg: colors.ink },
+    blue: { bg: colors.blue, shadow: colors.blueShadow, fg: colors.white },
+    danger: { bg: colors.redDark, shadow: colors.redShadow, fg: colors.white },
+    /** Action destructive secondaire (fond blanc, contour rouge) : « Supprimer définitivement ». */
+    dangerOutline: {
+      bg: colors.white,
+      shadow: colors.redDark,
+      fg: colors.redText,
+      border: colors.redDark,
+    },
+  };
 
 const SHADOW = 4;
 
@@ -48,6 +56,7 @@ export function ChunkyButton({
           ? { backgroundColor: colors.border, marginTop: SHADOW }
           : {
               backgroundColor: look.bg,
+              ...(look.border === undefined ? null : { borderWidth: 2, borderColor: look.border }),
               borderBottomColor: look.shadow,
               borderBottomWidth: pressed ? 0 : SHADOW,
               marginTop: pressed ? SHADOW : 0,

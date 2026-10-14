@@ -38,14 +38,16 @@ Développer l'API sans Docker pour elle : `docker compose up -d postgres`, puis 
 Tests de l'API : créer une base jetable (`docker compose exec postgres createdb -U gbe gbe_test`), puis
 `TEST_DATABASE_URL=postgresql://gbe:<mot-de-passe>@localhost:5432/gbe_test npm test`.
 
-| Route                  | Rôle                                                      |
-| ---------------------- | --------------------------------------------------------- |
-| `POST /v1/auth/guest`  | crée un compte invité, rend identifiant + secret + jeton  |
-| `POST /v1/auth/token`  | échange identifiant + secret contre un jeton d'une heure  |
-| `POST /v1/sync/events` | reçoit jusqu'à 500 événements ; les doublons sont ignorés |
-| `GET /v1/progress`     | progression recalculée côté serveur (contrôle)            |
-| `DELETE /v1/account`   | supprime le compte et tout son journal                    |
-| `GET /v1/health`       | état du service et de la base                             |
+| Route                        | Rôle                                                      |
+| ---------------------------- | --------------------------------------------------------- |
+| `POST /v1/auth/guest`        | crée un compte invité, rend identifiant + secret + jeton  |
+| `POST /v1/auth/token`        | échange identifiant + secret contre un jeton d'une heure  |
+| `POST /v1/sync/events`       | reçoit jusqu'à 500 événements ; les doublons sont ignorés |
+| `GET /v1/progress`           | progression recalculée côté serveur (contrôle)            |
+| `DELETE /v1/account`         | supprime le compte et tout son journal                    |
+| `GET /v1/health`             | état du service et de la base                             |
+| `GET /confidentialite`       | politique de confidentialité (à déclarer sur Google Play) |
+| `GET /suppression-du-compte` | comment supprimer son compte (exigé par Google Play)      |
 
 Pour un APK à installer sur des téléphones de test : `npx eas-cli build --profile preview --platform android`
 (compte Expo gratuit nécessaire). Pour le Play Store : profil `production` (fichier `.aab`).
@@ -120,7 +122,7 @@ Sans cette variable, ou sur le web, l'appli garde le pack embarqué.
 ## Ce qui reste (plan de développement)
 
 - **J4** : premier vrai pack validé et enregistré, téléchargement des packs avec vérification d'empreinte.
-- **J5** : unités 2 et 3, profil, écran de suppression du compte (exigé par Google Play), Sentry.
+- **J5** : unités 2 et 3 (contenu des experts), Sentry.
 - **J6–J7** : bêta fermée (12 testeurs, 14 jours), puis publication.
 
 Les règles provisoires (vies, XP, cauris) et les écarts à la maquette sont listés dans

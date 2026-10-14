@@ -27,3 +27,12 @@ Livré : écrans 1 à 8 de la maquette, jouables hors-ligne avec le pack de test
 ## Conséquences
 
 Le jalon J3 ajoute l'API (NestJS + PostgreSQL), les comptes et l'envoi du journal d'événements.
+
+## Ajouts du 14/10/2026 (Profil)
+
+- Écrans 11 « Profil » et 12 « Supprimer le compte » dessinés dans la maquette puis validés.
+- Changer l'objectif du jour depuis le Profil réutilise la liste de l'écran 1, dépliée sur place
+  (pas d'écran dédié dans la maquette).
+- Variante de texte quand l'appli n'est reliée à aucun serveur (« Ta progression reste sur ce
+  téléphone… ») et états « Suppression… » / erreur : provisoires, marqués dans `fr.ts`.
+- La ligne « Confidentialité » n'apparaît que si `EXPO_PUBLIC_PRIVACY_URL` est défini.

@@ -18,7 +18,19 @@ describe('loadConfig', () => {
       runMigrations: true,
       authRateLimitPerMinute: 10,
       accessTokenTtlSeconds: 3600,
+      contactEmail: null,
+      inactiveAccountDays: 365,
+      retentionIntervalMs: 86_400_000,
     });
+  });
+
+  it('lit l’adresse de contact et refuse une adresse invalide', () => {
+    expect(loadConfig({ ...valid, CONTACT_EMAIL: 'bonjour@gbe.app' }).contactEmail).toBe(
+      'bonjour@gbe.app',
+    );
+    expect(() => loadConfig({ ...valid, CONTACT_EMAIL: 'pas-une-adresse' })).toThrow(
+      /CONTACT_EMAIL/,
+    );
   });
 
   it('lit le port, les origines web et le choix des migrations', () => {

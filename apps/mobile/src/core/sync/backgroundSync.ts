@@ -1,11 +1,12 @@
 import { useEffect, useMemo } from 'react';
 import { AppState } from 'react-native';
 
+import { retryPendingDeletion } from '../account/accountDeletion';
 import { systemClock } from '../clock';
 import type { Repositories } from '../db/repositories';
 import { useProgressStore } from '../progress/progressStore';
-import { createApiClient } from './apiClient';
-import { credentialStore } from './credentials';
+import { createApiClient, type ApiClient } from './apiClient';
+import { credentialStore, pendingDeletionStore } from './credentials';
 import { createSyncEngine, type SyncEngine } from './syncEngine';
 
 /** Délai après un nouvel événement, pour grouper ceux d'une même leçon en un seul envoi. */
@@ -20,17 +21,39 @@ export function apiUrl(raw: string | undefined = process.env.EXPO_PUBLIC_API_URL
   return url === undefined || url.length === 0 ? null : url;
 }
 
-/** Moteur de synchronisation de l'appli, ou `null` si aucune API n'est configurée. */
+let client: ApiClient | null | undefined;
+
+/** Client de l'API de l'appli, ou `null` si aucune API n'est configurée. */
+export function appApiClient(): ApiClient | null {
+  if (client === undefined) {
+    const url = apiUrl();
+    client = url === null ? null : createApiClient(url);
+  }
+  return client;
+}
+
+/**
+ * Moteur de synchronisation de l'appli, ou `null` si aucune API n'est configurée.
+ * Avant chaque envoi, termine une suppression de compte restée en attente.
+ */
 export function useSyncEngine(repositories: Repositories): SyncEngine | null {
   return useMemo(() => {
-    const url = apiUrl();
-    if (url === null) return null;
-    return createSyncEngine({
-      api: createApiClient(url),
+    const api = appApiClient();
+    if (api === null) return null;
+    const engine = createSyncEngine({
+      api,
       credentials: credentialStore,
       events: repositories.events,
       now: () => systemClock.now(),
     });
+    return {
+      sync: async () => {
+        await retryPendingDeletion({ api, pendingDeletion: pendingDeletionStore }).catch(
+          () => undefined,
+        );
+        return engine.sync();
+      },
+    };
   }, [repositories]);
 }
 

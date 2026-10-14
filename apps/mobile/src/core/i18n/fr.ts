@@ -27,6 +27,8 @@ export const fr = {
 
   'tabs.learn': 'Apprendre',
   'tabs.sounds': 'Sons',
+  'tabs.league': 'Ligue',
+  'tabs.profile': 'Profil',
   'tabs.navigation': 'Navigation principale',
 
   'path.course': 'Cours : fon',
@@ -100,6 +102,41 @@ export const fr = {
   'sounds.listenCard': 'Écouter {word} : {meaning}',
   'sounds.listenNasal': 'Écouter {symbol}',
   'sounds.empty': 'Le guide des sons arrive avec le prochain pack.',
+
+  // Écrans 11 et 12 (proposition validée le 14/10/2026).
+  'profile.pseudoCaption': 'Ton nom dans la Ligue',
+  'profile.pseudoChange': 'Changer de pseudo',
+  'profile.stats': 'Mes progrès',
+  'profile.streak.one': '{n} jour',
+  'profile.streak.other': '{n} jours',
+  'profile.streakLabel': 'Série',
+  'profile.xpLabel': 'XP au total',
+  'profile.lessonsLabel': 'Leçons terminées',
+  'profile.caurisLabel': 'Cauris',
+  'profile.goal': 'Objectif du jour',
+  'profile.goalChange': 'Changer',
+  'profile.goalCurrent': 'Objectif : {goal}, {minutes}. Changer',
+  'profile.account': 'Mon compte',
+  'profile.accountBody':
+    'Ta progression est sur ce téléphone et sauvegardée sur nos serveurs, sans e-mail ni nom.',
+  // Provisoire : variante quand l'appli n'est reliée à aucun serveur.
+  'profile.accountBodyLocal': 'Ta progression reste sur ce téléphone, sans e-mail ni nom.',
+  'profile.privacy': 'Confidentialité',
+  'profile.delete': 'Supprimer mon compte',
+
+  'delete.close': 'Retour au profil',
+  'delete.title': 'Supprimer ton compte ?',
+  'delete.body':
+    'Ta progression, ta série et tes cauris seront effacés de ce téléphone et de nos serveurs. Tu ne pourras pas les récupérer.',
+  'delete.item.lessons': 'Leçons terminées et XP',
+  'delete.item.streak': 'Série et cauris',
+  'delete.item.league': 'Place dans la Ligue',
+  'delete.keep': 'Garder mon compte',
+  'delete.confirm': 'Supprimer définitivement',
+  'delete.after': 'Ensuite, l’appli repart de zéro, comme au premier lancement.',
+  // Provisoire : états non dessinés dans la maquette.
+  'delete.working': 'Suppression…',
+  'delete.error': 'La suppression n’a pas abouti. Réessaie.',
 } as const;
 
 export type TranslationKey = keyof typeof fr;

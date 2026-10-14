@@ -4,17 +4,22 @@ import { parseCredentials, type CredentialStore, type GuestCredentials } from '.
 
 export type { CredentialStore, GuestCredentials };
 
-const KEY = 'gbe.guest';
+/** Android et iOS : identifiants dans le stockage chiffré du système. */
+function createCredentialStore(key: string): CredentialStore {
+  return {
+    async load() {
+      return parseCredentials(await getItemAsync(key));
+    },
+    async save(credentials) {
+      await setItemAsync(key, JSON.stringify(credentials));
+    },
+    async clear() {
+      await deleteItemAsync(key);
+    },
+  };
+}
 
-/** Android et iOS : le secret du compte invité reste dans le stockage chiffré du système. */
-export const credentialStore: CredentialStore = {
-  async load() {
-    return parseCredentials(await getItemAsync(KEY));
-  },
-  async save(credentials) {
-    await setItemAsync(KEY, JSON.stringify(credentials));
-  },
-  async clear() {
-    await deleteItemAsync(KEY);
-  },
-};
+/** Compte invité en cours. */
+export const credentialStore = createCredentialStore('gbe.guest');
+/** Compte supprimé sur le téléphone, dont la suppression sur le serveur reste à faire (hors-ligne). */
+export const pendingDeletionStore = createCredentialStore('gbe.pendingDeletion');

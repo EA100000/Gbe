@@ -1,6 +1,7 @@
 import {
   DEFAULT_DAILY_GOAL,
   isDailyGoalId,
+  isValidPseudo,
   parseGameEvent,
   type DailyGoalId,
   type GameEvent,
@@ -17,19 +18,29 @@ export interface EventRepository {
   unsynced(limit: number): Promise<GameEvent[]>;
   /** Marque des événements comme reçus par le serveur. */
   markSynced(ids: readonly string[]): Promise<void>;
+  /** Efface tout le journal (suppression du compte). */
+  clear(): Promise<void>;
 }
 
 export interface Settings {
   onboarded: boolean;
   dailyGoal: DailyGoalId;
+  /** Nom affiché dans la Ligue, tiré au hasard (jamais saisi) ; `null` avant le premier tirage. */
+  pseudo: string | null;
 }
 
-export const DEFAULT_SETTINGS: Settings = { onboarded: false, dailyGoal: DEFAULT_DAILY_GOAL };
+export const DEFAULT_SETTINGS: Settings = {
+  onboarded: false,
+  dailyGoal: DEFAULT_DAILY_GOAL,
+  pseudo: null,
+};
 
 /** Réglages de l'apprenant, validés à la lecture. */
 export interface SettingsRepository {
   load(): Promise<Settings>;
   save(settings: Settings): Promise<void>;
+  /** Revient aux réglages du premier lancement (suppression du compte). */
+  clear(): Promise<void>;
 }
 
 export interface Repositories {
@@ -47,10 +58,15 @@ export function parseStoredEvent(payload: string): GameEvent | null {
 }
 
 /** Réglages relus depuis des valeurs brutes, avec repli sur les valeurs par défaut. */
-export function settingsFromRaw(onboarded: string | null, goal: string | null): Settings {
+export function settingsFromRaw(
+  onboarded: string | null,
+  goal: string | null,
+  pseudo: string | null = null,
+): Settings {
   return {
     onboarded: onboarded === 'true',
     dailyGoal: goal !== null && isDailyGoalId(goal) ? goal : DEFAULT_SETTINGS.dailyGoal,
+    pseudo: isValidPseudo(pseudo) ? pseudo.normalize('NFC') : null,
   };
 }
 
@@ -96,6 +112,10 @@ export function createEventRepository(db: Database): EventRepository {
       const placeholders = ids.map(() => '?').join(', ');
       await db.runAsync(`UPDATE events SET synced = 1 WHERE id IN (${placeholders})`, ...ids);
     },
+
+    async clear(): Promise<void> {
+      await db.runAsync('DELETE FROM events');
+    },
   };
 }
 
@@ -113,14 +133,23 @@ export function createSettingsRepository(db: Database): SettingsRepository {
 
   return {
     async load(): Promise<Settings> {
-      const [onboarded, goal] = await Promise.all([read('onboarded'), read('dailyGoal')]);
-      return settingsFromRaw(onboarded, goal);
+      const [onboarded, goal, pseudo] = await Promise.all([
+        read('onboarded'),
+        read('dailyGoal'),
+        read('pseudo'),
+      ]);
+      return settingsFromRaw(onboarded, goal, pseudo);
     },
     async save(settings: Settings): Promise<void> {
       await db.withTransactionAsync(async () => {
         await write('onboarded', String(settings.onboarded));
         await write('dailyGoal', settings.dailyGoal);
+        if (settings.pseudo !== null) await write('pseudo', settings.pseudo);
+        else await db.runAsync('DELETE FROM settings WHERE key = ?', 'pseudo');
       });
+    },
+    async clear(): Promise<void> {
+      await db.runAsync('DELETE FROM settings');
     },
   };
 }

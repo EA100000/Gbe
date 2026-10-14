@@ -11,3 +11,4 @@ export * from './random';
 export * from './session';
 export * from './streak';
 export * from './xp';
+export * from './pseudo';

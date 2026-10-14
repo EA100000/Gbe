@@ -112,14 +112,26 @@ export function createWebStorageRepositories(storage: KeyValueStorage): Reposito
         ids.forEach((id) => synced.add(id));
         safeSet(storage, 'synced', JSON.stringify([...synced]));
       },
+      async clear() {
+        safeSet(storage, 'events', '[]');
+        safeSet(storage, 'synced', '[]');
+      },
     },
     settings: {
       async load() {
-        return settingsFromRaw(safeGet(storage, 'onboarded'), safeGet(storage, 'dailyGoal'));
+        return settingsFromRaw(
+          safeGet(storage, 'onboarded'),
+          safeGet(storage, 'dailyGoal'),
+          safeGet(storage, 'pseudo'),
+        );
       },
       async save(settings: Settings) {
         safeSet(storage, 'onboarded', String(settings.onboarded));
         safeSet(storage, 'dailyGoal', settings.dailyGoal);
+        safeSet(storage, 'pseudo', settings.pseudo ?? '');
+      },
+      async clear() {
+        for (const key of ['onboarded', 'dailyGoal', 'pseudo']) safeSet(storage, key, '');
       },
     },
   };
