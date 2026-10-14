@@ -2,7 +2,7 @@ import { Icon, ProgressBar, UiText, colors } from '@gbe/ui';
 import { StyleSheet, View } from 'react-native';
 
 import { IconButton } from '../../../components/IconButton';
-import { t } from '../../../core/i18n';
+import { t, tPlural } from '../../../core/i18n';
 
 /** Haut de l'écran : quitter, barre de progression, vies restantes. */
 export function LessonTopBar({
@@ -20,7 +20,7 @@ export function LessonTopBar({
       <ProgressBar value={progress} accessibilityLabel={t('lesson.progress')} />
       <View
         accessible
-        accessibilityLabel={t('lesson.heartsLeft', { n: hearts })}
+        accessibilityLabel={tPlural(hearts, 'lesson.heartsLeft.one', 'lesson.heartsLeft.other')}
         style={styles.hearts}
         testID="lesson-hearts">
         <Icon name="heart" size={24} />

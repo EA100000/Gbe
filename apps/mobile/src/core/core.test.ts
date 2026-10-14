@@ -7,6 +7,7 @@ import {
   DEFAULT_SETTINGS,
 } from './db/repositories';
 import { formatDuration, formatPercent, t, tPlural } from './i18n';
+import { fr } from './i18n/fr';
 import { heartLostEvent } from './progress/eventFactory';
 
 describe('chargement du contenu', () => {
@@ -106,6 +107,23 @@ describe('traductions', () => {
   it('accorde la série au singulier et au pluriel', () => {
     expect(tPlural(1, 'end.streak.one', 'end.streak.other')).toBe('Série de 1 jour !');
     expect(tPlural(5, 'end.streak.one', 'end.streak.other')).toBe('Série de 5 jours !');
+  });
+
+  it('a toujours une forme au singulier et une au pluriel', () => {
+    const keys = Object.keys(fr);
+    const plurals = keys.filter((key) => key.endsWith('.one') || key.endsWith('.other'));
+    for (const key of plurals) {
+      const stem = key.replace(/\.(one|other)$/, '');
+      expect(keys).toContain(`${stem}.one`);
+      expect(keys).toContain(`${stem}.other`);
+    }
+    expect(plurals.length).toBeGreaterThan(0);
+  });
+
+  it('accorde vies et série à 0 et 1 comme en français (singulier)', () => {
+    expect(tPlural(0, 'lesson.heartsLeft.one', 'lesson.heartsLeft.other')).toBe('0 vie restante');
+    expect(tPlural(1, 'path.streak.one', 'path.streak.other')).toBe('Série : 1 jour');
+    expect(tPlural(3, 'path.hearts.one', 'path.hearts.other')).toBe('3 vies');
   });
 
   it('affiche la durée et la précision comme la maquette', () => {

@@ -90,6 +90,7 @@ npm run typecheck                # TypeScript strict, tous les paquets
 npm test                         # Jest : domain, content-schema, appli mobile, API
 npm run test:coverage            # idem avec couverture (domain ≥ 90 %)
 npm run content:validate         # contrôle bloquant des packs (schéma, NFC, audios, empreintes)
+npm run native:check             # modules natifs : une seule copie, à la version du SDK Expo
 npm run content:build            # réécrit les manifestes et la liste des packs embarqués
 npm run audio:placeholders       # bips de remplacement pour les audios manquants (ffmpeg)
 npm run packs:publish            # dist-packs/ : packs validés (+ --allow-unvalidated pour la bêta)
@@ -116,3 +117,6 @@ Après toute modification d'un `pack.json` : `npm run content:build`, puis `npm 
 Les modules natifs utilisés (SQLite, audio, SVG, presse-papiers, notifications locales) font partie
 d'Expo Go : on peut tester avec Expo Go si sa version correspond au SDK 57, sinon avec un APK de test
 (`eas build --profile preview --platform android`).
+Après l'ajout d'un module natif : version exacte du SDK (`node_modules/expo/bundledNativeModules.json`,
+`npx expo install` est bloqué ici), puis `npm run native:check`. Un module en deux copies fait planter
+l'appli au démarrage sur téléphone, pas sur le web : `overrides` dans le `package.json` racine.

@@ -17,8 +17,9 @@
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "content:validate": "tsx scripts/validate-content.ts",
+    "native:check": "tsx scripts/check-native-modules.ts",
     "audio:placeholders": "tsx scripts/make-placeholder-audio.ts",
-    "check": "npm run format:check && npm run lint && npm run typecheck && npm run test && npm run content:validate",
+    "check": "npm run format:check && npm run lint && npm run typecheck && npm run test && npm run content:validate && npm run native:check",
     "content:build": "tsx scripts/build-packs.ts",
     "demo:web": "tsx scripts/build-web-demo.ts",
     "packs:publish": "tsx scripts/publish-packs.ts",
@@ -51,5 +52,8 @@
     "tsx": "^4.20.0",
     "typescript": "~6.0.3",
     "typescript-eslint": "^8.71.0"
+  },
+  "overrides": {
+    "react-native-svg": "15.15.4"
   }
 }

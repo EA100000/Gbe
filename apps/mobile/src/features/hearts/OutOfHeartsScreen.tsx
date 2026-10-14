@@ -4,7 +4,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import Svg, { Path } from 'react-native-svg';
 
 import { IconButton } from '../../components/IconButton';
-import { t } from '../../core/i18n';
+import { t, tPlural } from '../../core/i18n';
 import { useOutOfHeartsController } from './useOutOfHeartsController';
 
 const HEART =
@@ -79,8 +79,7 @@ export function OutOfHeartsScreen() {
         <View
           accessible
           accessibilityRole="image"
-          accessibilityLabel={t(c.count > 1 ? 'hearts.countPlural' : 'hearts.count', {
-            n: c.count,
+          accessibilityLabel={tPlural(c.count, 'hearts.count.one', 'hearts.count.other', {
             max: c.max,
           })}
           style={styles.hearts}
