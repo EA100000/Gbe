@@ -38,8 +38,9 @@ export const fr = {
   'path.hearts': '{n} vies',
   'path.unit': 'Unité {n} · {title}',
   'path.unitGuide': 'Guide de l’unité',
-  // Provisoire : l'unité verrouillée n'est pas dessinée dans la maquette (une seule unité).
+  // Écran 18 (proposition validée le 14/10/2026) : unité verrouillée.
   'path.unitLocked': 'Unité {n} · {title}, verrouillée : termine d’abord l’unité {previous}',
+  'path.unitLockedHint': 'Termine l’unité {previous} pour l’ouvrir',
   'path.start': 'Commencer',
   'path.lesson.done': 'Leçon {n}, terminée : la refaire',
   'path.lesson.current': 'Leçon {n} : commencer',
@@ -71,10 +72,15 @@ export const fr = {
   'lesson.pairs.help': 'Touche un mot fon, puis sa traduction.',
   'lesson.pairs.count': '{n}/{total}',
   'lesson.pairs.found': '{word}, paire trouvée',
-  // Provisoire : pas d'écran « plus de vies » dans la maquette.
+  // Fin de leçon faute de vie, avant l'écran 16 (quand aucune réponse n'est à corriger).
   'lesson.outOfHearts.title': 'Plus de vies',
   'lesson.outOfHearts.body': 'Ta prochaine vie arrive dans {n} min.',
-  'lesson.outOfHearts.back': 'Retour au chemin',
+  // Écran 17 (proposition validée le 14/10/2026) : quitter la leçon.
+  'lesson.quitSheet.title': 'Tu pars déjà ?',
+  'lesson.quitSheet.body':
+    'Si tu quittes maintenant, cette leçon ne sera pas comptée. Les vies perdues restent perdues.',
+  'lesson.quitSheet.stay': 'Continuer la leçon',
+  'lesson.quitSheet.leave': 'Quitter la leçon',
 
   'end.title': 'Leçon terminée !',
   'end.xp': 'XP gagnés',
@@ -172,6 +178,32 @@ export const fr = {
   // Provisoire : états non dessinés dans la maquette.
   'recoveryCode.loading': 'Création de ton code…',
   'recoveryCode.offline': 'Il faut une connexion internet pour créer ton code.',
+
+  // Écran 16 (proposition validée le 14/10/2026) : plus de vies.
+  'hearts.close': 'Retour au chemin',
+  'hearts.title': 'Plus de vies !',
+  'hearts.body': 'Pas de panique : tes vies reviennent toutes seules, une toutes les 30 minutes.',
+  'hearts.count': '{n} vie sur {max}',
+  'hearts.countPlural': '{n} vies sur {max}',
+  'hearts.next': 'Prochaine vie',
+  'hearts.full': 'Toutes tes vies',
+  'hearts.in': 'dans {time}',
+  'hearts.back': 'Retour au chemin',
+  'hearts.sounds': 'En attendant, écoute les sons du fon',
+  // Provisoire : une vie est revenue pendant que l'écran est ouvert.
+  'hearts.titleBack': 'Une vie est revenue !',
+
+  // Écran 19 (proposition validée le 14/10/2026) : erreur inattendue.
+  'error.title': 'Oups, un souci !',
+  'error.body':
+    'Gbè a rencontré un problème inattendu. Ta progression est bien enregistrée sur ce téléphone.',
+  'error.retry': 'Réessayer',
+  'error.home': 'Retour au chemin',
+  'error.hint': 'Si ça recommence, ferme puis rouvre l’appli.',
+
+  'time.minutes': '{n} min',
+  'time.hours': '{h} h {m}',
+  'time.hoursExact': '{h} h',
 
   'recover.link': 'J’ai déjà un compte',
   'recover.back': 'Retour à l’accueil',

@@ -87,7 +87,7 @@ describe('buildFeedback', () => {
 
   it('annonce la fin des vies avec le délai avant la prochaine', () => {
     const feedback = buildFeedback(startLesson('l', exercises, 0, 0, 1), items, undefined, 12);
-    expect(feedback?.button).toBe('back');
+    expect(feedback?.button).toBe('outOfHearts');
     expect(feedback?.body).toEqual([{ fr: 'Ta prochaine vie arrive dans 12 min.' }]);
   });
 });

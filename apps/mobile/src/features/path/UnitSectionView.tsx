@@ -41,10 +41,12 @@ export function UnitSectionView({
               })
             : undefined
         }>
-        <View style={styles.bannerArt}>
-          <Illustration name="bannerDots" width={160} height={110} />
-        </View>
-        <View style={styles.bannerDash} />
+        {locked ? null : (
+          <View style={styles.bannerArt}>
+            <Illustration name="bannerDots" width={160} height={110} />
+          </View>
+        )}
+        <View style={[styles.bannerDash, locked ? styles.bannerDashLocked : null]} />
         <View style={styles.bannerText}>
           <UiText
             size={13}
@@ -56,7 +58,17 @@ export function UnitSectionView({
           <UiText size={19} weight="extrabold" color={ink} accessibilityRole="header">
             {unit.subtitle}
           </UiText>
+          {locked ? (
+            <UiText size={14} weight="bold" color={colors.inkMuted} style={styles.lockedHint}>
+              {t('path.unitLockedHint', { previous: section.previousOrder ?? unit.order - 1 })}
+            </UiText>
+          ) : null}
         </View>
+        {locked ? (
+          <View style={styles.lock}>
+            <Icon name="lock" size={24} color={colors.inkMuted} />
+          </View>
+        ) : null}
         {section.hasGuide && !locked ? (
           <Pressable
             accessibilityRole="button"
@@ -141,4 +153,14 @@ const styles = StyleSheet.create({
   decoHut: { position: 'absolute', right: 22, top: 318 },
   decoPalm: { position: 'absolute', left: 14, top: 372 },
   bannerLocked: { backgroundColor: colors.locked, borderBottomColor: colors.lockedShadow },
+  bannerDashLocked: { borderColor: colors.lockedShadow },
+  lockedHint: { marginTop: 4 },
+  lock: {
+    width: 48,
+    height: 48,
+    borderRadius: 24,
+    backgroundColor: colors.white,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
 });

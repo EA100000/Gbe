@@ -70,15 +70,19 @@ export function usePathController() {
     }
   }, [sections, progress.openedChests, record, clock]);
 
-  const open = useCallback((node: PathLessonNode) => {
-    if (node.status === 'locked') return;
-    if (node.kind === 'story') {
-      router.push(`/histoire/${node.lessonId}`);
-      return;
-    }
-    // Sans vie, l'écran de leçon l'annonce lui-même et propose de revenir au chemin.
-    router.push(`/lecon/${node.lessonId}`);
-  }, []);
+  const noHearts = hearts.count === 0;
+  const open = useCallback(
+    (node: PathLessonNode) => {
+      if (node.status === 'locked') return;
+      if (node.kind === 'story') {
+        router.push(`/histoire/${node.lessonId}`);
+        return;
+      }
+      // Sans vie, pas de leçon : l'écran 16 dit quand les vies reviennent.
+      router.push(noHearts ? '/vies' : `/lecon/${node.lessonId}`);
+    },
+    [noHearts],
+  );
 
   return {
     sections,

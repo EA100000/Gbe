@@ -6,9 +6,9 @@ import {
   storyUnlockedBy,
   summarizeSession,
 } from '@gbe/domain';
-import { router } from 'expo-router';
-import { useCallback, useEffect, useMemo } from 'react';
-import { AccessibilityInfo } from 'react-native';
+import { router, useFocusEffect } from 'expo-router';
+import { useCallback, useEffect, useMemo, useState } from 'react';
+import { AccessibilityInfo, BackHandler } from 'react-native';
 
 import { preloadAudio, stopAudio } from '../../core/audio/audioService';
 import { useClipPlayer } from '../../core/audio/useClipPlayer';
@@ -42,6 +42,7 @@ export function useLessonController(lessonId: string) {
   const dispatch = useLessonStore((s) => s.dispatch);
   const reset = useLessonStore((s) => s.reset);
   const playClip = useClipPlayer(content);
+  const [quitAsked, setQuitAsked] = useState(false);
 
   const exercises = useMemo(() => lesson?.exercises.filter(isLessonExercise) ?? [], [lesson]);
 
@@ -115,11 +116,35 @@ export function useLessonController(lessonId: string) {
     [clock, dispatch, finish, lessonId, record],
   );
 
-  const quit = useCallback(() => {
+  const leave = useCallback(() => {
+    setQuitAsked(false);
     reset();
     if (router.canGoBack()) router.back();
     else router.replace('/');
   }, [reset]);
+
+  /** Fin de leçon faute de vie : l'écran 16 remplace la leçon. */
+  const showOutOfHearts = useCallback(() => {
+    reset();
+    router.replace('/vies');
+  }, [reset]);
+
+  // Écran 17 : la croix et le bouton « retour » d'Android demandent confirmation.
+  const outOfHearts = state?.session.phase === 'out_of_hearts';
+  const askQuit = useCallback(() => {
+    if (outOfHearts) showOutOfHearts();
+    else setQuitAsked(true);
+  }, [outOfHearts, showOutOfHearts]);
+
+  useFocusEffect(
+    useCallback(() => {
+      const subscription = BackHandler.addEventListener('hardwareBackPress', () => {
+        askQuit();
+        return true;
+      });
+      return () => subscription.remove();
+    }, [askQuit]),
+  );
 
   const exercise = state === null ? undefined : currentExercise(state);
   const next = nextHeartAt(hearts);
@@ -138,6 +163,10 @@ export function useLessonController(lessonId: string) {
     content,
     playClip,
     act,
-    quit,
+    quit: askQuit,
+    quitAsked,
+    stay: () => setQuitAsked(false),
+    leave,
+    showOutOfHearts,
   };
 }

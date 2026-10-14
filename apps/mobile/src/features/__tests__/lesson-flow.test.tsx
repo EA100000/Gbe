@@ -1,4 +1,5 @@
-import { fireEvent, render, screen } from '@testing-library/react-native';
+import { act, fireEvent, render, screen } from '@testing-library/react-native';
+import { BackHandler } from 'react-native';
 import { router } from 'expo-router';
 
 import { useProgressStore } from '../../core/progress/progressStore';
@@ -82,7 +83,7 @@ describe('une leçon complète, hors-ligne', () => {
     expect(screen.getByText('A wà nǔ')).toBeOnTheScreen();
   });
 
-  it('arrête la leçon quand il ne reste plus de vie', async () => {
+  it('n’ouvre pas de leçon sans vie et mène à l’écran « Plus de vies »', async () => {
     const clock = fakeClock();
     const losses = Array.from({ length: 5 }, (_, i) => ({
       id: `h${i}`,
@@ -95,7 +96,79 @@ describe('une leçon complète, hors-ligne', () => {
     await render(<LessonScreen lessonId="u01-l01" />);
 
     expect(screen.getByText('Plus de vies')).toBeOnTheScreen();
-    await fireEvent.press(screen.getByText('Retour au chemin'));
+    await fireEvent.press(screen.getByTestId('feedback-button'));
+    expect(router.replace).toHaveBeenCalledWith('/vies');
+  });
+
+  it('corrige la réponse qui fait perdre la dernière vie, puis mène à « Plus de vies »', async () => {
+    // Préparer : 4 vies déjà perdues, il en reste une.
+    const clock = fakeClock();
+    const losses = Array.from({ length: 4 }, (_, i) => ({
+      id: `h${i}`,
+      type: 'heart_lost' as const,
+      at: clock.now() - 1000 + i,
+      dayKey: '2026-10-13',
+      lessonId: 'u01-l01',
+    }));
+    await setupStores({ clock, events: losses });
+    await render(<LessonScreen lessonId="u01-l01" />);
+
+    // Agir : mauvaise réponse.
+    await choose('hwe');
+
+    // Vérifier : la correction s'affiche, puis « Continuer » mène à l'écran 16.
+    expect(screen.getByText('Pas tout à fait…')).toBeOnTheScreen();
+    expect(screen.getByLabelText('0 vies restantes')).toBeOnTheScreen();
+    await fireEvent.press(screen.getByTestId('feedback-button'));
+    expect(router.replace).toHaveBeenCalledWith('/vies');
+  });
+});
+
+describe('quitter une leçon (écran 17)', () => {
+  beforeEach(() => {
+    useLessonStore.getState().reset();
+    jest.clearAllMocks();
+  });
+
+  it('demande confirmation, puis reprend la leçon', async () => {
+    await setupStores();
+    await render(<LessonScreen lessonId="u01-l01" />);
+
+    await fireEvent.press(screen.getByTestId('lesson-quit'));
+    expect(screen.getByText('Tu pars déjà ?')).toBeOnTheScreen();
+    await fireEvent.press(screen.getByTestId('quit-stay'));
+
+    expect(screen.queryByText('Tu pars déjà ?')).toBeNull();
+    expect(router.back).not.toHaveBeenCalled();
+  });
+
+  it('quitte la leçon après confirmation', async () => {
+    await setupStores();
+    await render(<LessonScreen lessonId="u01-l01" />);
+
+    await fireEvent.press(screen.getByTestId('lesson-quit'));
+    await fireEvent.press(screen.getByTestId('quit-leave'));
+
     expect(router.back).toHaveBeenCalled();
+    expect(useLessonStore.getState().state).toBeNull();
+  });
+
+  it('demande aussi confirmation avec le bouton « retour » d’Android', async () => {
+    const handlers: Parameters<typeof BackHandler.addEventListener>[1][] = [];
+    const spy = jest.spyOn(BackHandler, 'addEventListener').mockImplementation((_, handler) => {
+      handlers.push(handler);
+      return { remove: jest.fn() };
+    });
+    await setupStores();
+    await render(<LessonScreen lessonId="u01-l01" />);
+
+    let handled: boolean | null | undefined = false;
+    await act(async () => {
+      handled = handlers.at(-1)?.({} as never);
+    });
+
+    expect(handled).toBe(true);
+    expect(screen.getByText('Tu pars déjà ?')).toBeOnTheScreen();
+    spy.mockRestore();
   });
 });

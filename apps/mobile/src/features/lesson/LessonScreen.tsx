@@ -9,12 +9,26 @@ import { FeedbackPanel } from './components/FeedbackPanel';
 import { ImageChoiceView } from './components/ImageChoiceView';
 import { LessonTopBar } from './components/LessonTopBar';
 import { MatchPairsView } from './components/MatchPairsView';
+import { QuitLessonSheet } from './components/QuitLessonSheet';
 import { useLessonController } from './useLessonController';
 
 /** Écrans 3, 4 et 5 de la maquette : un exercice à la fois, puis le panneau de correction. */
 export function LessonScreen({ lessonId }: { lessonId: string }) {
-  const { state, exercise, progress, canCheck, feedback, content, playClip, act, quit } =
-    useLessonController(lessonId);
+  const {
+    state,
+    exercise,
+    progress,
+    canCheck,
+    feedback,
+    content,
+    playClip,
+    act,
+    quit,
+    quitAsked,
+    stay,
+    leave,
+    showOutOfHearts,
+  } = useLessonController(lessonId);
 
   if (state === null || exercise === undefined) return <SafeAreaView style={styles.screen} />;
   const { phase } = state.session;
@@ -60,12 +74,7 @@ export function LessonScreen({ lessonId }: { lessonId: string }) {
 
   let footer = null;
   if (feedback !== null) {
-    const label =
-      feedback.button === 'continue'
-        ? t('common.continue')
-        : feedback.button === 'retry'
-          ? t('common.retry')
-          : t('lesson.outOfHearts.back');
+    const label = feedback.button === 'retry' ? t('common.retry') : t('common.continue');
     footer = (
       <FeedbackPanel
         tone={feedback.tone}
@@ -75,7 +84,7 @@ export function LessonScreen({ lessonId }: { lessonId: string }) {
         onPress={() => {
           if (feedback.button === 'continue') act({ type: 'next' });
           else if (feedback.button === 'retry') act({ type: 'retry' });
-          else quit();
+          else showOutOfHearts();
         }}
       />
     );
@@ -117,6 +126,7 @@ export function LessonScreen({ lessonId }: { lessonId: string }) {
         {body}
       </ScrollView>
       {footer}
+      <QuitLessonSheet visible={quitAsked} onStay={stay} onLeave={leave} />
     </SafeAreaView>
   );
 }

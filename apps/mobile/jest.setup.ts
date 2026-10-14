@@ -73,5 +73,8 @@ jest.mock('expo-notifications', () => ({
   cancelAllScheduledNotificationsAsync: jest.fn(async () => undefined),
 }));
 
+// Rapports de plantage simulés : rien ne part vers Sentry pendant les tests.
+jest.mock('@sentry/react-native', () => ({ init: jest.fn(), captureException: jest.fn() }));
+
 // Presse-papiers simulé.
 jest.mock('expo-clipboard', () => ({ setStringAsync: jest.fn(async () => true) }));

@@ -9,7 +9,8 @@ export interface Feedback {
   tone: 'correct' | 'wrong';
   title: readonly RichSegment[];
   body: readonly RichSegment[] | null;
-  button: 'continue' | 'retry' | 'back';
+  /** `outOfHearts` : la leçon s'arrête, « Continuer » mène à l'écran 16 (plus de vies). */
+  button: 'continue' | 'retry' | 'outOfHearts';
 }
 
 function meaning(item: LexiconItem): RichSegment[] {
@@ -28,13 +29,31 @@ export function buildFeedback(
 ): Feedback | null {
   const { phase } = state.session;
   if (phase === 'out_of_hearts') {
+    // La dernière vie vient d'être perdue : on montre d'abord la correction de cette réponse.
+    const lastAnswer =
+      state.session.heartsLost > 0
+        ? answerFeedback({ ...state, session: { ...state.session, phase: 'wrong' } }, items, uiFon)
+        : null;
+    if (lastAnswer !== null && lastAnswer.tone === 'wrong') {
+      return { ...lastAnswer, button: 'outOfHearts' };
+    }
     return {
       tone: 'wrong',
       title: [{ fr: t('lesson.outOfHearts.title') }],
       body: [{ fr: t('lesson.outOfHearts.body', { n: Math.max(1, minutesToNextHeart) }) }],
-      button: 'back',
+      button: 'outOfHearts',
     };
   }
+  return answerFeedback(state, items, uiFon);
+}
+
+/** Correction d'une réponse (panneau bleu ou rouge), selon le type d'exercice. */
+function answerFeedback(
+  state: LessonViewState,
+  items: ReadonlyMap<string, LexiconItem>,
+  uiFon: UiFon | undefined,
+): Feedback | null {
+  const { phase } = state.session;
   if (phase !== 'correct' && phase !== 'wrong') return null;
   const exercise = currentExercise(state);
   if (exercise === undefined) return null;
