@@ -39,18 +39,21 @@ Développer l'API sans Docker pour elle : `docker compose up -d postgres`, puis 
 Tests de l'API : créer une base jetable (`docker compose exec postgres createdb -U gbe gbe_test`), puis
 `TEST_DATABASE_URL=postgresql://gbe:<mot-de-passe>@localhost:5432/gbe_test npm test`.
 
-| Route                        | Rôle                                                      |
-| ---------------------------- | --------------------------------------------------------- |
-| `POST /v1/auth/guest`        | crée un compte invité, rend identifiant + secret + jeton  |
-| `POST /v1/auth/token`        | échange identifiant + secret contre un jeton d'une heure  |
-| `POST /v1/sync/events`       | reçoit jusqu'à 500 événements ; les doublons sont ignorés |
-| `GET /v1/progress`           | progression recalculée côté serveur (contrôle)            |
-| `DELETE /v1/account`         | supprime le compte et tout son journal                    |
-| `PUT /v1/me`                 | enregistre le pseudo (tiré dans les listes de l'appli)    |
-| `GET /v1/league`             | groupe de la Ligue de la semaine, classé par XP           |
-| `GET /v1/health`             | état du service et de la base                             |
-| `GET /confidentialite`       | politique de confidentialité (à déclarer sur Google Play) |
-| `GET /suppression-du-compte` | comment supprimer son compte (exigé par Google Play)      |
+| Route                            | Rôle                                                      |
+| -------------------------------- | --------------------------------------------------------- |
+| `POST /v1/auth/guest`            | crée un compte invité, rend identifiant + secret + jeton  |
+| `POST /v1/auth/token`            | échange identifiant + secret contre un jeton d'une heure  |
+| `POST /v1/sync/events`           | reçoit jusqu'à 500 événements ; les doublons sont ignorés |
+| `GET /v1/sync/events`            | rend le journal du compte, par pages de 500 (curseur)     |
+| `GET /v1/progress`               | progression recalculée côté serveur (contrôle)            |
+| `POST /v1/account/recovery-code` | crée le code de récupération (remplace le précédent)      |
+| `POST /v1/auth/recover`          | code de récupération → compte, nouveau secret et jeton    |
+| `DELETE /v1/account`             | supprime le compte et tout son journal                    |
+| `PUT /v1/me`                     | enregistre le pseudo (tiré dans les listes de l'appli)    |
+| `GET /v1/league`                 | groupe de la Ligue de la semaine, classé par XP           |
+| `GET /v1/health`                 | état du service et de la base                             |
+| `GET /confidentialite`           | politique de confidentialité (à déclarer sur Google Play) |
+| `GET /suppression-du-compte`     | comment supprimer son compte (exigé par Google Play)      |
 
 Pour un APK à installer sur des téléphones de test : `npx eas-cli build --profile preview --platform android`
 (compte Expo gratuit nécessaire). Pour le Play Store : profil `production` (fichier `.aab`).
