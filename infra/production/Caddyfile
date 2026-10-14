@@ -1,0 +1,16 @@
+# Caddy obtient seul les certificats HTTPS pour ces deux noms de domaine.
+{$API_DOMAIN} {
+	encode gzip
+	reverse_proxy api:3000
+}
+
+# Packs de leçons : fichiers statiques du dossier ./packs (copie de dist-packs/).
+# Les versions sont immuables (cache d'un an) ; seul catalog.json change (cache de 5 minutes).
+{$PACKS_DOMAIN} {
+	root * /srv/packs
+	encode gzip
+	header Access-Control-Allow-Origin *
+	header /packs/* Cache-Control "public, max-age=31536000, immutable"
+	header /catalog.json Cache-Control "public, max-age=300"
+	file_server
+}

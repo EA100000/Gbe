@@ -1,0 +1,62 @@
+# Production sur un seul serveur (VPS) : API, base PostgreSQL, et Caddy devant, qui obtient et
+# renouvelle seul les certificats HTTPS (Let's Encrypt) et sert les packs du dossier ./packs.
+#
+#   cp .env.production.example .env.production   # puis remplir les valeurs
+#   docker compose --env-file .env.production up -d --build
+#
+# Guide complet : docs/DEPLOIEMENT.md
+services:
+  caddy:
+    image: caddy:2
+    restart: unless-stopped
+    ports:
+      - '80:80'
+      - '443:443'
+    environment:
+      API_DOMAIN: ${API_DOMAIN:?Définis API_DOMAIN}
+      PACKS_DOMAIN: ${PACKS_DOMAIN:?Définis PACKS_DOMAIN}
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - ./packs:/srv/packs:ro
+      - caddy-data:/data
+      - caddy-config:/config
+    depends_on:
+      - api
+
+  api:
+    build:
+      context: ../..
+      dockerfile: infra/api.Dockerfile
+    restart: unless-stopped
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      DATABASE_URL: postgresql://gbe:${POSTGRES_PASSWORD:?Définis POSTGRES_PASSWORD}@postgres:5432/gbe
+      JWT_SECRET: ${JWT_SECRET:?Définis JWT_SECRET}
+      CORS_ORIGINS: ${CORS_ORIGINS:-}
+      AUTH_RATE_LIMIT_PER_MINUTE: ${AUTH_RATE_LIMIT_PER_MINUTE:-10}
+      CONTACT_EMAIL: ${CONTACT_EMAIL:-}
+      INACTIVE_ACCOUNT_DAYS: ${INACTIVE_ACCOUNT_DAYS:-365}
+    # Pas de port publié : seul Caddy parle à l'API.
+
+  postgres:
+    image: postgres:17
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: gbe
+      POSTGRES_USER: gbe
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+      - ./backups:/backups
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U gbe -d gbe']
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+volumes:
+  caddy-data:
+  caddy-config:
+  postgres-data:

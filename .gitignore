@@ -23,6 +23,7 @@ coverage/
 .env
 .env.*
 !.env.example
+!.env.production.example
 
 # Audio : les masters WAV restent hors du dépôt (stockage dédié)
 content/masters/
@@ -37,3 +38,11 @@ dist-demo/
 
 # Packs prêts à publier (npm run packs:publish)
 dist-packs/
+
+# Résultats des tests de parcours (Playwright)
+test-results/
+playwright-report/
+
+# Production : sauvegardes et packs copiés sur le serveur
+infra/production/backups/
+infra/production/packs/
