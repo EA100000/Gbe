@@ -1,9 +1,10 @@
 import { DAILY_GOALS, goalMinutes, type DailyGoalId } from '@gbe/domain';
 import { router } from 'expo-router';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useState } from 'react';
 import { Linking } from 'react-native';
 
 import { useProgressStore, useProgressView } from '../../core/progress/progressStore';
+import { useEnsurePseudo } from '../../core/progress/useEnsurePseudo';
 import { appApiClient } from '../../core/sync/backgroundSync';
 import { useNow } from '../../core/useNow';
 
@@ -27,10 +28,7 @@ export function useProfileController() {
   const setDailyGoal = useProgressStore((s) => s.setDailyGoal);
   const [editingGoal, setEditingGoal] = useState(false);
 
-  // Apprenants arrivés avant les pseudos : on leur en tire un à la première visite.
-  useEffect(() => {
-    if (settings.onboarded && settings.pseudo === null) void rerollPseudo();
-  }, [settings.onboarded, settings.pseudo, rerollPseudo]);
+  useEnsurePseudo();
 
   const chooseGoal = useCallback(
     async (goal: DailyGoalId) => {

@@ -45,6 +45,8 @@ Tests de l'API : créer une base jetable (`docker compose exec postgres createdb
 | `POST /v1/sync/events`       | reçoit jusqu'à 500 événements ; les doublons sont ignorés |
 | `GET /v1/progress`           | progression recalculée côté serveur (contrôle)            |
 | `DELETE /v1/account`         | supprime le compte et tout son journal                    |
+| `PUT /v1/me`                 | enregistre le pseudo (tiré dans les listes de l'appli)    |
+| `GET /v1/league`             | groupe de la Ligue de la semaine, classé par XP           |
 | `GET /v1/health`             | état du service et de la base                             |
 | `GET /confidentialite`       | politique de confidentialité (à déclarer sur Google Play) |
 | `GET /suppression-du-compte` | comment supprimer son compte (exigé par Google Play)      |
@@ -133,4 +135,4 @@ Le guide pas à pas (serveur, HTTPS, packs, sauvegardes, APK de test, fiche Goog
 
 Les règles provisoires (vies, XP, cauris) et les écarts à la maquette sont listés dans
 `docs/adr/0003` et `docs/adr/0004` ; les choix de l'API (Drizzle au lieu de Prisma, comptes invités)
-dans `docs/adr/0005` et `docs/adr/0006`.
+dans `docs/adr/0005` et `docs/adr/0006` ; les packs, la bêta et la Ligue dans `docs/adr/0007` à `0009`.

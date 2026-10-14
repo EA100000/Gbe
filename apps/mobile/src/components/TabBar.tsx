@@ -3,12 +3,17 @@ import type { BottomTabBarProps } from 'expo-router/js-tabs';
 import { Pressable, StyleSheet, View } from 'react-native';
 
 import { t } from '../core/i18n';
+import { appApiClient } from '../core/sync/backgroundSync';
 
 const TABS: Record<string, { icon: IconName; label: string }> = {
   index: { icon: 'tabPath', label: t('tabs.learn') },
   sons: { icon: 'tabSounds', label: t('tabs.sounds') },
+  ligue: { icon: 'tabLeague', label: t('tabs.league') },
   profil: { icon: 'tabProfile', label: t('tabs.profile') },
 };
+
+/** La Ligue a besoin du serveur : sans API configurée (démo web), son onglet est masqué. */
+const hidden = (name: string) => name === 'ligue' && appApiClient() === null;
 
 /** Barre de navigation du bas, comme dans la maquette (onglet actif encadré de jaune). */
 export function TabBar({ state, navigation, insets }: BottomTabBarProps) {
@@ -19,7 +24,7 @@ export function TabBar({ state, navigation, insets }: BottomTabBarProps) {
       style={[styles.bar, { paddingBottom: Math.max(insets.bottom, 12) }]}>
       {state.routes.map((route, index) => {
         const tab = TABS[route.name];
-        if (tab === undefined) return null;
+        if (tab === undefined || hidden(route.name)) return null;
         const focused = state.index === index;
         return (
           <Pressable

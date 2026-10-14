@@ -53,6 +53,7 @@ export function useSyncEngine(repositories: Repositories): SyncEngine | null {
         );
         return engine.sync();
       },
+      withAccessToken: engine.withAccessToken,
     };
   }, [repositories]);
 }

@@ -20,7 +20,10 @@ async function tick(ms?: number) {
 }
 
 function fakeEngine(): SyncEngine & { sync: jest.Mock } {
-  return { sync: jest.fn(async () => ({ status: 'synced' as const, sent: 0 })) };
+  return {
+    sync: jest.fn(async () => ({ status: 'synced' as const, sent: 0 })),
+    withAccessToken: (call) => call('jeton'),
+  };
 }
 
 describe('déclencheurs de la synchronisation', () => {

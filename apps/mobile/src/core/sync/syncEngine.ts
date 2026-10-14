@@ -11,6 +11,11 @@ export type SyncOutcome =
 export interface SyncEngine {
   /** Envoie au serveur les événements pas encore synchronisés. Un seul envoi à la fois. */
   sync(): Promise<SyncOutcome>;
+  /**
+   * Appelle le serveur au nom du compte invité (créé s'il n'existe pas encore).
+   * Un jeton refusé est renouvelé une fois. Les erreurs (hors-ligne…) remontent à l'appelant.
+   */
+  withAccessToken<T>(call: (accessToken: string) => Promise<T>): Promise<T>;
 }
 
 interface Deps {
@@ -75,7 +80,18 @@ export function createSyncEngine({ api, credentials, events, now }: Deps): SyncE
     }
   }
 
+  async function withAccessToken<T>(call: (accessToken: string) => Promise<T>): Promise<T> {
+    try {
+      return await call(await accessToken());
+    } catch (error) {
+      if (!(error instanceof ApiError && error.status === 401)) throw error;
+      token = null;
+      return call(await accessToken());
+    }
+  }
+
   return {
+    withAccessToken,
     sync() {
       inFlight ??= run()
         .catch((error: unknown): SyncOutcome => {

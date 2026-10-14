@@ -25,6 +25,8 @@ function fakeApi(deleteImpl: () => Promise<void> = async () => undefined) {
     token: jest.fn(async () => ({ accessToken: 'jeton', expiresIn: 3600 })),
     sendEvents: jest.fn(),
     deleteAccount: jest.fn(deleteImpl),
+    setPseudo: jest.fn(),
+    league: jest.fn(),
   };
   return api;
 }
