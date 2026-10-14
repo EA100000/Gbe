@@ -103,6 +103,21 @@ export const fr = {
   'sounds.listenNasal': 'Écouter {symbol}',
   'sounds.empty': 'Le guide des sons arrive avec le prochain pack.',
 
+  // Écran 9 : Ligue de la semaine.
+  'league.title': 'Ligue Cauris',
+  // Provisoire : une seule ligue pendant la bêta, donc pas encore de montée (texte de la maquette remplacé).
+  'league.subtitle': 'Classement de la semaine, remis à zéro chaque lundi',
+  'league.top': 'Les {n} premiers',
+  'league.daysLeft.one': 'Encore {n} jour',
+  'league.daysLeft.other': 'Encore {n} jours',
+  'league.me': 'Toi',
+  'league.xp': '{n} XP',
+  'league.row': 'Rang {rank} : {name}, {n} XP',
+  // Provisoire : états non dessinés dans la maquette.
+  'league.anonymous': 'Apprenant',
+  'league.loading': 'Chargement de la Ligue',
+  'league.offline': 'La Ligue a besoin d’une connexion internet.',
+
   // Écrans 11 et 12 (proposition validée le 14/10/2026).
   'profile.pseudoCaption': 'Ton nom dans la Ligue',
   'profile.pseudoChange': 'Changer de pseudo',

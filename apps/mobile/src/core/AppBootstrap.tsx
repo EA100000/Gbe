@@ -13,7 +13,8 @@ import { createPackStorage } from './packs/packStorage';
 import { packsUrl } from './packs/packUpdater';
 import { usePackUpdates, type PackUpdatesConfig } from './packs/usePackUpdates';
 import { useProgressStore } from './progress/progressStore';
-import { useBackgroundSync, useSyncEngine } from './sync/backgroundSync';
+import { appApiClient, useBackgroundSync, useSyncEngine } from './sync/backgroundSync';
+import { ServerContext, type Server } from './sync/serverContext';
 
 /**
  * Prépare l'appli avant le premier écran : packs vérifiés, journal et réglages relus.
@@ -28,6 +29,10 @@ export function AppBootstrap({ children }: { children: ReactNode }) {
   const hydrate = useProgressStore((s) => s.hydrate);
   const syncEngine = useSyncEngine(repositories);
   useBackgroundSync(syncEngine, ready);
+  const server = useMemo<Server | null>(() => {
+    const api = appApiClient();
+    return api === null || syncEngine === null ? null : { api, engine: syncEngine };
+  }, [syncEngine]);
   const packDeps = useMemo<LocalPacksDeps | null>(() => {
     const storage = createPackStorage();
     return storage === null ? null : { storage, sha256: sha256Hex };
@@ -58,7 +63,7 @@ export function AppBootstrap({ children }: { children: ReactNode }) {
       </View>
     );
   }
-  return <>{children}</>;
+  return <ServerContext.Provider value={server}>{children}</ServerContext.Provider>;
 }
 
 const styles = StyleSheet.create({

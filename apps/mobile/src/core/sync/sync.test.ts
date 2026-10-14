@@ -62,6 +62,8 @@ function fakeApi(overrides: Partial<ApiClient> = {}) {
       return { accepted: events.length, duplicates: 0 };
     }),
     deleteAccount: jest.fn(async () => undefined),
+    setPseudo: jest.fn(async () => undefined),
+    league: jest.fn(),
     ...overrides,
   };
   return { api, received };
@@ -255,7 +257,74 @@ describe('synchronisation du journal', () => {
   });
 });
 
+describe('appels au nom du compte invité', () => {
+  it('crée le compte si besoin et fournit le jeton', async () => {
+    const { repo, clock, credentials } = await setup({ events: 0 });
+    const { api } = fakeApi();
+    const engine = createSyncEngine({ api, credentials, events: repo, now: clock.now });
+
+    const result = await engine.withAccessToken(async (token) => `appel avec ${token}`);
+
+    expect(result).toBe('appel avec guest-token-1');
+    expect(credentials.current()?.userId).toBe('user-1');
+  });
+
+  it('renouvelle une fois un jeton refusé', async () => {
+    const { repo, clock, credentials } = await setup({
+      events: 0,
+      credentials: { userId: 'user-9', secret: SECRET },
+    });
+    const { api } = fakeApi();
+    const engine = createSyncEngine({ api, credentials, events: repo, now: clock.now });
+    let calls = 0;
+
+    const result = await engine.withAccessToken(async (token) => {
+      calls += 1;
+      if (calls === 1) throw new ApiError(401, 'expiré');
+      return token;
+    });
+
+    expect(result).toBe('fresh-token');
+    expect(api.token).toHaveBeenCalledTimes(2);
+  });
+
+  it('laisse remonter une panne réseau', async () => {
+    const { repo, clock, credentials } = await setup({ events: 0 });
+    const { api } = fakeApi({
+      createGuest: jest.fn(async () => {
+        throw new OfflineError(new TypeError('Network request failed'));
+      }),
+    });
+    const engine = createSyncEngine({ api, credentials, events: repo, now: clock.now });
+
+    await expect(engine.withAccessToken(async () => 'jamais')).rejects.toBeInstanceOf(OfflineError);
+  });
+});
+
 describe('client de l’API', () => {
+  it('enregistre le pseudo puis lit la Ligue validée par son schéma', async () => {
+    const league = {
+      weekKey: '2026-10-12',
+      endsAt: 1,
+      groupSize: 30,
+      topCount: 5,
+      members: [{ rank: 1, pseudo: 'Lion sage', xp: 25, isMe: true }],
+    };
+    const fetchImpl: FetchLike = jest.fn(async (url: string) =>
+      url.endsWith('/me')
+        ? new Response(null, { status: 204 })
+        : new Response(JSON.stringify(league), { status: 200 }),
+    );
+    const client = createApiClient('https://api', fetchImpl);
+
+    await client.setPseudo('jeton', 'Lion sage');
+    expect(await client.league('jeton')).toEqual(league);
+    expect(fetchImpl).toHaveBeenCalledWith(
+      'https://api/v1/me',
+      expect.objectContaining({ method: 'PUT', body: JSON.stringify({ pseudo: 'Lion sage' }) }),
+    );
+  });
+
   function respond(status: number, body: unknown): FetchLike {
     return jest.fn(async () => new Response(JSON.stringify(body), { status }));
   }

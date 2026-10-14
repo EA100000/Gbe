@@ -1,6 +1,7 @@
 import {
   bigint,
   index,
+  integer,
   jsonb,
   pgTable,
   primaryKey,
@@ -20,6 +21,8 @@ export const users = pgTable('users', {
   secretHash: text('secret_hash').notNull(),
   createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
   lastSeenAt: timestamp('last_seen_at', { withTimezone: true }).notNull().defaultNow(),
+  /** Pseudo de la Ligue, tiré au hasard par l'appli dans des listes fixes (jamais saisi). */
+  pseudo: text('pseudo'),
 });
 
 /**
@@ -42,5 +45,25 @@ export const events = pgTable(
   (table) => [
     primaryKey({ columns: [table.userId, table.id] }),
     index('events_user_at').on(table.userId, table.at),
+  ],
+);
+
+/**
+ * Groupes de la Ligue : un apprenant rejoint un groupe de la semaine en ouvrant la Ligue.
+ * Les XP ne sont pas recopiés ici : ils sont recalculés depuis le journal.
+ */
+export const leagueMembers = pgTable(
+  'league_members',
+  {
+    weekKey: text('week_key').notNull(),
+    groupNumber: integer('group_number').notNull(),
+    userId: uuid('user_id')
+      .notNull()
+      .references(() => users.id, { onDelete: 'cascade' }),
+    joinedAt: timestamp('joined_at', { withTimezone: true }).notNull().defaultNow(),
+  },
+  (table) => [
+    primaryKey({ columns: [table.weekKey, table.userId] }),
+    index('league_members_group').on(table.weekKey, table.groupNumber),
   ],
 );

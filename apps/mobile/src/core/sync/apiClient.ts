@@ -30,10 +30,26 @@ const GuestSchema = AccessTokenSchema.extend({
   secret: z.string().min(20),
 });
 const SyncResultSchema = z.object({ accepted: z.number(), duplicates: z.number() });
+const LeagueSchema = z.object({
+  weekKey: z.string(),
+  endsAt: z.number(),
+  groupSize: z.number().int().positive(),
+  topCount: z.number().int().nonnegative(),
+  members: z.array(
+    z.object({
+      rank: z.number().int().positive(),
+      pseudo: z.string().nullable(),
+      xp: z.number().int().nonnegative(),
+      isMe: z.boolean(),
+    }),
+  ),
+});
 
 export type AccessToken = z.infer<typeof AccessTokenSchema>;
 export type GuestAccount = z.infer<typeof GuestSchema>;
 export type SyncResult = z.infer<typeof SyncResultSchema>;
+export type League = z.infer<typeof LeagueSchema>;
+export type LeagueMember = League['members'][number];
 
 export type FetchLike = (url: string, init: RequestInit) => Promise<Response>;
 
@@ -43,6 +59,10 @@ export interface ApiClient {
   sendEvents(accessToken: string, events: readonly GameEvent[]): Promise<SyncResult>;
   /** Supprime le compte et tout son journal sur le serveur. */
   deleteAccount(accessToken: string): Promise<void>;
+  /** Enregistre le pseudo tiré par l'appli (le serveur refuse tout texte hors des listes). */
+  setPseudo(accessToken: string, pseudo: string): Promise<void>;
+  /** Groupe de la Ligue de la semaine, classé. */
+  league(accessToken: string): Promise<League>;
 }
 
 /** Client HTTP de l'API Gbè. Toute réponse est validée par Zod avant usage. */
@@ -100,5 +120,9 @@ export function createApiClient(baseUrl: string, fetchImpl: FetchLike = fetch): 
     deleteAccount: async (accessToken) => {
       await send('/account', { method: 'DELETE', token: accessToken });
     },
+    setPseudo: async (accessToken, pseudo) => {
+      await send('/me', { method: 'PUT', body: { pseudo }, token: accessToken });
+    },
+    league: (accessToken) => call('/league', LeagueSchema, { method: 'GET', token: accessToken }),
   };
 }

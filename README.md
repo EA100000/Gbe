@@ -3,9 +3,10 @@
 Application pour francophones qui apprennent le fon. Android d'abord, puis iOS et web, une seule base de code.
 L'audio enregistré par deux locuteurs natifs est le cœur du produit ; tout fonctionne hors-ligne.
 
-> **État : jalon J3 « Progression sauvegardée sur un serveur ».** Les écrans 1 à 8 de la maquette
-> sont jouables sans réseau avec un pack de test de l'unité 1 ; quand une API est configurée, la
-> progression part sur le serveur (compte invité automatique, sans donnée personnelle).
+> **État : prêt techniquement pour une bêta fermée.** Les écrans 1 à 9 de la maquette, plus le
+> Profil et la suppression du compte, fonctionnent avec un pack de test de l'unité 1. Hors-ligne
+> d'abord ; avec une API, la progression est sauvegardée (compte invité, sans donnée personnelle),
+> les packs se mettent à jour seuls et la Ligue de la semaine s'affiche.
 > **Le contenu fon n'est pas encore validé par les experts** et les audios sont des bips provisoires :
 > l'appli l'affiche dans un bandeau.
 
@@ -45,6 +46,8 @@ Tests de l'API : créer une base jetable (`docker compose exec postgres createdb
 | `POST /v1/sync/events`       | reçoit jusqu'à 500 événements ; les doublons sont ignorés |
 | `GET /v1/progress`           | progression recalculée côté serveur (contrôle)            |
 | `DELETE /v1/account`         | supprime le compte et tout son journal                    |
+| `PUT /v1/me`                 | enregistre le pseudo (tiré dans les listes de l'appli)    |
+| `GET /v1/league`             | groupe de la Ligue de la semaine, classé par XP           |
 | `GET /v1/health`             | état du service et de la base                             |
 | `GET /confidentialite`       | politique de confidentialité (à déclarer sur Google Play) |
 | `GET /suppression-du-compte` | comment supprimer son compte (exigé par Google Play)      |
@@ -119,10 +122,10 @@ Le guide pas à pas (serveur, HTTPS, packs, sauvegardes, APK de test, fiche Goog
 
 | Où                        | Quoi                                                  | Nombre |
 | ------------------------- | ----------------------------------------------------- | ------ |
-| `packages/domain`         | règles du jeu, dont tests de propriétés (fast-check)  | 145    |
-| `packages/content-schema` | schémas et validation des packs                       | 58     |
-| `apps/mobile`             | réducteurs, écrans, parcours d'une leçon, synchro     | 85     |
-| `apps/api`                | comptes, synchro, isolation, limites (PostgreSQL)     | 26     |
+| `packages/domain`         | règles du jeu, Ligue, pseudos ; tests de propriétés   | 155    |
+| `packages/content-schema` | schémas, validation et catalogue des packs            | 65     |
+| `apps/mobile`             | écrans, leçon, synchro, packs, profil, Ligue, son     | 141    |
+| `apps/api`                | comptes, synchro, Ligue, pages, ménage (PostgreSQL)   | 39     |
 | `e2e/` (Playwright)       | parcours complets sur l'appli web (`npm run e2e:web`) | 4      |
 
 ## Ce qui reste (plan de développement)
@@ -133,4 +136,4 @@ Le guide pas à pas (serveur, HTTPS, packs, sauvegardes, APK de test, fiche Goog
 
 Les règles provisoires (vies, XP, cauris) et les écarts à la maquette sont listés dans
 `docs/adr/0003` et `docs/adr/0004` ; les choix de l'API (Drizzle au lieu de Prisma, comptes invités)
-dans `docs/adr/0005` et `docs/adr/0006`.
+dans `docs/adr/0005` et `docs/adr/0006` ; les packs, la bêta et la Ligue dans `docs/adr/0007` à `0009`.

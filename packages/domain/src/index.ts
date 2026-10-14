@@ -12,3 +12,4 @@ export * from './session';
 export * from './streak';
 export * from './xp';
 export * from './pseudo';
+export * from './league';

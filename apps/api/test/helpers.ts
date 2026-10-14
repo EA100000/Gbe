@@ -5,6 +5,7 @@ import request from 'supertest';
 import { createApp } from '../src/app';
 import type { AppConfig } from '../src/config';
 import { createDatabase, runMigrations, type DatabaseHandle } from '../src/db/database';
+import type { Clock } from '../src/tokens';
 
 /**
  * Les tests de l'API tournent sur une vraie base PostgreSQL jetable :
@@ -43,11 +44,14 @@ export interface TestContext {
   http: () => ReturnType<typeof request>;
 }
 
-export async function startTestApp(overrides: Partial<AppConfig> = {}): Promise<TestContext> {
+export async function startTestApp(
+  overrides: Partial<AppConfig> = {},
+  clock?: Clock,
+): Promise<TestContext> {
   const config = testConfig(overrides);
   const handle = createDatabase(config.databaseUrl);
   await runMigrations(handle.db);
-  const app = await createApp({ config, db: handle.db }, false);
+  const app = await createApp({ config, db: handle.db, clock }, false);
   await app.init();
   return { app, handle, http: () => request(app.getHttpServer()) };
 }
@@ -59,7 +63,7 @@ export async function stopTestApp(context: TestContext): Promise<void> {
 
 /** Vide les tables entre deux tests. */
 export async function resetDatabase(context: TestContext): Promise<void> {
-  await context.handle.db.execute(sql`truncate table events, users cascade`);
+  await context.handle.db.execute(sql`truncate table league_members, events, users cascade`);
 }
 
 /** Événement de jeu valide, modifiable. */

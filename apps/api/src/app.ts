@@ -14,6 +14,8 @@ import { AuthService } from './auth/auth.service';
 import type { AppConfig } from './config';
 import type { Database } from './db/database';
 import { HealthController } from './health/health.controller';
+import { LeagueController } from './league/league.controller';
+import { LeagueService } from './league/league.service';
 import { PagesController, PUBLIC_PAGES } from './pages/pages.controller';
 import { SyncController } from './sync/sync.controller';
 import { SyncService } from './sync/sync.service';
@@ -33,13 +35,20 @@ export function createAppModule(deps: AppDependencies) {
       // Limite appliquée aux routes de comptes (ThrottlerGuard), par route et par adresse IP.
       ThrottlerModule.forRoot([{ ttl: 60_000, limit: deps.config.authRateLimitPerMinute }]),
     ],
-    controllers: [AuthController, SyncController, HealthController, PagesController],
+    controllers: [
+      AuthController,
+      SyncController,
+      LeagueController,
+      HealthController,
+      PagesController,
+    ],
     providers: [
       { provide: CONFIG, useValue: deps.config },
       { provide: DATABASE, useValue: deps.db },
       { provide: CLOCK, useValue: deps.clock ?? systemClock },
       AuthService,
       SyncService,
+      LeagueService,
       AuthGuard,
       RetentionService,
     ],
