@@ -118,7 +118,7 @@ describe('une leçon complète, hors-ligne', () => {
 
     // Vérifier : la correction s'affiche, puis « Continuer » mène à l'écran 16.
     expect(screen.getByText('Pas tout à fait…')).toBeOnTheScreen();
-    expect(screen.getByLabelText('0 vies restantes')).toBeOnTheScreen();
+    expect(screen.getByLabelText('0 vie restante')).toBeOnTheScreen();
     await fireEvent.press(screen.getByTestId('feedback-button'));
     expect(router.replace).toHaveBeenCalledWith('/vies');
   });

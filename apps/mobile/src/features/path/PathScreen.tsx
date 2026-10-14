@@ -4,7 +4,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { StatBadge } from '../../components/StatBadge';
 import { TestContentBanner } from '../../components/TestContentBanner';
-import { t } from '../../core/i18n';
+import { t, tPlural } from '../../core/i18n';
 import { UnitSectionView } from './UnitSectionView';
 import { usePathController } from './usePathController';
 
@@ -25,7 +25,7 @@ export function PathScreen() {
           icon="flame"
           value={stats.streak}
           color={colors.redDark}
-          label={t('path.streak', { n: stats.streak })}
+          label={tPlural(stats.streak, 'path.streak.one', 'path.streak.other')}
           testID="stat-streak"
         />
         <StatBadge
@@ -39,7 +39,7 @@ export function PathScreen() {
           icon="heart"
           value={stats.hearts}
           color={colors.redDark}
-          label={t('path.hearts', { n: stats.hearts })}
+          label={tPlural(stats.hearts, 'path.hearts.one', 'path.hearts.other')}
           testID="stat-hearts"
         />
       </View>

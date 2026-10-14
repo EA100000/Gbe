@@ -49,6 +49,8 @@ jobs:
         run: npm run test:coverage
       - name: Packs de contenu (bloquant)
         run: npm run content:validate
+      - name: Modules natifs (une copie, version du SDK)
+        run: npm run native:check
       - name: Build de l'API
         run: npm run api:build
       - name: Bundle Android

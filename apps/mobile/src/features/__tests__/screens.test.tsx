@@ -67,7 +67,7 @@ describe('Chemin des leçons', () => {
     await setupStores({ events: [completed('u01-l01', 'a')] });
     await render(<PathScreen />);
 
-    expect(screen.getByLabelText('Série : 1 jours')).toBeOnTheScreen();
+    expect(screen.getByLabelText('Série : 1 jour')).toBeOnTheScreen();
     expect(
       screen.getByText('Contenu de test, pas encore validé par les experts'),
     ).toBeOnTheScreen();
