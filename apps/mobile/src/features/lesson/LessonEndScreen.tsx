@@ -5,6 +5,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { formatDuration, formatPercent, t, tPlural } from '../../core/i18n';
 import { useProgressStore } from '../../core/progress/progressStore';
+import { useContinueAfterLesson } from '../reminder/useContinueAfterLesson';
 
 function StatCard({
   title,
@@ -43,6 +44,7 @@ function StatCard({
 export function LessonEndScreen() {
   const summary = useProgressStore((s) => s.lastSummary);
   const goHome = () => router.dismissTo('/');
+  const continueAfterLesson = useContinueAfterLesson();
 
   if (summary === null) {
     return (
@@ -142,7 +144,11 @@ export function LessonEndScreen() {
         </View>
       </ScrollView>
       <View style={styles.footer}>
-        <ChunkyButton label={t('common.continue')} onPress={goHome} testID="end-continue" />
+        <ChunkyButton
+          label={t('common.continue')}
+          onPress={continueAfterLesson}
+          testID="end-continue"
+        />
       </View>
     </SafeAreaView>
   );

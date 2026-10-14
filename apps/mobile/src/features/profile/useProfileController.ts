@@ -4,6 +4,9 @@ import { useCallback, useState } from 'react';
 import { Linking } from 'react-native';
 
 import { useProgressStore, useProgressView } from '../../core/progress/progressStore';
+import { reminderNotifier } from '../../core/reminders/notifier';
+import { formatReminderHour } from '../../core/reminders/reminderSchedule';
+import { t } from '../../core/i18n';
 import { useEnsurePseudo } from '../../core/progress/useEnsurePseudo';
 import { appApiClient } from '../../core/sync/backgroundSync';
 import { useServer } from '../../core/sync/serverContext';
@@ -62,6 +65,15 @@ export function useProfileController() {
     backedUp: appApiClient() !== null,
     openPrivacy: privacy === null ? null : () => void Linking.openURL(privacy),
     askDelete: () => router.push('/supprimer-compte'),
+    /** Rappel quotidien : seulement là où les notifications existent (pas sur le web). */
+    reminder: reminderNotifier.supported
+      ? {
+          value: settings.reminder.enabled
+            ? formatReminderHour(settings.reminder.hour)
+            : t('reminder.off'),
+          open: () => router.push('/rappel'),
+        }
+      : null,
     /** Code de récupération : seulement si la progression est sauvegardée sur un serveur. */
     openRecoveryCode: server === null ? null : () => router.push('/code-recuperation'),
   };

@@ -1,7 +1,11 @@
 import { buildPack } from '@gbe/content-schema/src/__fixtures__/pack';
 import { fakeClock, memoryDatabase, testContent } from '../test-utils/fixtures';
 import { loadContent, playableExercises } from './content/content';
-import { createEventRepository, createSettingsRepository } from './db/repositories';
+import {
+  createEventRepository,
+  createSettingsRepository,
+  DEFAULT_SETTINGS,
+} from './db/repositories';
 import { formatDuration, formatPercent, t, tPlural } from './i18n';
 import { heartLostEvent } from './progress/eventFactory';
 
@@ -52,17 +56,27 @@ describe('dépôt des événements', () => {
 describe('dépôt des réglages', () => {
   it('rend les réglages par défaut au premier lancement', async () => {
     const repo = createSettingsRepository(memoryDatabase());
-    expect(await repo.load()).toEqual({ onboarded: false, dailyGoal: 'regular', pseudo: null });
+    expect(await repo.load()).toEqual(DEFAULT_SETTINGS);
   });
 
-  it('relit l’objectif et le pseudo enregistrés', async () => {
+  it('relit l’objectif, le pseudo et le rappel enregistrés', async () => {
     const repo = createSettingsRepository(memoryDatabase());
-    await repo.save({ onboarded: true, dailyGoal: 'intense', pseudo: 'Lion sage' });
-    expect(await repo.load()).toEqual({
+    const saved = {
       onboarded: true,
-      dailyGoal: 'intense',
+      dailyGoal: 'intense' as const,
       pseudo: 'Lion sage',
-    });
+      reminder: { enabled: true, hour: 7 },
+      reminderOffered: true,
+    };
+    await repo.save(saved);
+    expect(await repo.load()).toEqual(saved);
+  });
+
+  it('remplace une heure de rappel abîmée par l’heure par défaut', async () => {
+    const db = memoryDatabase();
+    const repo = createSettingsRepository(db);
+    await db.runAsync('INSERT INTO settings (key, value) VALUES (?, ?)', 'reminderHour', '31');
+    expect((await repo.load()).reminder).toEqual({ enabled: false, hour: 19 });
   });
 
   it('ignore un pseudo stocké qui ne vient pas des listes', async () => {
@@ -74,11 +88,12 @@ describe('dépôt des réglages', () => {
 
   it('revient aux réglages du premier lancement', async () => {
     const repo = createSettingsRepository(memoryDatabase());
-    await repo.save({ onboarded: true, dailyGoal: 'intense', pseudo: 'Lion sage' });
-    await repo.save({ onboarded: true, dailyGoal: 'intense', pseudo: null });
+    const settings = { ...DEFAULT_SETTINGS, onboarded: true, dailyGoal: 'intense' as const };
+    await repo.save({ ...settings, pseudo: 'Lion sage' });
+    await repo.save({ ...settings, pseudo: null });
     expect((await repo.load()).pseudo).toBeNull();
     await repo.clear();
-    expect(await repo.load()).toEqual({ onboarded: false, dailyGoal: 'regular', pseudo: null });
+    expect(await repo.load()).toEqual(DEFAULT_SETTINGS);
   });
 });
 

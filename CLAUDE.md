@@ -113,5 +113,6 @@ sur base sont sautés en local et la CI échoue. Synchronisation de l'appli : `E
 (vide = pack embarqué seulement). Une version publiée ne change jamais : augmenter `version` (ADR 0007).
 
 Après toute modification d'un `pack.json` : `npm run content:build`, puis `npm run content:validate`.
-Les modules natifs utilisés (SQLite, audio, SVG) font partie d'Expo Go : on peut tester avec Expo Go
-si sa version correspond au SDK 57, sinon avec un APK de test (`eas build --profile preview --platform android`).
+Les modules natifs utilisés (SQLite, audio, SVG, presse-papiers, notifications locales) font partie
+d'Expo Go : on peut tester avec Expo Go si sa version correspond au SDK 57, sinon avec un APK de test
+(`eas build --profile preview --platform android`).

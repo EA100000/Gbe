@@ -162,6 +162,23 @@ export function ProfileScreen() {
               </UiText>
             </Tile>
           )}
+          {c.reminder === null ? null : (
+            <Pressable
+              accessibilityRole="link"
+              accessibilityLabel={`${t('profile.reminder')} : ${c.reminder.value}`}
+              onPress={c.reminder.open}
+              style={[styles.row, styles.reminder]}
+              testID="profile-reminder">
+              <Icon name="bell" size={22} color={colors.inkMuted} />
+              <UiText size={16} weight="bold" style={styles.rowLabel}>
+                {t('profile.reminder')}
+              </UiText>
+              <UiText size={15} weight="extrabold" color={colors.blueShadow}>
+                {c.reminder.value}
+              </UiText>
+              <Icon name="chevronRight" size={20} color={colors.inkSoft} />
+            </Pressable>
+          )}
         </View>
 
         <View style={styles.section}>
@@ -251,4 +268,5 @@ const styles = StyleSheet.create({
   },
   divider: { borderTopWidth: 2, borderTopColor: colors.borderSoft },
   rowLabel: { flex: 1 },
+  reminder: { borderRadius: 16, borderWidth: 2, borderColor: colors.border },
 });

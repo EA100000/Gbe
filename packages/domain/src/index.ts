@@ -14,3 +14,4 @@ export * from './xp';
 export * from './pseudo';
 export * from './league';
 export * from './recovery-code';
+export * from './reminder';
