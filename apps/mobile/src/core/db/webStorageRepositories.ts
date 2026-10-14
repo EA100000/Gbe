@@ -2,7 +2,9 @@ import { dedupeEvents, type GameEvent } from '@gbe/domain';
 
 import {
   parseStoredEvent,
+  SETTING_KEYS,
   settingsFromRaw,
+  settingsToRaw,
   type Repositories,
   type Settings,
 } from './repositories';
@@ -120,18 +122,15 @@ export function createWebStorageRepositories(storage: KeyValueStorage): Reposito
     settings: {
       async load() {
         return settingsFromRaw(
-          safeGet(storage, 'onboarded'),
-          safeGet(storage, 'dailyGoal'),
-          safeGet(storage, 'pseudo'),
+          Object.fromEntries(SETTING_KEYS.map((key) => [key, safeGet(storage, key)])),
         );
       },
       async save(settings: Settings) {
-        safeSet(storage, 'onboarded', String(settings.onboarded));
-        safeSet(storage, 'dailyGoal', settings.dailyGoal);
-        safeSet(storage, 'pseudo', settings.pseudo ?? '');
+        const raw = settingsToRaw(settings);
+        for (const key of SETTING_KEYS) safeSet(storage, key, raw[key] ?? '');
       },
       async clear() {
-        for (const key of ['onboarded', 'dailyGoal', 'pseudo']) safeSet(storage, key, '');
+        for (const key of SETTING_KEYS) safeSet(storage, key, '');
       },
     },
   };

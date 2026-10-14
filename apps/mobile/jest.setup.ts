@@ -62,5 +62,16 @@ jest.mock('expo-secure-store', () => {
   };
 });
 
+// Notifications locales simulées : autorisées, rien n'est réellement programmé.
+jest.mock('expo-notifications', () => ({
+  AndroidImportance: { DEFAULT: 5 },
+  SchedulableTriggerInputTypes: { DATE: 'date' },
+  getPermissionsAsync: jest.fn(async () => ({ granted: true, canAskAgain: true })),
+  requestPermissionsAsync: jest.fn(async () => ({ granted: true, canAskAgain: true })),
+  setNotificationChannelAsync: jest.fn(async () => null),
+  scheduleNotificationAsync: jest.fn(async () => 'rappel'),
+  cancelAllScheduledNotificationsAsync: jest.fn(async () => undefined),
+}));
+
 // Presse-papiers simulé.
 jest.mock('expo-clipboard', () => ({ setStringAsync: jest.fn(async () => true) }));

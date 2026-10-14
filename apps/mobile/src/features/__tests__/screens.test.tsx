@@ -4,6 +4,7 @@ import { router } from 'expo-router';
 import { playAudio } from '../../core/audio/audioService';
 import { loadContent } from '../../core/content/content';
 import { useContentStore } from '../../core/content/contentStore';
+import { DEFAULT_SETTINGS } from '../../core/db/repositories';
 import { useProgressStore } from '../../core/progress/progressStore';
 import { bundledPacks } from '../../content/bundled-packs.generated';
 import { fakeUnit, setupStores } from '../../test-utils/fixtures';
@@ -42,7 +43,7 @@ describe('Bienvenue', () => {
     await fireEvent.press(screen.getByTestId('goal-serious'));
     await fireEvent.press(screen.getByTestId('welcome-start'));
 
-    expect(useProgressStore.getState().settings).toEqual({
+    expect(useProgressStore.getState().settings).toMatchObject({
       onboarded: true,
       dailyGoal: 'serious',
       pseudo: expect.stringMatching(/^\S+ \S+$/),
@@ -190,7 +191,7 @@ describe('Profil', () => {
     await setupStores();
     await useProgressStore
       .getState()
-      .saveSettings({ onboarded: true, dailyGoal: 'regular', pseudo: null });
+      .saveSettings({ ...DEFAULT_SETTINGS, onboarded: true, pseudo: null });
 
     await render(<ProfileScreen />);
 
@@ -228,7 +229,7 @@ describe('Suppression du compte', () => {
 
     const state = useProgressStore.getState();
     expect(state.events).toEqual([]);
-    expect(state.settings).toEqual({ onboarded: false, dailyGoal: 'regular', pseudo: null });
+    expect(state.settings).toEqual(DEFAULT_SETTINGS);
     expect(await state.repositories?.events.all()).toEqual([]);
     expect(router.dismissTo).toHaveBeenCalledWith('/');
   });

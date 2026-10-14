@@ -46,6 +46,10 @@ interface ProgressState {
   setDailyGoal: (goal: DailyGoalId) => Promise<void>;
   /** Tire un nouveau pseudo, différent du précédent. */
   rerollPseudo: () => Promise<void>;
+  /** Change le rappel quotidien (activé, heure). */
+  setReminder: (change: Partial<Settings['reminder']>) => Promise<void>;
+  /** Note que le rappel a été proposé après la première leçon (une seule fois). */
+  markReminderOffered: () => Promise<void>;
   /**
    * Remplace la progression du téléphone par celle d'un compte retrouvé : journal déjà reçu par le
    * serveur (marqué synchronisé), accueil passé, pseudo du compte (ou un nouveau s'il n'en a pas).
@@ -107,6 +111,16 @@ export const useProgressStore = create<ProgressState>((set, get) => ({
   rerollPseudo: async () => {
     const { settings, saveSettings } = get();
     await saveSettings({ ...settings, pseudo: generatePseudo(freshRng(), settings.pseudo) });
+  },
+
+  setReminder: async (change) => {
+    const { settings, saveSettings } = get();
+    await saveSettings({ ...settings, reminder: { ...settings.reminder, ...change } });
+  },
+
+  markReminderOffered: async () => {
+    const { settings, saveSettings } = get();
+    if (!settings.reminderOffered) await saveSettings({ ...settings, reminderOffered: true });
   },
 
   restore: async (events, pseudo) => {

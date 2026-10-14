@@ -38,6 +38,19 @@ const ICONS = {
   leagueShield: `<svg viewBox="0 0 24 26"><path d="M12 1l9 3.5v7c0 6-4 10-9 13-5-3-9-7-9-13v-7z" fill="${colors.yellow}" stroke="${colors.yellowShadow}" stroke-width="1.2"/><ellipse cx="12" cy="12" rx="4" ry="5.5" fill="${colors.white}"/><path d="M12 8v8M10.6 10h1.4M10.6 12h1.4M10.6 14h1.4M12 11h1.4M12 13h1.4" stroke="${colors.ink}" stroke-width="0.8" fill="none"/></svg>`,
   shield: stroke('M12 2.5l8 3v6c0 5-3.4 8.6-8 10-4.6-1.4-8-5-8-10v-6zM9 12l2 2 4-4'),
   chevronLeft: stroke('M15 5l-7 7 7 7', 2.6),
+  bell: stroke('M6 16.5V11a6 6 0 0 1 12 0v5.5l1.5 2h-15zM10 21a2 2 0 0 0 4 0'),
+  bellOff: stroke('M6 16.5V11a6 6 0 0 1 9.2-5M18 11v5.5l1.5 2H8M10 21a2 2 0 0 0 4 0M3.5 3.5l17 17'),
+  sunrise: stroke(
+    'M3 19h18M7 15a5 5 0 0 1 10 0M12 4v5M9.5 6.5L12 4l2.5 2.5M4.5 11l1.5 1M19.5 11l-1.5 1',
+  ),
+  sun: stroke(
+    'M12 8a4 4 0 1 0 0 8a4 4 0 1 0 0-8zM12 2.5v2M12 19.5v2M2.5 12h2M19.5 12h2M5.3 5.3l1.4 1.4M17.3 17.3l1.4 1.4M5.3 18.7l1.4-1.4M17.3 6.7l1.4-1.4',
+  ),
+  sunset: stroke(
+    'M3 19h18M7 15a5 5 0 0 1 10 0M12 4v5M9.5 6.5L12 9l2.5-2.5M4.5 11l1.5 1M19.5 11l-1.5 1',
+  ),
+  moon: stroke('M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5z'),
+  clockLine: stroke('M12 3a9 9 0 1 0 0 18a9 9 0 1 0 0-18zM12 7v5l3 2'),
   key: stroke('M11.5 11.5L20 3M16.5 6.5l3 3M14 9l2 2').replace(
     '</svg>',
     '<circle cx="8" cy="15" r="4.5" fill="none" stroke="currentColor" stroke-width="2.2"/></svg>',

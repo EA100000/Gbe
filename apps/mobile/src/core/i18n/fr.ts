@@ -195,6 +195,40 @@ export const fr = {
   'recover.working': 'Recherche…',
   'recover.invalid': 'Ce code n’a pas la bonne forme : 12 lettres et chiffres.',
   'recover.busy': 'Le serveur ne répond pas pour l’instant. Réessaie dans une minute.',
+
+  // Écran 15 (proposition validée le 14/10/2026) : rappel quotidien.
+  'profile.reminder': 'Rappel quotidien',
+  'reminder.back': 'Retour au profil',
+  'reminder.greeting.profile': 'Je te fais signe chaque jour, à l’heure qui t’arrange.',
+  'reminder.greeting.lesson': 'Bravo pour ta première leçon ! Je te fais signe demain ?',
+  'reminder.title.profile': 'Rappel quotidien',
+  'reminder.title.lesson': 'Un petit rappel chaque jour ?',
+  'reminder.switch': 'Me rappeler chaque jour',
+  'reminder.everyDay': 'Chaque jour à {time}',
+  'reminder.off': 'Désactivé',
+  'reminder.blocked': 'Les notifications de Gbè sont bloquées sur ce téléphone.',
+  'reminder.openSettings': 'Ouvrir les réglages',
+  'reminder.when': 'À quelle heure ?',
+  'reminder.preset.morning': 'Matin',
+  'reminder.preset.noon': 'Midi',
+  'reminder.preset.evening': 'Soir',
+  'reminder.preset.night': 'Nuit',
+  'reminder.hour': '{h} h',
+  'reminder.otherTime': 'Autre heure…',
+  'reminder.preview': 'Aperçu',
+  'reminder.previewFrom': 'Gbè · {time}',
+  'reminder.notif.title': 'C’est l’heure de ta leçon !',
+  'reminder.notif.streak.one': 'Quelques minutes suffisent pour garder ta série de {n} jour.',
+  'reminder.notif.streak.other': 'Quelques minutes suffisent pour garder ta série de {n} jours.',
+  'reminder.goalNote': 'Objectif du jour déjà atteint ? Pas de rappel ce jour-là.',
+  'reminder.activate': 'Activer le rappel',
+  'reminder.later': 'Plus tard',
+  'reminder.permissionNote':
+    'Ton téléphone va te demander l’autorisation d’afficher des notifications.',
+  // Provisoire : textes non dessinés dans la maquette.
+  'reminder.notif.generic': 'Quelques minutes suffisent pour avancer en fon.',
+  'reminder.channel': 'Rappel quotidien',
+  'reminder.otherTimeValue': 'Autre heure : {time}',
 } as const;
 
 export type TranslationKey = keyof typeof fr;

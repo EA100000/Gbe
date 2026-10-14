@@ -1,5 +1,6 @@
 import { heartLostEvent } from '../progress/eventFactory';
 import { fakeClock } from '../../test-utils/fixtures';
+import { DEFAULT_SETTINGS } from './repositories';
 import {
   browserStorage,
   createWebStorageRepositories,
@@ -40,17 +41,16 @@ describe('stockage web de la progression', () => {
 
   it('enregistre et relit les réglages', async () => {
     const repos = createWebStorageRepositories(memoryStorage());
-    expect(await repos.settings.load()).toEqual({
-      onboarded: false,
-      dailyGoal: 'regular',
-      pseudo: null,
-    });
-    await repos.settings.save({ onboarded: true, dailyGoal: 'relaxed', pseudo: 'Tortue calme' });
-    expect(await repos.settings.load()).toEqual({
+    expect(await repos.settings.load()).toEqual(DEFAULT_SETTINGS);
+    const saved = {
       onboarded: true,
-      dailyGoal: 'relaxed',
+      dailyGoal: 'relaxed' as const,
       pseudo: 'Tortue calme',
-    });
+      reminder: { enabled: true, hour: 21 },
+      reminderOffered: true,
+    };
+    await repos.settings.save(saved);
+    expect(await repos.settings.load()).toEqual(saved);
     await repos.settings.clear();
     expect((await repos.settings.load()).onboarded).toBe(false);
   });

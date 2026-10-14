@@ -47,6 +47,7 @@ export default function RootLayout() {
               <Stack.Screen name="supprimer-compte" />
               <Stack.Screen name="recuperer" />
               <Stack.Screen name="code-recuperation" />
+              <Stack.Screen name="rappel" />
             </Stack>
           </AppBootstrap>
         </PersistenceProvider>
