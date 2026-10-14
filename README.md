@@ -134,12 +134,19 @@ Le guide pas à pas (serveur, HTTPS, packs, sauvegardes, APK de test, fiche Goog
 | `apps/api`                | comptes, récupération, synchro, Ligue, pages, ménage (PostgreSQL)  | 54     |
 | `e2e/` (Playwright)       | parcours complets sur l'appli web (`npm run e2e:web`)              | 4      |
 
-## Ce qui reste (plan de développement)
+## Ce qui reste avant la bêta fermée
 
-- **J4** : premier vrai pack validé et enregistré, téléchargement des packs avec vérification d'empreinte.
-- **J5** : unités 2 et 3 (contenu des experts), Sentry.
-- **J6–J7** : bêta fermée (12 testeurs, 14 jours), puis publication.
+Le code de l'appli et de l'API est prêt pour une bêta fermée. Ce qui reste ne dépend plus du code :
 
-Les règles provisoires (vies, XP, cauris) et les écarts à la maquette sont listés dans
-`docs/adr/0003` et `docs/adr/0004` ; les choix de l'API (Drizzle au lieu de Prisma, comptes invités)
-dans `docs/adr/0005` et `docs/adr/0006` ; les packs, la bêta et la Ligue dans `docs/adr/0007` à `0009`.
+- **Contenu** : validation du fon par les deux experts et enregistrement des audios au studio
+  (le pack de test affiche un bandeau tant que ce n'est pas fait).
+- **Essai sur téléphone** : Expo Go (SDK 57) ou APK de test, pour vérifier le son, les rappels et le
+  bouton « retour » d'Android, que le web ne montre pas.
+- **Serveur** : un VPS, un domaine et `docs/DEPLOIEMENT.md` (API, packs, HTTPS, sauvegardes).
+- **Google Play** : compte développeur, fiche, puis test fermé (12 testeurs pendant 14 jours).
+- **Expo SDK 58** : mise à jour dès la sortie de la version stable (en bêta au 14/10/2026).
+- **Atelier des experts** (`apps/backoffice`, prévu au cahier) : mis de côté pour l'instant.
+
+Les règles provisoires et les écarts à la maquette sont consignés dans `docs/adr/` : règles du jeu
+(0003), API (0005, 0006), packs (0007), bêta (0008), Ligue (0009), plusieurs unités (0010), code de
+récupération (0011), rappel quotidien (0012), vies, sortie de leçon et erreurs (0013).

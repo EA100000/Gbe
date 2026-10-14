@@ -149,6 +149,17 @@ export const fr = {
   'profile.accountBodyLocal': 'Ta progression reste sur ce téléphone, sans e-mail ni nom.',
   'profile.privacy': 'Confidentialité',
   'profile.delete': 'Supprimer mon compte',
+  // Écran 11 mis à jour pour la bêta (validé le 14/10/2026).
+  'profile.report': 'Signaler un problème',
+  'profile.reportHint': 'Par e-mail à l’équipe de Gbè',
+  'profile.version': 'Gbè {version}',
+  'profile.versionBeta': 'Gbè {version} · version bêta',
+  // Provisoire : contenu de l'e-mail de signalement (pas dans la maquette).
+  'report.subject': 'Gbè {version} : un problème',
+  'report.body':
+    'Décris ce qui s’est passé (écran, ce que tu faisais, ce que tu attendais) :\n\n\n—\nGbè {version} · {system}',
+  'report.android': 'Android (API {api})',
+  'report.ios': 'iOS {version}',
 
   'delete.close': 'Retour au profil',
   'delete.title': 'Supprimer ton compte ?',
