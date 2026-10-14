@@ -3,6 +3,7 @@ import fc from 'fast-check';
 import {
   computeHearts,
   FULL_HEARTS,
+  fullHeartsAt,
   HEART_REFILL_MS,
   loseHeart,
   MAX_HEARTS,
@@ -101,5 +102,43 @@ describe('nextHeartAt', () => {
 
   it('ne renvoie rien quand les vies sont pleines', () => {
     expect(nextHeartAt(FULL_HEARTS)).toBeNull();
+  });
+});
+
+describe('fullHeartsAt', () => {
+  it('rend l’instant où toutes les vies seront revenues', () => {
+    // Préparer : 5 vies perdues à T0, minuteur lancé à T0.
+    const state = computeHearts([T0, T0, T0, T0, T0], T0);
+    // Agir et vérifier
+    expect(state.count).toBe(0);
+    expect(fullHeartsAt(state)).toBe(T0 + 5 * HEART_REFILL_MS);
+  });
+
+  it('tient compte des vies déjà revenues', () => {
+    const state = computeHearts([T0, T0, T0], T0 + HEART_REFILL_MS + 1);
+    expect(state.count).toBe(3);
+    expect(fullHeartsAt(state)).toBe(T0 + 3 * HEART_REFILL_MS);
+  });
+
+  it('ne rend rien quand les vies sont pleines', () => {
+    expect(fullHeartsAt(FULL_HEARTS)).toBeNull();
+  });
+
+  it('n’arrive jamais avant la prochaine vie', () => {
+    fc.assert(
+      fc.property(
+        fc.array(fc.integer({ min: 0, max: 4 * HEART_REFILL_MS }), { maxLength: 8 }),
+        (offsets) => {
+          const state = computeHearts(
+            offsets.map((o) => T0 + o),
+            T0 + 4 * HEART_REFILL_MS,
+          );
+          const next = nextHeartAt(state);
+          const full = fullHeartsAt(state);
+          expect(full === null).toBe(next === null);
+          if (next !== null && full !== null) expect(full).toBeGreaterThanOrEqual(next);
+        },
+      ),
+    );
   });
 });

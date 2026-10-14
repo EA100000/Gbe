@@ -14,9 +14,13 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { AppBootstrap } from '../core/AppBootstrap';
 import { PersistenceProvider } from '../core/db/PersistenceProvider';
 import { initMonitoring } from '../core/monitoring/monitoring';
+import { ErrorScreen } from '../features/errors/ErrorScreen';
 import { queryClient } from '../core/query/queryClient';
 
 initMonitoring();
+
+/** Écran 19 : un écran qui plante est remplacé par « Oups, un souci ! » (Expo Router). */
+export const ErrorBoundary = ErrorScreen;
 void SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
@@ -48,6 +52,7 @@ export default function RootLayout() {
               <Stack.Screen name="recuperer" />
               <Stack.Screen name="code-recuperation" />
               <Stack.Screen name="rappel" />
+              <Stack.Screen name="vies" options={{ animation: 'fade' }} />
             </Stack>
           </AppBootstrap>
         </PersistenceProvider>

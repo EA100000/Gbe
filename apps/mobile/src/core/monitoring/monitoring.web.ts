@@ -2,3 +2,7 @@
 export function initMonitoring(): boolean {
   return false;
 }
+
+export function reportError(error: unknown): void {
+  console.error(error);
+}

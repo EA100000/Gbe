@@ -38,6 +38,10 @@ const ICONS = {
   leagueShield: `<svg viewBox="0 0 24 26"><path d="M12 1l9 3.5v7c0 6-4 10-9 13-5-3-9-7-9-13v-7z" fill="${colors.yellow}" stroke="${colors.yellowShadow}" stroke-width="1.2"/><ellipse cx="12" cy="12" rx="4" ry="5.5" fill="${colors.white}"/><path d="M12 8v8M10.6 10h1.4M10.6 12h1.4M10.6 14h1.4M12 11h1.4M12 13h1.4" stroke="${colors.ink}" stroke-width="0.8" fill="none"/></svg>`,
   shield: stroke('M12 2.5l8 3v6c0 5-3.4 8.6-8 10-4.6-1.4-8-5-8-10v-6zM9 12l2 2 4-4'),
   chevronLeft: stroke('M15 5l-7 7 7 7', 2.6),
+  lock: stroke(
+    'M7.5 10.5h9a2.5 2.5 0 0 1 2.5 2.5v5a2.5 2.5 0 0 1-2.5 2.5h-9A2.5 2.5 0 0 1 5 18v-5a2.5 2.5 0 0 1 2.5-2.5zM8.5 10.5V8a3.5 3.5 0 0 1 7 0v2.5',
+    2.4,
+  ),
   bell: stroke('M6 16.5V11a6 6 0 0 1 12 0v5.5l1.5 2h-15zM10 21a2 2 0 0 0 4 0'),
   bellOff: stroke('M6 16.5V11a6 6 0 0 1 9.2-5M18 11v5.5l1.5 2H8M10 21a2 2 0 0 0 4 0M3.5 3.5l17 17'),
   sunrise: stroke(

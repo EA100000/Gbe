@@ -29,6 +29,17 @@ export function formatDuration(ms: number): string {
   return `${minutes}:${String(seconds).padStart(2, '0')}`;
 }
 
+/** Attente à la française : « 24 min », « 2 h 24 », « 3 h » (arrondie à la minute supérieure). */
+export function formatWait(ms: number): string {
+  const minutes = Math.max(1, Math.ceil(ms / 60_000));
+  if (minutes < 60) return t('time.minutes', { n: minutes });
+  const h = Math.floor(minutes / 60);
+  const m = minutes % 60;
+  return m === 0
+    ? t('time.hoursExact', { h })
+    : t('time.hours', { h, m: String(m).padStart(2, '0') });
+}
+
 /** Pourcentage arrondi avec espace insécable, à la française (90 %). */
 export function formatPercent(ratio: number): string {
   return `${Math.round(ratio * 100)}\u00a0%`;

@@ -42,3 +42,9 @@ export function computeHearts(lossTimes: readonly number[], now: number): Hearts
 export function nextHeartAt(state: HeartsState): number | null {
   return state.refillFrom === null ? null : state.refillFrom + HEART_REFILL_MS;
 }
+
+/** Instant où toutes les vies seront revenues, ou `null` si elles sont déjà au maximum. */
+export function fullHeartsAt(state: HeartsState): number | null {
+  if (state.refillFrom === null || state.count >= MAX_HEARTS) return null;
+  return state.refillFrom + (MAX_HEARTS - state.count) * HEART_REFILL_MS;
+}

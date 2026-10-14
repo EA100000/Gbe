@@ -22,3 +22,8 @@ export function initMonitoring(
   });
   return true;
 }
+
+/** Envoie une erreur attrapée par l'écran « Un souci » (sans effet si Sentry n'est pas actif). */
+export function reportError(error: unknown): void {
+  Sentry.captureException(error);
+}
