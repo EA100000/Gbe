@@ -1,8 +1,12 @@
 import { fireEvent, render, screen } from '@testing-library/react-native';
 import { router } from 'expo-router';
 
+import { loadContent } from '../../core/content/content';
+import { useContentStore } from '../../core/content/contentStore';
 import { useProgressStore } from '../../core/progress/progressStore';
+import { bundledPacks } from '../../content/bundled-packs.generated';
 import { setupStores } from '../../test-utils/fixtures';
+import { bundledPackJson } from '../../test-utils/packFixtures';
 import { LessonEndScreen } from '../lesson/LessonEndScreen';
 import { WelcomeScreen } from '../onboarding/WelcomeScreen';
 import { PathScreen } from '../path/PathScreen';
@@ -58,6 +62,19 @@ describe('Chemin des leçons', () => {
     expect(
       screen.getByText('Contenu de test, pas encore validé par les experts'),
     ).toBeOnTheScreen();
+  });
+
+  it('passe à la nouvelle version du pack en revenant sur le chemin', async () => {
+    // Préparer : une version 2 a été téléchargée pendant une leçon.
+    await setupStores();
+    const v2 = loadContent(bundledPackJson(2), bundledPacks[0]?.audio ?? {});
+    if (!v2.ok) throw new Error('pack v2 invalide');
+    useContentStore.setState({ pending: [v2.content] });
+    // Agir
+    await render(<PathScreen />);
+    // Vérifier
+    expect(useContentStore.getState().content?.pack.version).toBe(2);
+    expect(useContentStore.getState().pending).toBeNull();
   });
 
   it('ouvre la calebasse une seule fois quand l’unité est terminée', async () => {

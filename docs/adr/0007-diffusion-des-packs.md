@@ -34,3 +34,13 @@ un pack qu'après en avoir vérifié l'empreinte.
 - Une ancienne version reste en ligne : un téléphone qui la télécharge pendant la mise à jour
   du catalogue obtient un pack complet et cohérent.
 - Plus tard, le back-office des linguistes pourra écrire le catalogue à la place du script.
+
+## Côté appli
+
+- Une version téléchargée est vérifiée de bout en bout (catalogue → manifeste → chaque fichier, puis
+  validation Zod) dans un dossier temporaire, puis déplacée d'un bloc dans `packs/<id>/<version>/`.
+- Au démarrage, l'appli garde pour chaque pack la version la plus récente entre le pack embarqué et
+  les versions installées encore intactes, et efface les autres.
+- Une version arrivée pendant la session n'est appliquée que sur le chemin des leçons.
+- Limites actuelles : l'appli n'affiche encore qu'une unité (l'affichage de plusieurs unités viendra
+  avec le contenu de l'unité 2) ; le web garde le pack embarqué.
