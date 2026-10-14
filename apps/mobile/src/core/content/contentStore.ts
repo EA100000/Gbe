@@ -78,3 +78,15 @@ export function useContent(): LoadedContent {
   if (content === null) throw new Error('Contenu non chargé');
   return content;
 }
+
+/**
+ * Pack qui contient la leçon (plusieurs unités peuvent être chargées).
+ * À défaut, l'unité affichée : l'écran de leçon gère lui-même une leçon introuvable.
+ */
+export function useContentForLesson(lessonId: string): LoadedContent {
+  const content = useContentStore(
+    (s) => s.contents.find((c) => c.lessonsById.has(lessonId)) ?? s.content,
+  );
+  if (content === null) throw new Error('Contenu non chargé');
+  return content;
+}

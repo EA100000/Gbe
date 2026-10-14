@@ -1,3 +1,4 @@
+import { buildPack } from '@gbe/content-schema/src/__fixtures__/pack';
 import type { GameEvent } from '@gbe/domain';
 
 import type { Clock } from '../core/clock';
@@ -74,13 +75,44 @@ export function memoryDatabase(): Database & {
 }
 
 /** Prépare les deux magasins (contenu et progression) comme au démarrage de l'appli. */
-export async function setupStores(options: { events?: GameEvent[]; clock?: Clock } = {}) {
+export async function setupStores(
+  options: { events?: GameEvent[]; clock?: Clock; extraUnits?: LoadedContent[] } = {},
+) {
   const db = memoryDatabase();
   const events = createEventRepository(db);
   if (options.events !== undefined) await events.append(options.events);
-  useContentStore.setState({ status: 'ready', content: testContent() });
+  const content = testContent();
+  useContentStore.setState({
+    status: 'ready',
+    content,
+    contents: [content, ...(options.extraUnits ?? [])],
+    pending: null,
+  });
   await useProgressStore
     .getState()
     .hydrate({ events, settings: createSettingsRepository(db) }, options.clock ?? fakeClock());
   return { db };
+}
+
+/**
+ * Unité supplémentaire pour les tests (pack factice du schéma de contenu) : textes neutres,
+ * aucun mot fon. Ses audios sont de simples numéros de ressource.
+ */
+export function fakeUnit(order: number, id = `u0${order}`): LoadedContent {
+  const base = buildPack();
+  const pack = {
+    ...base,
+    id: `test-${id}`,
+    unit: {
+      ...base.unit,
+      id,
+      order,
+      title: `Unité test ${order}`,
+      lessons: base.unit.lessons.map((l) => ({ ...l, id: `${id}-${l.id}` })),
+    },
+  };
+  const audio = Object.fromEntries(pack.audios.map((a, i) => [a.file, 9000 + i]));
+  const result = loadContent(pack, audio);
+  if (!result.ok) throw new Error(`Unité de test invalide : ${JSON.stringify(result.issues)}`);
+  return result.content;
 }

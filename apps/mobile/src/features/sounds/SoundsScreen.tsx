@@ -44,8 +44,9 @@ function ToneCurve({ contour }: { contour: keyof typeof CONTOURS }) {
 
 /** Écran 8 de la maquette : lettres propres au fon, voyelles nasales, tons. */
 export function SoundsScreen() {
-  const { pack } = useContent();
-  const playClip = useClipPlayer();
+  const content = useContent();
+  const { pack } = content;
+  const playClip = useClipPlayer(content);
   const [playing, setPlaying] = useState<string | null>(null);
   const guide = pack.sounds;
 

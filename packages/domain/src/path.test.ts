@@ -1,4 +1,5 @@
 import {
+  buildCoursePath,
   buildUnitPath,
   chestIdFor,
   chestsToOpen,
@@ -88,5 +89,41 @@ describe('storyUnlockedBy', () => {
 
   it('n’annonce rien si l’histoire est déjà terminée', () => {
     expect(storyUnlockedBy(unit, 'l2', new Set(['l1', 'story']))).toBeNull();
+  });
+});
+
+describe('buildCoursePath', () => {
+  const second: PathUnit = {
+    id: 'u02',
+    lessons: [
+      { id: 'u2-l1', kind: 'standard' },
+      { id: 'u2-l2', kind: 'standard' },
+    ],
+  };
+  const lessonStatuses = (sectionNodes: ReturnType<typeof buildUnitPath>) =>
+    sectionNodes.filter(isLessonNode).map((n) => n.status);
+
+  it('garde l’unité suivante verrouillée tant que la première n’est pas finie', () => {
+    // Préparer
+    const completed = new Set(['l1', 'l2']);
+    // Agir
+    const [first, next] = buildCoursePath([unit, second], completed);
+    // Vérifier
+    expect(first?.locked).toBe(false);
+    expect(next?.locked).toBe(true);
+    expect(lessonStatuses(next?.nodes ?? [])).toEqual(['locked', 'locked']);
+  });
+
+  it('ouvre la première leçon de l’unité suivante quand la précédente est finie', () => {
+    const [, next] = buildCoursePath([unit, second], new Set(['l1', 'l2', 'story']));
+    expect(next?.locked).toBe(false);
+    expect(lessonStatuses(next?.nodes ?? [])).toEqual(['current', 'locked']);
+  });
+
+  it('laisse rejouer une leçon terminée même si son unité est de nouveau verrouillée', () => {
+    // Cas d'une nouvelle version de l'unité 1 qui ajoute une leçon après coup.
+    const [, next] = buildCoursePath([unit, second], new Set(['l1', 'l2', 'u2-l1']));
+    expect(next?.locked).toBe(true);
+    expect(lessonStatuses(next?.nodes ?? [])).toEqual(['done', 'locked']);
   });
 });

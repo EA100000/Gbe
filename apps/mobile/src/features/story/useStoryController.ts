@@ -7,7 +7,7 @@ import { AccessibilityInfo } from 'react-native';
 import { preloadAudio, stopAudio } from '../../core/audio/audioService';
 import { useClipPlayer } from '../../core/audio/useClipPlayer';
 import { lessonAudioIds } from '../../core/content/content';
-import { useContent } from '../../core/content/contentStore';
+import { useContentForLesson } from '../../core/content/contentStore';
 import { t } from '../../core/i18n';
 import { lessonCompletedEvent } from '../../core/progress/eventFactory';
 import { useProgressStore } from '../../core/progress/progressStore';
@@ -22,12 +22,12 @@ import {
 
 /** Relie l'histoire au journal d'événements et à l'audio. */
 export function useStoryController(lessonId: string) {
-  const content = useContent();
+  const content = useContentForLesson(lessonId);
   const lesson = content.lessonsById.get(lessonId);
   const story = lesson?.exercises.find((e): e is StoryExercise => e.type === 'story');
   const clock = useProgressStore((s) => s.clock);
   const record = useProgressStore((s) => s.record);
-  const playClip = useClipPlayer();
+  const playClip = useClipPlayer(content);
   const [state, setState] = useState(initialStoryState);
   const startedAt = useRef(clock.now());
 

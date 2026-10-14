@@ -1,20 +1,37 @@
-import { buildUnitPath, CHEST_CAURIS, chestsToOpen, type PathLessonNode } from '@gbe/domain';
+import {
+  buildCoursePath,
+  CHEST_CAURIS,
+  chestsToOpen,
+  type PathLessonNode,
+  type PathNode,
+} from '@gbe/domain';
+import type { Unit } from '@gbe/content-schema';
 import { router, useFocusEffect } from 'expo-router';
 import { useCallback, useEffect, useMemo } from 'react';
 
-import { useContent, useContentStore } from '../../core/content/contentStore';
+import { useContentStore } from '../../core/content/contentStore';
 import { chestOpenedEvent } from '../../core/progress/eventFactory';
 import { useProgressStore, useProgressView } from '../../core/progress/progressStore';
 import { useNow } from '../../core/useNow';
 
-/** Données et actions de l'écran « Chemin des leçons ». */
+export interface UnitSection {
+  unit: Unit;
+  /** Vrai tant que l'unité précédente n'est pas terminée. */
+  locked: boolean;
+  /** Ordre de l'unité précédente, pour le libellé « termine d'abord l'unité N ». */
+  previousOrder: number | null;
+  /** Le pack de l'unité a un guide des sons. */
+  hasGuide: boolean;
+  nodes: PathNode[];
+}
+
+/** Données et actions de l'écran « Chemin des leçons » : toutes les unités, à la suite. */
 export function usePathController() {
-  const content = useContent();
+  const contents = useContentStore((s) => s.contents);
   const clock = useProgressStore((s) => s.clock);
   const record = useProgressStore((s) => s.record);
   const now = useNow();
   const { progress, hearts, streak } = useProgressView(now);
-  const unit = content.pack.unit;
 
   // Une nouvelle version de pack téléchargée s'applique ici : sur le chemin, aucune leçon n'est en cours.
   useFocusEffect(
@@ -27,18 +44,31 @@ export function usePathController() {
     }, []),
   );
 
-  const nodes = useMemo(
-    () => buildUnitPath(unit, progress.completedLessons),
-    [unit, progress.completedLessons],
-  );
+  const sections = useMemo<UnitSection[]>(() => {
+    const units = contents.map((c) => c.pack.unit);
+    return buildCoursePath(units, progress.completedLessons).map((section, i) => {
+      const content = contents[i];
+      if (content === undefined) throw new Error('Unité absente');
+      return {
+        unit: content.pack.unit,
+        locked: section.locked,
+        previousOrder: contents[i - 1]?.pack.unit.order ?? null,
+        hasGuide: content.pack.sounds !== undefined,
+        nodes: section.nodes,
+      };
+    });
+  }, [contents, progress.completedLessons]);
 
   // Une calebasse débloquée s'ouvre et crédite ses cauris (une seule fois, identifiant stable).
   useEffect(() => {
-    const toOpen = chestsToOpen(nodes, progress.openedChests);
+    const toOpen = chestsToOpen(
+      sections.flatMap((s) => s.nodes),
+      progress.openedChests,
+    );
     if (toOpen.length > 0) {
       void record(toOpen.map((id) => chestOpenedEvent(clock, id, CHEST_CAURIS)));
     }
-  }, [nodes, progress.openedChests, record, clock]);
+  }, [sections, progress.openedChests, record, clock]);
 
   const open = useCallback((node: PathLessonNode) => {
     if (node.status === 'locked') return;
@@ -51,8 +81,7 @@ export function usePathController() {
   }, []);
 
   return {
-    unit,
-    nodes,
+    sections,
     stats: { streak: streak.current, cauris: progress.cauris, hearts: hearts.count },
     open,
     openGuide: () => router.navigate('/sons'),

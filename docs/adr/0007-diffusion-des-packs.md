@@ -42,5 +42,5 @@ un pack qu'après en avoir vérifié l'empreinte.
 - Au démarrage, l'appli garde pour chaque pack la version la plus récente entre le pack embarqué et
   les versions installées encore intactes, et efface les autres.
 - Une version arrivée pendant la session n'est appliquée que sur le chemin des leçons.
-- Limites actuelles : l'appli n'affiche encore qu'une unité (l'affichage de plusieurs unités viendra
-  avec le contenu de l'unité 2) ; le web garde le pack embarqué.
+- Plusieurs unités : elles s'affichent à la suite sur le chemin (voir ADR 0010).
+- Limite actuelle : le web garde le pack embarqué.

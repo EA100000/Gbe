@@ -1,13 +1,15 @@
 import { fireEvent, render, screen } from '@testing-library/react-native';
 import { router } from 'expo-router';
 
+import { playAudio } from '../../core/audio/audioService';
 import { loadContent } from '../../core/content/content';
 import { useContentStore } from '../../core/content/contentStore';
 import { useProgressStore } from '../../core/progress/progressStore';
 import { bundledPacks } from '../../content/bundled-packs.generated';
-import { setupStores } from '../../test-utils/fixtures';
+import { fakeUnit, setupStores } from '../../test-utils/fixtures';
 import { bundledPackJson } from '../../test-utils/packFixtures';
 import { LessonEndScreen } from '../lesson/LessonEndScreen';
+import { LessonScreen } from '../lesson/LessonScreen';
 import { DeleteAccountScreen } from '../profile/DeleteAccountScreen';
 import { ProfileScreen } from '../profile/ProfileScreen';
 import { WelcomeScreen } from '../onboarding/WelcomeScreen';
@@ -239,5 +241,49 @@ describe('Suppression du compte', () => {
 
     expect(useProgressStore.getState().events).toHaveLength(1);
     expect(router.back).toHaveBeenCalled();
+  });
+});
+
+describe('Plusieurs unités', () => {
+  const unit1 = ['u01-l01', 'u01-l02', 'u01-l03', 'u01-l04', 'u01-histoire'];
+
+  it('affiche l’unité 2 verrouillée tant que l’unité 1 n’est pas finie', async () => {
+    // Préparer
+    await setupStores({ events: [completed('u01-l01', 'a')], extraUnits: [fakeUnit(2)] });
+    // Agir
+    await render(<PathScreen />);
+    // Vérifier
+    expect(
+      screen.getByLabelText('Unité 2 · Unité test 2, verrouillée : termine d’abord l’unité 1'),
+    ).toBeOnTheScreen();
+    expect(screen.getByLabelText('Leçon 1, verrouillée')).toBeDisabled();
+    expect(screen.getByLabelText('Leçon 2 : commencer')).toBeOnTheScreen();
+  });
+
+  it('ouvre la première leçon de l’unité 2 une fois l’unité 1 finie', async () => {
+    await setupStores({
+      events: unit1.map((id, i) => completed(id, `e${i}`)),
+      extraUnits: [fakeUnit(2)],
+    });
+    await render(<PathScreen />);
+
+    await fireEvent.press(screen.getByLabelText('Leçon 1 : commencer'));
+
+    expect(router.push).toHaveBeenCalledWith('/lecon/u02-l01');
+    expect(screen.queryByLabelText(/verrouillée : termine d’abord/)).toBeNull();
+  });
+
+  it('joue une leçon de l’unité 2 avec son propre contenu', async () => {
+    await setupStores({
+      events: unit1.map((id, i) => completed(id, `e${i}`)),
+      extraUnits: [fakeUnit(2)],
+    });
+
+    await render(<LessonScreen lessonId="u02-l01" />);
+
+    expect(await screen.findByText('Choisis la bonne image')).toBeOnTheScreen();
+    // Le son vient bien du pack de l'unité 2 (ressource 9000), pas de celui de l'unité 1.
+    await fireEvent.press(screen.getByTestId('choice-item-a'));
+    expect(playAudio).toHaveBeenCalledWith(9000);
   });
 });
