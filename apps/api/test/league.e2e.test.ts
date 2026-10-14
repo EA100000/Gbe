@@ -1,5 +1,6 @@
 import { LEAGUE_GROUP_SIZE } from '@gbe/domain';
 
+import { leagueMembers, users } from '../src/db/schema';
 import {
   lessonCompleted,
   resetDatabase,
@@ -113,16 +114,26 @@ describe('Ligue de la semaine', () => {
   });
 
   it(`ouvre un nouveau groupe après ${LEAGUE_GROUP_SIZE} apprenants`, async () => {
-    for (let i = 0; i < LEAGUE_GROUP_SIZE; i += 1) {
-      const auth = await learner('Hibou calme');
-      await ctx.http().get('/v1/league').set('Authorization', auth).expect(200);
-    }
+    // Préparer : un groupe déjà plein, écrit directement en base (rapide et sans hachage Argon2).
+    const full = await ctx.handle.db
+      .insert(users)
+      .values(
+        Array.from({ length: LEAGUE_GROUP_SIZE }, () => ({
+          secretHash: 'x',
+          pseudo: 'Hibou calme',
+        })),
+      )
+      .returning({ id: users.id });
+    await ctx.handle.db
+      .insert(leagueMembers)
+      .values(full.map((u) => ({ weekKey: '2026-10-12', groupNumber: 1, userId: u.id })));
     const late = await learner('Colibri agile');
 
+    // Agir
     const { body } = await ctx.http().get('/v1/league').set('Authorization', late).expect(200);
 
-    expect(body.members).toHaveLength(1);
-    expect(body.members[0]).toMatchObject({ pseudo: 'Colibri agile', isMe: true });
+    // Vérifier
+    expect(body.members).toEqual([{ rank: 1, pseudo: 'Colibri agile', xp: 0, isMe: true }]);
   });
 
   it('garde l’apprenant dans le même groupe toute la semaine', async () => {
