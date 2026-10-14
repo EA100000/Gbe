@@ -88,6 +88,21 @@ docs/adr/                 décisions d'architecture (dont les écarts à la maqu
 3. Passer `"validated": true`, augmenter `"version"`.
 4. `npm run content:build` puis `npm run content:validate`.
 
+## Publier les packs
+
+Les packs sont diffusés sur un stockage compatible S3 derrière un CDN : un dossier par version,
+jamais réécrit, et un `catalog.json` que l'appli consulte (`docs/adr/0007`).
+
+```bash
+npm run packs:publish                         # dist-packs/ : packs validés par les experts seulement
+npm run packs:publish -- --allow-unvalidated  # tests et bêta : publie aussi le pack de test
+npm run packs:serve                           # sert dist-packs/ sur le port 8090 (test local)
+npm run packs:upload                          # envoie sur S3 (variables S3_* du .env)
+```
+
+Pour modifier un pack déjà publié : changer ses fichiers, **augmenter `version`** dans `pack.json`,
+puis `content:build`, `packs:publish` et `packs:upload`. L'envoi refuse de réécrire une version en ligne.
+
 ## Tests
 
 | Où                        | Quoi                                                 | Nombre |
