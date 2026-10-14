@@ -1,5 +1,7 @@
 /** @type {import('jest').Config} */
 module.exports = {
+  // En CI, chaque test en échec devient une annotation lisible sur GitHub (sans ouvrir les journaux).
+  reporters: process.env.GITHUB_ACTIONS === 'true' ? ['default', 'github-actions'] : ['default'],
   preset: 'jest-expo',
   roots: ['<rootDir>/src'],
   setupFilesAfterEnv: ['<rootDir>/jest.setup.ts'],

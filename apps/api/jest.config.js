@@ -17,7 +17,11 @@ if (!hasDatabase) {
 
 /** @type {import('jest').Config} */
 module.exports = {
+  // En CI, chaque test en échec devient une annotation lisible sur GitHub (sans ouvrir les journaux).
+  reporters: process.env.GITHUB_ACTIONS === 'true' ? ['default', 'github-actions'] : ['default'],
   testEnvironment: 'node',
+  // Les tests sur base (hachage Argon2, PostgreSQL) sont plus lents sur les machines de CI.
+  testTimeout: 20_000,
   roots: ['<rootDir>/src', '<rootDir>/test'],
   transform: {
     '^.+\\.ts$': [
