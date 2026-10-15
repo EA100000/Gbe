@@ -93,8 +93,8 @@
     },
     {
       "lesson": "l03",
-      "ref": "je-m-appelle-marie",
-      "fr": "Je m’appelle Marie."
+      "ref": "je-m-appelle-camille",
+      "fr": "Je m’appelle Camille."
     },
     {
       "lesson": "l03",
@@ -124,7 +124,7 @@
       },
       {
         "speaker": "apprenant",
-        "fr": "Je m’appelle Marie. Et toi ?"
+        "fr": "Je m’appelle Camille. Et toi ?"
       },
       {
         "speaker": "vendeuse",
@@ -147,7 +147,7 @@
         "correct": true
       },
       {
-        "meaning": "je m’appelle Marie",
+        "meaning": "je m’appelle Camille",
         "correct": false
       },
       {

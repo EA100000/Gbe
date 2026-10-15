@@ -1,4 +1,5 @@
 import {
+  audioTakes,
   validatePack,
   type Exercise,
   type Illustration,
@@ -33,6 +34,8 @@ export interface LoadedContent {
   lessonsById: ReadonlyMap<string, Lesson>;
   /** Identifiant d'audio → source jouable (ressource embarquée ou fichier local). */
   audioSources: ReadonlyMap<string, number | string>;
+  /** Identifiant d'audio → ses prises : lui-même et l'autre voix du même texte (ADR 0016). */
+  audioTakes: ReadonlyMap<string, readonly string[]>;
 }
 
 export type ContentResult =
@@ -76,6 +79,7 @@ export function loadContent(
       illustrationsById: new Map(pack.illustrations.map((i) => [i.id, i])),
       lessonsById: new Map(pack.unit.lessons.map((l) => [l.id, l])),
       audioSources,
+      audioTakes: audioTakes(pack.audios),
     },
   };
 }
@@ -85,7 +89,7 @@ export function playableExercises(lesson: Lesson): SupportedExercise[] {
   return lesson.exercises.filter(isSupportedExercise);
 }
 
-/** Audios utilisés par une leçon, à précharger avant de commencer. */
+/** Audios utilisés par une leçon, toutes voix comprises, à précharger avant de commencer. */
 export function lessonAudioIds(lesson: Lesson, content: LoadedContent): string[] {
   const ids = new Set<string>();
   const addItem = (itemId: string) => {
@@ -111,5 +115,5 @@ export function lessonAudioIds(lesson: Lesson, content: LoadedContent): string[]
         break;
     }
   }
-  return [...ids];
+  return [...new Set([...ids].flatMap((id) => content.audioTakes.get(id) ?? [id]))];
 }

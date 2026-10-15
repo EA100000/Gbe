@@ -20,7 +20,8 @@ et le paiement par unité, prévu plus tard, suppose un flux régulier d'unités
 - **Bon de commande** : `content/sources/<pack>/commande.json` décrit le plan en français
   (aucun mot fon). `npm run content:workbook -- --commande …` en tire le classeur à envoyer.
 - **Import** : `npm run content:import -- <classeur.xlsx>` écrit `content/packs/<pack>/pack.json`
-  et `enregistrements.csv` (la liste des fichiers à enregistrer, avec le texte à lire).
+  et une liste des fichiers à enregistrer, avec le texte à lire (une par voix depuis l'ADR 0016 :
+  `enregistrements-homme.csv`, `enregistrements-femme.csv`).
   Les erreurs sont listées par feuille et par ligne, en français, et rien n'est écrit tant qu'il en
   reste. Le fon est normalisé en NFC à la lecture. La version augmente seulement si le contenu
   change (ADR 0007). Les durées des audios déjà déposés sont mesurées (ffprobe), sinon estimées.

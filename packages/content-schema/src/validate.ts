@@ -1,4 +1,4 @@
-import type { Manifest, Pack } from './schema';
+import type { Audio, Manifest, Pack } from './schema';
 import { ManifestSchema, PackSchema, SUPPORTED_FORMAT_VERSIONS } from './schema';
 
 export type PackIssueCode =
@@ -10,6 +10,7 @@ export type PackIssueCode =
   | 'missing_illustration'
   | 'missing_audio'
   | 'story_answer'
+  | 'audio_group'
   | 'manifest_mismatch'
   | 'manifest_missing_file'
   | 'hash_mismatch';
@@ -97,6 +98,16 @@ function checkConsistency(pack: Pack): PackIssue[] {
   for (const [path, ids] of groups) {
     for (const duplicate of findDuplicates(ids)) {
       add('duplicate_id', path, `Identifiant en double : ${duplicate}`);
+    }
+  }
+
+  // Un groupe réunit les prises d'un même texte : une par voix, toutes à la même vitesse.
+  for (const [group, takes] of groupAudios(pack.audios)) {
+    if (new Set(takes.map((t) => t.speed)).size > 1) {
+      add('audio_group', `audios.${group}`, `Groupe ${group} : des vitesses différentes`);
+    }
+    if (new Set(takes.map((t) => t.voice)).size < takes.length) {
+      add('audio_group', `audios.${group}`, `Groupe ${group} : deux prises de la même voix`);
     }
   }
 
@@ -280,4 +291,33 @@ export function verifyManifest(
   }
 
   return issues.length === 0 ? { ok: true, manifest } : { ok: false, issues };
+}
+
+/** Audios rangés par groupe de prises ; les audios sans groupe n'y figurent pas. */
+function groupAudios(audios: readonly Audio[]): Map<string, Audio[]> {
+  const groups = new Map<string, Audio[]>();
+  for (const audio of audios) {
+    if (audio.group !== undefined) {
+      groups.set(audio.group, [...(groups.get(audio.group) ?? []), audio]);
+    }
+  }
+  return groups;
+}
+
+/**
+ * Prises jouables pour chaque audio : lui-même et les autres voix de son groupe, voix A d'abord.
+ * Un audio sans groupe n'a qu'une prise : lui-même.
+ */
+export function audioTakes(audios: readonly Audio[]): Map<string, string[]> {
+  const groups = groupAudios(audios);
+  const takes = new Map<string, string[]>();
+  for (const audio of audios) {
+    const group = audio.group === undefined ? [audio] : (groups.get(audio.group) ?? [audio]);
+    const ordered = [...group].sort((a, b) => a.voice.localeCompare(b.voice));
+    takes.set(
+      audio.id,
+      ordered.map((take) => take.id),
+    );
+  }
+  return takes;
 }

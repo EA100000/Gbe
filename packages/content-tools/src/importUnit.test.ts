@@ -117,7 +117,7 @@ describe('import du classeur des experts', () => {
     expect(review?.exercises.every((exercise) => exercise.tag?.kind === 'review')).toBe(true);
   });
 
-  it('construit l’histoire : voix B pour la vendeuse, réplique à écouter sans texte', () => {
+  it('construit l’histoire : voix de femme pour la vendeuse, réplique à écouter sans texte', () => {
     const { pack, recordings } = expectPack(importFilled());
 
     const story = pack.unit.lessons[4]?.exercises[0];
@@ -146,30 +146,51 @@ describe('import du classeur des experts', () => {
     });
   });
 
-  it('liste un enregistrement normal et un lent par mot et par phrase, plus les répliques', () => {
+  it('fait enregistrer chaque mot et chaque phrase par les deux voix, aux deux vitesses', () => {
     const { pack, recordings } = expectPack(importFilled());
 
-    expect(recordings).toHaveLength(12 * 2 + 3);
+    expect(recordings).toHaveLength(12 * 4 + 3);
     expect(pack.audios.map((audio) => audio.file)).toEqual(recordings.map((r) => r.file));
-    expect(recordings[0]).toEqual({
-      file: 'audio/pomme-n.m4a',
-      voice: 'A',
-      speed: 'normal',
-      fon: 'pa',
-      fr: 'pomme',
+    expect(recordings.slice(0, 4)).toEqual([
+      { file: 'audio/pomme-a-n.m4a', voice: 'A', speed: 'normal', fon: 'pa', fr: 'pomme' },
+      { file: 'audio/pomme-b-n.m4a', voice: 'B', speed: 'normal', fon: 'pa', fr: 'pomme' },
+      { file: 'audio/pomme-a-l.m4a', voice: 'A', speed: 'slow', fon: 'pa', fr: 'pomme' },
+      { file: 'audio/pomme-b-l.m4a', voice: 'B', speed: 'slow', fon: 'pa', fr: 'pomme' },
+    ]);
+  });
+
+  it('range les deux voix d’un même texte dans un groupe, par vitesse', () => {
+    const { pack } = expectPack(importFilled());
+
+    const groupOf = (id: string) => pack.audios.find((audio) => audio.id === id)?.group;
+    expect([groupOf('pomme-a-n'), groupOf('pomme-b-n')]).toEqual(['pomme-n', 'pomme-n']);
+    expect([groupOf('pomme-a-l'), groupOf('pomme-b-l')]).toEqual(['pomme-l', 'pomme-l']);
+    expect(pack.items.find((item) => item.id === 'pomme')?.audio).toEqual({
+      normal: 'pomme-a-n',
+      slow: 'pomme-a-l',
     });
-    expect(recordings[1]).toMatchObject({ file: 'audio/pomme-l.m4a', speed: 'slow' });
+  });
+
+  it('garde une seule voix par personnage dans l’histoire', () => {
+    const { pack } = expectPack(importFilled());
+
+    const lines = pack.audios.filter((audio) => audio.id.startsWith('histoire-'));
+    expect(lines.map((audio) => [audio.id, audio.voice, audio.group])).toEqual([
+      ['histoire-1', 'B', undefined],
+      ['histoire-2', 'A', undefined],
+      ['histoire-3', 'B', undefined],
+    ]);
   });
 
   it('reprend les durées mesurées des enregistrements existants', () => {
     const result = importUnit({
       workbook: filledWorkbook(),
       drawings: DRAWINGS,
-      durations: new Map([['pomme-n', 1234]]),
+      durations: new Map([['pomme-b-n', 1234]]),
     });
 
     const { pack } = expectPack(result);
-    expect(pack.audios.find((audio) => audio.id === 'pomme-n')?.durationMs).toBe(1234);
+    expect(pack.audios.find((audio) => audio.id === 'pomme-b-n')?.durationMs).toBe(1234);
   });
 
   it('produit exactement le même pack à chaque import', () => {

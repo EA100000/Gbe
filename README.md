@@ -101,8 +101,10 @@ npm run audio:placeholders && npm run content:build && npm run content:validate
 ```
 
 `commande.json` décrit le plan en français (leçons, mots, phrases, histoire). L'import liste les
-erreurs par feuille et par ligne, génère les exercices et écrit `enregistrements.csv` : les fichiers
-audio à enregistrer, avec le texte à lire. Les dessins des mots illustrés vont dans
+erreurs par feuille et par ligne, génère les exercices et écrit une liste par voix,
+`enregistrements-homme.csv` et `enregistrements-femme.csv` : les fichiers audio à enregistrer, avec
+le texte à lire. Chaque mot et chaque phrase est dit par les deux voix ; l'appli les alterne
+(ADR 0016). Les dessins des mots illustrés vont dans
 `content/sources/<pack>/illustrations/<réf>.svg`.
 
 ## Remplacer le contenu de test

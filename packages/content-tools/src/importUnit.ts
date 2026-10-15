@@ -79,8 +79,26 @@ const SPEAKERS: Record<string, StoryLine['speaker']> = {
   apprenante: 'learner',
 };
 
-/** Voix des enregistrements : A pour l'apprenant et le lexique, B pour la vendeuse. */
+/** Les deux voix des experts (ADR 0016) : A, la voix d'homme ; B, la voix de femme. */
+export const VOICE_NAMES: Record<Audio['voice'], string> = { A: 'homme', B: 'femme' };
+
+/** Dans l'histoire, chaque personnage garde sa voix : l'apprenant, l'homme ; la vendeuse, la femme. */
 const VOICE_OF: Record<StoryLine['speaker'], Audio['voice']> = { learner: 'A', vendor: 'B' };
+
+const SPEED_SUFFIX: Record<Audio['speed'], string> = { normal: 'n', slow: 'l' };
+
+/** Identifiant d'une prise : `<réf>-<voix>-<vitesse>`, par exemple `pomme-b-l`. */
+const takeId = (ref: string, voice: Audio['voice'], speed: Audio['speed']) =>
+  `${ref}-${voice.toLowerCase()}-${SPEED_SUFFIX[speed]}`;
+
+type AddAudio = (
+  id: string,
+  voice: Audio['voice'],
+  speed: Audio['speed'],
+  fon: string,
+  fr: string,
+  group?: string,
+) => void;
 
 interface PlannedLesson extends LessonRef {
   type: LessonType;
@@ -217,7 +235,7 @@ export function importUnit(options: ImportOptions): ImportResult {
       tiles: splitTiles(values.fon),
       image: image === true,
       ...(values.note === '' ? {} : { note: values.note }),
-      audio: `${values.ref}-n`,
+      audio: takeId(values.ref, 'A', 'normal'),
     });
   }
 
@@ -241,7 +259,7 @@ export function importUnit(options: ImportOptions): ImportResult {
       tiles,
       image: false,
       ...(values.note === '' ? {} : { note: values.note }),
-      audio: `${values.ref}-n`,
+      audio: takeId(values.ref, 'A', 'normal'),
     });
   }
 
@@ -320,13 +338,7 @@ export function importUnit(options: ImportOptions): ImportResult {
   // Construction du pack
   const audios: Audio[] = [];
   const recordings: Recording[] = [];
-  const addAudio = (
-    id: string,
-    voice: Audio['voice'],
-    speed: Audio['speed'],
-    fon: string,
-    fr: string,
-  ) => {
+  const addAudio: AddAudio = (id, voice, speed, fon, fr, group) => {
     const file = `audio/${id}.m4a`;
     audios.push({
       id,
@@ -334,6 +346,7 @@ export function importUnit(options: ImportOptions): ImportResult {
       voice,
       speed,
       durationMs: durations.get(id) ?? estimateDurationMs(fon, speed),
+      ...(group === undefined ? {} : { group }),
     });
     recordings.push({ file, voice, speed, fon, fr });
   };
@@ -341,9 +354,14 @@ export function importUnit(options: ImportOptions): ImportResult {
   const items: LexiconItem[] = [];
   const illustrations: Illustration[] = [];
   for (const entry of entries) {
-    const slow = `${entry.ref}-l`;
-    addAudio(entry.audio, 'A', 'normal', entry.fon, entry.fr);
-    addAudio(slow, 'A', 'slow', entry.fon, entry.fr);
+    // Les deux experts disent chaque mot et chaque phrase, aux deux vitesses : l'appli alterne
+    // les voix d'un même groupe. Les éléments et les exercices citent la prise de la voix A.
+    for (const speed of ['normal', 'slow'] as const) {
+      for (const voice of ['A', 'B'] as const) {
+        const group = `${entry.ref}-${SPEED_SUFFIX[speed]}`;
+        addAudio(takeId(entry.ref, voice, speed), voice, speed, entry.fon, entry.fr, group);
+      }
+    }
     const drawing = entry.image ? drawings.get(entry.ref) : undefined;
     if (drawing !== undefined) illustrations.push({ id: `ill-${entry.ref}`, svg: drawing.trim() });
     items.push({
@@ -352,7 +370,7 @@ export function importUnit(options: ImportOptions): ImportResult {
       fr: entry.fr,
       ...(entry.kind === 'word' && entry.note !== undefined ? { note: entry.note } : {}),
       ...(drawing === undefined ? {} : { illustration: `ill-${entry.ref}` }),
-      audio: { normal: entry.audio, slow },
+      audio: { normal: entry.audio, slow: takeId(entry.ref, 'A', 'slow') },
     });
   }
 
@@ -411,13 +429,7 @@ function storyExercise(
   lines: readonly PlannedLine[],
   question: Record<keyof typeof QUESTION_FIELDS, string>,
   choices: readonly { fon: string; correct: boolean; explanation: RichText }[],
-  addAudio: (
-    id: string,
-    voice: Audio['voice'],
-    speed: Audio['speed'],
-    fon: string,
-    fr: string,
-  ) => void,
+  addAudio: AddAudio,
 ): StoryExercise {
   return {
     id: `${lesson.id}-e01`,
