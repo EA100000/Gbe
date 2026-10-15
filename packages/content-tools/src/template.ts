@@ -15,6 +15,8 @@ export const UnitPlanSchema = z
       order: z.number().int().positive(),
       title: z.string().min(1),
       subtitle: z.string().min(1),
+      /** Notion de grammaire visée : une indication pour les experts, jamais affichée dans l'appli. */
+      grammar: z.string().min(1).optional(),
     }),
     lessons: z
       .array(
@@ -102,6 +104,9 @@ export const GUIDE: readonly string[] = [
   'Ensuite, nous vous envoyons la liste des enregistrements : chaque mot et chaque phrase en vitesse normale et lente (voix A), les répliques de l’histoire (voix A pour l’apprenant, voix B pour la vendeuse).',
 ];
 
+/** Ligne d'information de la feuille Unité, lue par les experts et ignorée à l'import. */
+export const GRAMMAR_FIELD = 'Notion de grammaire visée (pour les experts, non importée)';
+
 const header = (labels: readonly string[]): TemplateCell[] =>
   labels.map((value) => ({ value, style: 'header' }));
 const given = (value: string | undefined): TemplateCell => ({ value: value ?? '', style: 'given' });
@@ -138,6 +143,7 @@ export function buildTemplate(plan?: UnitPlan): TemplateSheet[] {
         [given(UNIT_FIELDS.title), given(unit?.title)],
         [given(UNIT_FIELDS.subtitle), given(unit?.subtitle)],
         [given(UNIT_FIELDS.validated), { value: 'non', style: 'todo' }],
+        [given(GRAMMAR_FIELD), given(unit?.grammar)],
       ],
     },
     {

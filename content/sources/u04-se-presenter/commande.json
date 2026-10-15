@@ -1,0 +1,159 @@
+{
+  "unit": {
+    "id": "u04",
+    "pack": "u04-se-presenter",
+    "order": 4,
+    "title": "Se présenter",
+    "subtitle": "Dire son nom, d’où l’on vient et où l’on habite",
+    "grammar": "je et tu"
+  },
+  "lessons": [
+    {
+      "ref": "l01",
+      "type": "leçon",
+      "title": "Moi et toi",
+      "summary": "Tu sais dire moi, toi, nom et ami."
+    },
+    {
+      "ref": "l02",
+      "type": "leçon",
+      "title": "D’où viens-tu ?",
+      "summary": "Tu nommes des pays et des villes."
+    },
+    {
+      "ref": "l03",
+      "type": "leçon",
+      "title": "Je me présente",
+      "summary": "Tu te présentes en quelques phrases."
+    },
+    {
+      "ref": "l04",
+      "type": "révision",
+      "title": "Révision de l’unité",
+      "summary": "Tu as révisé toute l’unité 4."
+    },
+    {
+      "ref": "histoire",
+      "type": "histoire",
+      "title": "Faire connaissance"
+    }
+  ],
+  "words": [
+    {
+      "lesson": "l01",
+      "ref": "moi",
+      "fr": "moi"
+    },
+    {
+      "lesson": "l01",
+      "ref": "toi",
+      "fr": "toi"
+    },
+    {
+      "lesson": "l01",
+      "ref": "nom",
+      "fr": "nom"
+    },
+    {
+      "lesson": "l01",
+      "ref": "ami",
+      "fr": "ami"
+    },
+    {
+      "lesson": "l02",
+      "ref": "benin",
+      "fr": "Bénin"
+    },
+    {
+      "lesson": "l02",
+      "ref": "france",
+      "fr": "France"
+    },
+    {
+      "lesson": "l02",
+      "ref": "cotonou",
+      "fr": "Cotonou"
+    },
+    {
+      "lesson": "l02",
+      "ref": "ville",
+      "fr": "ville"
+    },
+    {
+      "lesson": "l02",
+      "ref": "village",
+      "fr": "village"
+    }
+  ],
+  "sentences": [
+    {
+      "lesson": "l03",
+      "ref": "comment-t-appelles-tu",
+      "fr": "Comment t’appelles-tu ?"
+    },
+    {
+      "lesson": "l03",
+      "ref": "je-m-appelle-marie",
+      "fr": "Je m’appelle Marie."
+    },
+    {
+      "lesson": "l03",
+      "ref": "d-ou-viens-tu",
+      "fr": "D’où viens-tu ?"
+    },
+    {
+      "lesson": "l03",
+      "ref": "je-viens-de-france",
+      "fr": "Je viens de France."
+    },
+    {
+      "lesson": "l03",
+      "ref": "j-habite-a-cotonou",
+      "fr": "J’habite à Cotonou."
+    }
+  ],
+  "story": {
+    "title": "La vendeuse fait connaissance",
+    "setting": "Au marché",
+    "prompt": "Que réponds-tu à son accueil ?",
+    "success": "Bien présenté !",
+    "lines": [
+      {
+        "speaker": "vendeuse",
+        "fr": "Bonjour ! Comment t’appelles-tu ?"
+      },
+      {
+        "speaker": "apprenant",
+        "fr": "Je m’appelle Marie. Et toi ?"
+      },
+      {
+        "speaker": "vendeuse",
+        "fr": "Moi, c’est Maman Rose. D’où viens-tu ?",
+        "audioOnly": true,
+        "hint": "Écoute : comment s’appelle-t-elle ?"
+      },
+      {
+        "speaker": "apprenant",
+        "fr": "Je viens de France, mais j’habite à Cotonou."
+      },
+      {
+        "speaker": "vendeuse",
+        "fr": "Bienvenue à Cotonou !"
+      }
+    ],
+    "choices": [
+      {
+        "meaning": "merci",
+        "correct": true
+      },
+      {
+        "meaning": "je m’appelle Marie",
+        "correct": false
+      },
+      {
+        "meaning": "au revoir",
+        "correct": false
+      }
+    ]
+  }
+}

@@ -1,0 +1,154 @@
+{
+  "unit": {
+    "id": "u18",
+    "pack": "u18-aimer-et-vouloir",
+    "order": 18,
+    "title": "Aimer et vouloir",
+    "subtitle": "Dire ce qu’on aime ou ce qu’on refuse",
+    "grammar": "la négation"
+  },
+  "lessons": [
+    {
+      "ref": "l01",
+      "type": "leçon",
+      "title": "Aimer et vouloir",
+      "summary": "Tu sais dire aimer, vouloir, refuser et préférer."
+    },
+    {
+      "ref": "l02",
+      "type": "leçon",
+      "title": "Oui ou non",
+      "summary": "Tu réponds oui, non ou peut-être."
+    },
+    {
+      "ref": "l03",
+      "type": "leçon",
+      "title": "J’aime, je n’aime pas",
+      "summary": "Tu dis ce que tu aimes et ce que tu refuses."
+    },
+    {
+      "ref": "l04",
+      "type": "révision",
+      "title": "Révision de l’unité",
+      "summary": "Tu as révisé toute l’unité 18."
+    },
+    {
+      "ref": "histoire",
+      "type": "histoire",
+      "title": "L’invitation"
+    }
+  ],
+  "words": [
+    {
+      "lesson": "l01",
+      "ref": "aimer",
+      "fr": "aimer"
+    },
+    {
+      "lesson": "l01",
+      "ref": "vouloir",
+      "fr": "vouloir"
+    },
+    {
+      "lesson": "l01",
+      "ref": "refuser",
+      "fr": "refuser"
+    },
+    {
+      "lesson": "l01",
+      "ref": "preferer",
+      "fr": "préférer"
+    },
+    {
+      "lesson": "l02",
+      "ref": "oui",
+      "fr": "oui"
+    },
+    {
+      "lesson": "l02",
+      "ref": "non",
+      "fr": "non"
+    },
+    {
+      "lesson": "l02",
+      "ref": "peut-etre",
+      "fr": "peut-être"
+    },
+    {
+      "lesson": "l02",
+      "ref": "pas-du-tout",
+      "fr": "pas du tout"
+    }
+  ],
+  "sentences": [
+    {
+      "lesson": "l03",
+      "ref": "j-aime-le-poisson",
+      "fr": "J’aime le poisson."
+    },
+    {
+      "lesson": "l03",
+      "ref": "je-n-aime-pas-ca",
+      "fr": "Je n’aime pas ça."
+    },
+    {
+      "lesson": "l03",
+      "ref": "je-ne-veux-pas",
+      "fr": "Je ne veux pas."
+    },
+    {
+      "lesson": "l03",
+      "ref": "tu-veux-venir",
+      "fr": "Tu veux venir ?"
+    },
+    {
+      "lesson": "l03",
+      "ref": "je-veux-bien",
+      "fr": "Je veux bien."
+    }
+  ],
+  "story": {
+    "title": "Dîner chez Maman Rose",
+    "setting": "Au marché",
+    "prompt": "Que réponds-tu ?",
+    "success": "Invitation acceptée !",
+    "lines": [
+      {
+        "speaker": "vendeuse",
+        "fr": "Tu veux venir manger chez moi ce soir ?"
+      },
+      {
+        "speaker": "apprenant",
+        "fr": "Je veux bien ! Tu cuisines du poisson ?"
+      },
+      {
+        "speaker": "vendeuse",
+        "fr": "Non, je fais de la viande.",
+        "audioOnly": true,
+        "hint": "Écoute : que prépare-t-elle ?"
+      },
+      {
+        "speaker": "apprenant",
+        "fr": "J’aime aussi la viande !"
+      },
+      {
+        "speaker": "vendeuse",
+        "fr": "Alors à ce soir !"
+      }
+    ],
+    "choices": [
+      {
+        "meaning": "merci",
+        "correct": true
+      },
+      {
+        "meaning": "je ne veux pas",
+        "correct": false
+      },
+      {
+        "meaning": "j’ai mal à la tête",
+        "correct": false
+      }
+    ]
+  }
+}

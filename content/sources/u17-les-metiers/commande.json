@@ -1,0 +1,154 @@
+{
+  "unit": {
+    "id": "u17",
+    "pack": "u17-les-metiers",
+    "order": 17,
+    "title": "Les métiers",
+    "subtitle": "Dire ce qu’on fait dans la vie",
+    "grammar": "être et faire"
+  },
+  "lessons": [
+    {
+      "ref": "l01",
+      "type": "leçon",
+      "title": "Au travail",
+      "summary": "Tu nommes quatre métiers."
+    },
+    {
+      "ref": "l02",
+      "type": "leçon",
+      "title": "D’autres métiers",
+      "summary": "Tu nommes quatre autres métiers."
+    },
+    {
+      "ref": "l03",
+      "type": "leçon",
+      "title": "Que fais-tu ?",
+      "summary": "Tu dis ce que tu fais dans la vie."
+    },
+    {
+      "ref": "l04",
+      "type": "révision",
+      "title": "Révision de l’unité",
+      "summary": "Tu as révisé toute l’unité 17."
+    },
+    {
+      "ref": "histoire",
+      "type": "histoire",
+      "title": "Les métiers du marché"
+    }
+  ],
+  "words": [
+    {
+      "lesson": "l01",
+      "ref": "vendeuse",
+      "fr": "vendeuse"
+    },
+    {
+      "lesson": "l01",
+      "ref": "cultivateur",
+      "fr": "cultivateur"
+    },
+    {
+      "lesson": "l01",
+      "ref": "enseignant",
+      "fr": "enseignant"
+    },
+    {
+      "lesson": "l01",
+      "ref": "couturier",
+      "fr": "couturier"
+    },
+    {
+      "lesson": "l02",
+      "ref": "conducteur",
+      "fr": "conducteur"
+    },
+    {
+      "lesson": "l02",
+      "ref": "medecin",
+      "fr": "médecin"
+    },
+    {
+      "lesson": "l02",
+      "ref": "pecheur",
+      "fr": "pêcheur"
+    },
+    {
+      "lesson": "l02",
+      "ref": "etudiant",
+      "fr": "étudiant"
+    }
+  ],
+  "sentences": [
+    {
+      "lesson": "l03",
+      "ref": "que-fais-tu",
+      "fr": "Que fais-tu dans la vie ?"
+    },
+    {
+      "lesson": "l03",
+      "ref": "je-suis-enseignant",
+      "fr": "Je suis enseignant."
+    },
+    {
+      "lesson": "l03",
+      "ref": "je-vends-au-marche",
+      "fr": "Je vends au marché."
+    },
+    {
+      "lesson": "l03",
+      "ref": "je-travaille-a-cotonou",
+      "fr": "Je travaille à Cotonou."
+    },
+    {
+      "lesson": "l03",
+      "ref": "je-suis-etudiant",
+      "fr": "Je suis étudiant."
+    }
+  ],
+  "story": {
+    "title": "Vingt ans au marché",
+    "setting": "Au marché",
+    "prompt": "Comment lui demandes-tu ce qu’elle fait ?",
+    "success": "Bonne question !",
+    "lines": [
+      {
+        "speaker": "vendeuse",
+        "fr": "Que fais-tu dans la vie ?"
+      },
+      {
+        "speaker": "apprenant",
+        "fr": "Je suis étudiant. Et toi ?"
+      },
+      {
+        "speaker": "vendeuse",
+        "fr": "Moi, je vends au marché depuis vingt ans.",
+        "audioOnly": true,
+        "hint": "Écoute : depuis combien de temps vend-elle ?"
+      },
+      {
+        "speaker": "apprenant",
+        "fr": "Vingt ans ! Bon courage !"
+      },
+      {
+        "speaker": "vendeuse",
+        "fr": "Merci, mon enfant."
+      }
+    ],
+    "choices": [
+      {
+        "meaning": "que fais-tu dans la vie ?",
+        "correct": true
+      },
+      {
+        "meaning": "où est le marché ?",
+        "correct": false
+      },
+      {
+        "meaning": "tu as faim ?",
+        "correct": false
+      }
+    ]
+  }
+}

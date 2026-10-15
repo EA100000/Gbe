@@ -1,0 +1,158 @@
+{
+  "unit": {
+    "id": "u15",
+    "pack": "u15-se-deplacer",
+    "order": 15,
+    "title": "Se déplacer",
+    "subtitle": "Guider un taxi-moto",
+    "grammar": "aller et venir"
+  },
+  "lessons": [
+    {
+      "ref": "l01",
+      "type": "leçon",
+      "title": "Sur la route",
+      "summary": "Tu nommes le taxi-moto, la voiture, la route et le carrefour."
+    },
+    {
+      "ref": "l02",
+      "type": "leçon",
+      "title": "Les directions",
+      "summary": "Tu dis à gauche, à droite et tout droit."
+    },
+    {
+      "ref": "l03",
+      "type": "leçon",
+      "title": "En taxi-moto",
+      "summary": "Tu guides un conducteur."
+    },
+    {
+      "ref": "l04",
+      "type": "révision",
+      "title": "Révision de l’unité",
+      "summary": "Tu as révisé toute l’unité 15."
+    },
+    {
+      "ref": "histoire",
+      "type": "histoire",
+      "title": "Trouver son chemin"
+    }
+  ],
+  "words": [
+    {
+      "lesson": "l01",
+      "ref": "taxi-moto",
+      "fr": "taxi-moto",
+      "image": true
+    },
+    {
+      "lesson": "l01",
+      "ref": "voiture",
+      "fr": "voiture",
+      "image": true
+    },
+    {
+      "lesson": "l01",
+      "ref": "route",
+      "fr": "route",
+      "image": true
+    },
+    {
+      "lesson": "l01",
+      "ref": "carrefour",
+      "fr": "carrefour",
+      "image": true
+    },
+    {
+      "lesson": "l02",
+      "ref": "a-gauche",
+      "fr": "à gauche"
+    },
+    {
+      "lesson": "l02",
+      "ref": "a-droite",
+      "fr": "à droite"
+    },
+    {
+      "lesson": "l02",
+      "ref": "tout-droit",
+      "fr": "tout droit"
+    },
+    {
+      "lesson": "l02",
+      "ref": "ici",
+      "fr": "ici"
+    }
+  ],
+  "sentences": [
+    {
+      "lesson": "l03",
+      "ref": "va-tout-droit",
+      "fr": "Va tout droit."
+    },
+    {
+      "lesson": "l03",
+      "ref": "tourne-a-gauche",
+      "fr": "Tourne à gauche."
+    },
+    {
+      "lesson": "l03",
+      "ref": "arrete-toi-ici",
+      "fr": "Arrête-toi ici."
+    },
+    {
+      "lesson": "l03",
+      "ref": "je-vais-au-marche",
+      "fr": "Je vais au marché."
+    },
+    {
+      "lesson": "l03",
+      "ref": "combien-pour-le-marche",
+      "fr": "Combien pour aller au marché ?"
+    }
+  ],
+  "story": {
+    "title": "Le chemin de la pharmacie",
+    "setting": "En ville",
+    "prompt": "Que dis-tu au conducteur pour qu’il s’arrête ?",
+    "success": "Bien arrivé !",
+    "lines": [
+      {
+        "speaker": "vendeuse",
+        "fr": "Tu vas où ?"
+      },
+      {
+        "speaker": "apprenant",
+        "fr": "Je vais à la pharmacie."
+      },
+      {
+        "speaker": "vendeuse",
+        "fr": "Va tout droit, puis tourne à gauche au carrefour.",
+        "audioOnly": true,
+        "hint": "Écoute le chemin."
+      },
+      {
+        "speaker": "apprenant",
+        "fr": "Tout droit, puis à gauche. Merci !"
+      },
+      {
+        "speaker": "vendeuse",
+        "fr": "Prends un taxi-moto, c’est loin !"
+      }
+    ],
+    "choices": [
+      {
+        "meaning": "arrête-toi ici",
+        "correct": true
+      },
+      {
+        "meaning": "tourne à gauche",
+        "correct": false
+      },
+      {
+        "meaning": "bon appétit",
+        "correct": false
+      }
+    ]
+  }
+}

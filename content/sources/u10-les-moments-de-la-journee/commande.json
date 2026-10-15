@@ -1,0 +1,154 @@
+{
+  "unit": {
+    "id": "u10",
+    "pack": "u10-les-moments-de-la-journee",
+    "order": 10,
+    "title": "Les moments de la journée",
+    "subtitle": "Dire quand on fait quelque chose",
+    "grammar": "quand ?"
+  },
+  "lessons": [
+    {
+      "ref": "l01",
+      "type": "leçon",
+      "title": "Matin, midi, soir",
+      "summary": "Tu nommes les moments de la journée."
+    },
+    {
+      "ref": "l02",
+      "type": "leçon",
+      "title": "Tôt ou tard",
+      "summary": "Tu dis si c’est tôt, tard ou maintenant."
+    },
+    {
+      "ref": "l03",
+      "type": "leçon",
+      "title": "Ma journée",
+      "summary": "Tu dis quand tu pars, manges et rentres."
+    },
+    {
+      "ref": "l04",
+      "type": "révision",
+      "title": "Révision de l’unité",
+      "summary": "Tu as révisé toute l’unité 10."
+    },
+    {
+      "ref": "histoire",
+      "type": "histoire",
+      "title": "Une journée chargée"
+    }
+  ],
+  "words": [
+    {
+      "lesson": "l01",
+      "ref": "matin",
+      "fr": "matin"
+    },
+    {
+      "lesson": "l01",
+      "ref": "midi",
+      "fr": "midi"
+    },
+    {
+      "lesson": "l01",
+      "ref": "soir",
+      "fr": "soir"
+    },
+    {
+      "lesson": "l01",
+      "ref": "nuit",
+      "fr": "nuit"
+    },
+    {
+      "lesson": "l02",
+      "ref": "tot",
+      "fr": "tôt"
+    },
+    {
+      "lesson": "l02",
+      "ref": "tard",
+      "fr": "tard"
+    },
+    {
+      "lesson": "l02",
+      "ref": "maintenant",
+      "fr": "maintenant"
+    },
+    {
+      "lesson": "l02",
+      "ref": "plus-tard",
+      "fr": "plus tard"
+    }
+  ],
+  "sentences": [
+    {
+      "lesson": "l03",
+      "ref": "je-pars-le-matin",
+      "fr": "Je pars le matin."
+    },
+    {
+      "lesson": "l03",
+      "ref": "je-mange-a-midi",
+      "fr": "Je mange à midi."
+    },
+    {
+      "lesson": "l03",
+      "ref": "je-rentre-le-soir",
+      "fr": "Je rentre le soir."
+    },
+    {
+      "lesson": "l03",
+      "ref": "quand-pars-tu",
+      "fr": "Quand pars-tu ?"
+    },
+    {
+      "lesson": "l03",
+      "ref": "je-pars-maintenant",
+      "fr": "Je pars maintenant."
+    }
+  ],
+  "story": {
+    "title": "Tu pars déjà ?",
+    "setting": "Au marché",
+    "prompt": "Que réponds-tu ?",
+    "success": "Bien répondu !",
+    "lines": [
+      {
+        "speaker": "vendeuse",
+        "fr": "Tu pars déjà ?"
+      },
+      {
+        "speaker": "apprenant",
+        "fr": "Oui, je pars maintenant."
+      },
+      {
+        "speaker": "vendeuse",
+        "fr": "Tu reviens quand ?",
+        "audioOnly": true,
+        "hint": "Écoute sa question."
+      },
+      {
+        "speaker": "apprenant",
+        "fr": "Je rentre le soir."
+      },
+      {
+        "speaker": "vendeuse",
+        "fr": "Bonne route !"
+      }
+    ],
+    "choices": [
+      {
+        "meaning": "merci",
+        "correct": true
+      },
+      {
+        "meaning": "bonne nuit",
+        "correct": false
+      },
+      {
+        "meaning": "j’ai soif",
+        "correct": false
+      }
+    ]
+  }
+}

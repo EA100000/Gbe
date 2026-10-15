@@ -1,4 +1,4 @@
-import { buildTemplate, GUIDE, UnitPlanSchema } from './template';
+import { buildTemplate, GRAMMAR_FIELD, GUIDE, UnitPlanSchema } from './template';
 import { findSheet, readFields, readTable, SHEETS } from './workbook';
 
 describe('lecture des feuilles', () => {
@@ -70,5 +70,23 @@ describe('modèle de classeur', () => {
     expect(words?.rows[1]?.[3]).toEqual({ value: '', style: 'todo' });
     expect(words?.rows[1]?.[5]).toEqual({ value: 'non', style: 'given' });
     expect(UnitPlanSchema.safeParse({ ...plan, inconnu: 1 }).success).toBe(false);
+  });
+
+  it('montre aux experts la notion de grammaire visée, sans l’importer', () => {
+    const plan = UnitPlanSchema.parse({
+      unit: {
+        id: 'u05',
+        pack: 'u05-x',
+        order: 5,
+        title: 'X',
+        subtitle: 'Y',
+        grammar: 'le pluriel',
+      },
+      lessons: [{ ref: 'l01', type: 'leçon', title: 'Z' }],
+    });
+
+    const unit = buildTemplate(plan).find((sheet) => sheet.name === SHEETS.unit);
+
+    expect(unit?.rows.at(-1)?.map((cell) => cell.value)).toEqual([GRAMMAR_FIELD, 'le pluriel']);
   });
 });

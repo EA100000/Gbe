@@ -1,0 +1,162 @@
+{
+  "unit": {
+    "id": "u12",
+    "pack": "u12-le-corps",
+    "order": 12,
+    "title": "Le corps",
+    "subtitle": "Dire où l’on a mal",
+    "grammar": "avoir mal"
+  },
+  "lessons": [
+    {
+      "ref": "l01",
+      "type": "leçon",
+      "title": "Tête, mains et pieds",
+      "summary": "Tu nommes les parties du corps."
+    },
+    {
+      "ref": "l02",
+      "type": "leçon",
+      "title": "Le visage",
+      "summary": "Tu nommes les parties du visage."
+    },
+    {
+      "ref": "l03",
+      "type": "leçon",
+      "title": "J’ai mal",
+      "summary": "Tu dis où tu as mal."
+    },
+    {
+      "ref": "l04",
+      "type": "révision",
+      "title": "Révision de l’unité",
+      "summary": "Tu as révisé toute l’unité 12."
+    },
+    {
+      "ref": "histoire",
+      "type": "histoire",
+      "title": "La vendeuse est malade"
+    }
+  ],
+  "words": [
+    {
+      "lesson": "l01",
+      "ref": "tete",
+      "fr": "tête",
+      "image": true
+    },
+    {
+      "lesson": "l01",
+      "ref": "main",
+      "fr": "main",
+      "image": true
+    },
+    {
+      "lesson": "l01",
+      "ref": "pied",
+      "fr": "pied",
+      "image": true
+    },
+    {
+      "lesson": "l01",
+      "ref": "ventre",
+      "fr": "ventre",
+      "image": true
+    },
+    {
+      "lesson": "l02",
+      "ref": "oeil",
+      "fr": "œil",
+      "image": true
+    },
+    {
+      "lesson": "l02",
+      "ref": "bouche",
+      "fr": "bouche",
+      "image": true
+    },
+    {
+      "lesson": "l02",
+      "ref": "oreille",
+      "fr": "oreille",
+      "image": true
+    },
+    {
+      "lesson": "l02",
+      "ref": "dent",
+      "fr": "dent",
+      "image": true
+    }
+  ],
+  "sentences": [
+    {
+      "lesson": "l03",
+      "ref": "j-ai-mal-a-la-tete",
+      "fr": "J’ai mal à la tête."
+    },
+    {
+      "lesson": "l03",
+      "ref": "j-ai-mal-au-ventre",
+      "fr": "J’ai mal au ventre."
+    },
+    {
+      "lesson": "l03",
+      "ref": "ou-as-tu-mal",
+      "fr": "Où as-tu mal ?"
+    },
+    {
+      "lesson": "l03",
+      "ref": "je-suis-malade",
+      "fr": "Je suis malade."
+    },
+    {
+      "lesson": "l03",
+      "ref": "ca-va-mieux",
+      "fr": "Ça va mieux."
+    }
+  ],
+  "story": {
+    "title": "Maman Rose ne va pas bien",
+    "setting": "Au marché",
+    "prompt": "Que lui souhaites-tu ?",
+    "success": "Quelle gentillesse !",
+    "lines": [
+      {
+        "speaker": "vendeuse",
+        "fr": "Aujourd’hui, je suis malade."
+      },
+      {
+        "speaker": "apprenant",
+        "fr": "Oh ! Où as-tu mal ?"
+      },
+      {
+        "speaker": "vendeuse",
+        "fr": "J’ai mal à la tête.",
+        "audioOnly": true,
+        "hint": "Écoute : où a-t-elle mal ?"
+      },
+      {
+        "speaker": "apprenant",
+        "fr": "Va te reposer."
+      },
+      {
+        "speaker": "vendeuse",
+        "fr": "Merci, ça va aller."
+      }
+    ],
+    "choices": [
+      {
+        "meaning": "bon courage",
+        "correct": true
+      },
+      {
+        "meaning": "bon appétit",
+        "correct": false
+      },
+      {
+        "meaning": "c’est trop cher",
+        "correct": false
+      }
+    ]
+  }
+}

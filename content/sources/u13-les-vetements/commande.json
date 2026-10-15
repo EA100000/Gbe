@@ -1,0 +1,162 @@
+{
+  "unit": {
+    "id": "u13",
+    "pack": "u13-les-vetements",
+    "order": 13,
+    "title": "Les vêtements",
+    "subtitle": "Dire ce qu’on porte",
+    "grammar": "les qualificatifs (beau, grand, neuf)"
+  },
+  "lessons": [
+    {
+      "ref": "l01",
+      "type": "leçon",
+      "title": "Pagne et chemise",
+      "summary": "Tu nommes les vêtements du quotidien."
+    },
+    {
+      "ref": "l02",
+      "type": "leçon",
+      "title": "Accessoires",
+      "summary": "Tu nommes chapeaux, robes et sacs."
+    },
+    {
+      "ref": "l03",
+      "type": "leçon",
+      "title": "C’est beau !",
+      "summary": "Tu commentes une tenue."
+    },
+    {
+      "ref": "l04",
+      "type": "révision",
+      "title": "Révision de l’unité",
+      "summary": "Tu as révisé toute l’unité 13."
+    },
+    {
+      "ref": "histoire",
+      "type": "histoire",
+      "title": "Acheter un pagne"
+    }
+  ],
+  "words": [
+    {
+      "lesson": "l01",
+      "ref": "pagne",
+      "fr": "pagne",
+      "image": true
+    },
+    {
+      "lesson": "l01",
+      "ref": "chemise",
+      "fr": "chemise",
+      "image": true
+    },
+    {
+      "lesson": "l01",
+      "ref": "pantalon",
+      "fr": "pantalon",
+      "image": true
+    },
+    {
+      "lesson": "l01",
+      "ref": "chaussures",
+      "fr": "chaussures",
+      "image": true
+    },
+    {
+      "lesson": "l02",
+      "ref": "chapeau",
+      "fr": "chapeau",
+      "image": true
+    },
+    {
+      "lesson": "l02",
+      "ref": "robe",
+      "fr": "robe",
+      "image": true
+    },
+    {
+      "lesson": "l02",
+      "ref": "sac",
+      "fr": "sac",
+      "image": true
+    },
+    {
+      "lesson": "l02",
+      "ref": "foulard",
+      "fr": "foulard",
+      "image": true
+    }
+  ],
+  "sentences": [
+    {
+      "lesson": "l03",
+      "ref": "c-est-beau",
+      "fr": "C’est beau !"
+    },
+    {
+      "lesson": "l03",
+      "ref": "ce-pagne-est-cher",
+      "fr": "Ce pagne est cher."
+    },
+    {
+      "lesson": "l03",
+      "ref": "je-veux-ce-pagne",
+      "fr": "Je veux ce pagne."
+    },
+    {
+      "lesson": "l03",
+      "ref": "c-est-trop-grand",
+      "fr": "C’est trop grand."
+    },
+    {
+      "lesson": "l03",
+      "ref": "c-est-neuf",
+      "fr": "C’est neuf ?"
+    }
+  ],
+  "story": {
+    "title": "Le beau pagne",
+    "setting": "Au marché",
+    "prompt": "Que dis-tu pour l’acheter ?",
+    "success": "Belle affaire !",
+    "lines": [
+      {
+        "speaker": "vendeuse",
+        "fr": "Regarde ce pagne, il est neuf !"
+      },
+      {
+        "speaker": "apprenant",
+        "fr": "C’est beau ! Combien ça coûte ?"
+      },
+      {
+        "speaker": "vendeuse",
+        "fr": "Trois mille francs.",
+        "audioOnly": true,
+        "hint": "Écoute le prix."
+      },
+      {
+        "speaker": "apprenant",
+        "fr": "C’est trop cher pour moi."
+      },
+      {
+        "speaker": "vendeuse",
+        "fr": "Bon, deux mille cinq cents."
+      }
+    ],
+    "choices": [
+      {
+        "meaning": "je prends ça",
+        "correct": true
+      },
+      {
+        "meaning": "c’est trop grand",
+        "correct": false
+      },
+      {
+        "meaning": "bonne nuit",
+        "correct": false
+      }
+    ]
+  }
+}
