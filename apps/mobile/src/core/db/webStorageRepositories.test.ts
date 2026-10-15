@@ -1,6 +1,6 @@
 import { heartLostEvent } from '../progress/eventFactory';
 import { fakeClock } from '../../test-utils/fixtures';
-import { DEFAULT_SETTINGS } from './repositories';
+import { DEFAULT_SETTINGS, settingsFromRaw } from './repositories';
 import {
   browserStorage,
   createWebStorageRepositories,
@@ -39,6 +39,13 @@ describe('stockage web de la progression', () => {
     expect(await createWebStorageRepositories(storage).events.all()).toEqual([]);
   });
 
+  it('ignore des réponses du démarrage inconnues, au lieu de les deviner', () => {
+    expect(settingsFromRaw({ learningReason: 'piratage', selfLevel: 'expert' })).toMatchObject({
+      learningReason: null,
+      selfLevel: null,
+    });
+  });
+
   it('enregistre et relit les réglages', async () => {
     const repos = createWebStorageRepositories(memoryStorage());
     expect(await repos.settings.load()).toEqual(DEFAULT_SETTINGS);
@@ -48,6 +55,8 @@ describe('stockage web de la progression', () => {
       pseudo: 'Tortue calme',
       reminder: { enabled: true, hour: 21 },
       reminderOffered: true,
+      learningReason: 'voyage' as const,
+      selfLevel: 'un-peu' as const,
     };
     await repos.settings.save(saved);
     expect(await repos.settings.load()).toEqual(saved);

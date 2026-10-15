@@ -8,7 +8,9 @@ import {
   type DailyGoalId,
   type GameEvent,
   type HeartsState,
+  type LearningReason,
   type Progress,
+  type SelfLevel,
   type StreakStatus,
 } from '@gbe/domain';
 import { useMemo } from 'react';
@@ -30,6 +32,12 @@ export interface LessonEndSummary {
   unlockedStory: { lessonId: string; title: string } | null;
 }
 
+/** Réponses du démarrage : pourquoi apprendre le fon, et le niveau déclaré. */
+export interface OnboardingAnswers {
+  reason: LearningReason | null;
+  level: SelfLevel | null;
+}
+
 interface ProgressState {
   ready: boolean;
   events: readonly GameEvent[];
@@ -41,8 +49,11 @@ interface ProgressState {
   /** Enregistre des événements : d'abord sur le téléphone, puis dans l'état affiché. */
   record: (events: readonly GameEvent[]) => Promise<void>;
   saveSettings: (settings: Settings) => Promise<void>;
-  /** Fin de l'accueil : objectif choisi, et premier pseudo tiré s'il n'existe pas encore. */
-  completeOnboarding: (goal: DailyGoalId) => Promise<void>;
+  /**
+   * Fin du démarrage : objectif choisi, réponses des écrans 1a et 1b s'il y en a,
+   * et premier pseudo tiré s'il n'existe pas encore.
+   */
+  completeOnboarding: (goal: DailyGoalId, answers?: OnboardingAnswers) => Promise<void>;
   setDailyGoal: (goal: DailyGoalId) => Promise<void>;
   /** Tire un nouveau pseudo, différent du précédent. */
   rerollPseudo: () => Promise<void>;
@@ -93,12 +104,14 @@ export const useProgressStore = create<ProgressState>((set, get) => ({
     set({ settings });
   },
 
-  completeOnboarding: async (goal) => {
+  completeOnboarding: async (goal, answers) => {
     const { settings, saveSettings } = get();
     await saveSettings({
       ...settings,
       onboarded: true,
       dailyGoal: goal,
+      learningReason: answers?.reason ?? settings.learningReason,
+      selfLevel: answers?.level ?? settings.selfLevel,
       pseudo: settings.pseudo ?? generatePseudo(freshRng()),
     });
   },

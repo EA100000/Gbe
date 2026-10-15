@@ -45,6 +45,8 @@ export default function RootLayout() {
               screenOptions={{ headerShown: false, contentStyle: { backgroundColor: '#FFFFFF' } }}>
               <Stack.Screen name="(tabs)" />
               <Stack.Screen name="bienvenue" />
+              <Stack.Screen name="niveau" />
+              <Stack.Screen name="objectif" />
               <Stack.Screen name="lecon/[lessonId]" options={{ gestureEnabled: false }} />
               <Stack.Screen name="histoire/[lessonId]" />
               <Stack.Screen name="fin" options={{ gestureEnabled: false }} />

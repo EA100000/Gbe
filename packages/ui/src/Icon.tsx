@@ -37,6 +37,24 @@ const ICONS = {
   arrowUp: stroke('M12 19V5M6 11l6-6 6 6', 2.6),
   leagueShield: `<svg viewBox="0 0 24 26"><path d="M12 1l9 3.5v7c0 6-4 10-9 13-5-3-9-7-9-13v-7z" fill="${colors.yellow}" stroke="${colors.yellowShadow}" stroke-width="1.2"/><ellipse cx="12" cy="12" rx="4" ry="5.5" fill="${colors.white}"/><path d="M12 8v8M10.6 10h1.4M10.6 12h1.4M10.6 14h1.4M12 11h1.4M12 13h1.4" stroke="${colors.ink}" stroke-width="0.8" fill="none"/></svg>`,
   shield: stroke('M12 2.5l8 3v6c0 5-3.4 8.6-8 10-4.6-1.4-8-5-8-10v-6zM9 12l2 2 4-4'),
+  // Raisons d'apprendre (écran 1a du démarrage).
+  family: stroke(
+    'M8 11a3 3 0 1 0 0-6 3 3 0 0 0 0 6zM16.5 11a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5zM2.5 20c.8-3.6 3-5.5 5.5-5.5s4.7 1.9 5.5 5.5M14 15c1-.5 1.7-.6 2.5-.6 2.2 0 4.2 1.7 5 5.1',
+  ),
+  roots: stroke(
+    'M12 21V9M12 13l-4-3M12 11l4-3M7 21c1.5-2 3-2.5 5-2.5s3.5.5 5 2.5M12 9a4 4 0 1 0 0-8 4 4 0 0 0 0 8z',
+  ),
+  pin: stroke(
+    'M12 21s-6.5-6-6.5-11a6.5 6.5 0 0 1 13 0c0 5-6.5 11-6.5 11zM12 12.5a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5z',
+  ),
+  heartLine: stroke(
+    'M12 20.5s-7.5-4.6-7.5-10.4A4.2 4.2 0 0 1 12 7.6a4.2 4.2 0 0 1 7.5 2.5c0 5.8-7.5 10.4-7.5 10.4z',
+  ),
+  briefcase: stroke('M4 8h16v11H4zM9 8V5h6v3M4 13h16'),
+  bulb: stroke(
+    'M9 18h6M10 21h4M12 3a6 6 0 0 0-3.5 10.9c.6.5 1 1.2 1 2.1h5c0-.9.4-1.6 1-2.1A6 6 0 0 0 12 3z',
+  ),
+  dots: stroke('M6 12h.01M12 12h.01M18 12h.01', 3.2),
   chevronLeft: stroke('M15 5l-7 7 7 7', 2.6),
   message: stroke(
     'M4 5.5A2.5 2.5 0 0 1 6.5 3h11A2.5 2.5 0 0 1 20 5.5v8a2.5 2.5 0 0 1-2.5 2.5H10l-4.5 4v-4A2.5 2.5 0 0 1 4 13.5zM12 6.8v4.2M12 13.6v.01',
