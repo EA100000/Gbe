@@ -1,6 +1,6 @@
 import { buildPack, clonePack } from './__fixtures__/pack';
 import type { Exercise, Pack } from './schema';
-import { listPackFiles, PACK_FILE, validatePack, verifyManifest } from './validate';
+import { audioTakes, listPackFiles, PACK_FILE, validatePack, verifyManifest } from './validate';
 
 /** Renvoie l'exercice demandé, ou échoue clairement s'il n'existe pas. */
 function exerciseAt(pack: Pack, lesson: number, index: number): Exercise {
@@ -229,6 +229,115 @@ describe('validatePack', () => {
     const pack = clonePack(buildPack());
     delete pack.sounds;
     expect(validatePack(pack).ok).toBe(true);
+  });
+
+  describe('deux voix pour un même texte', () => {
+    function withTakes(...extra: Pack['audios']): Pack {
+      const pack = clonePack(buildPack());
+      pack.audios.push(...extra);
+      return pack;
+    }
+
+    it('accepte une prise par voix dans un groupe, à la même vitesse', () => {
+      const pack = withTakes(
+        {
+          id: 'x-a',
+          file: 'audio/x-a.m4a',
+          voice: 'A',
+          speed: 'normal',
+          durationMs: 900,
+          group: 'x',
+        },
+        {
+          id: 'x-b',
+          file: 'audio/x-b.m4a',
+          voice: 'B',
+          speed: 'normal',
+          durationMs: 950,
+          group: 'x',
+        },
+      );
+
+      expect(validatePack(pack).ok).toBe(true);
+    });
+
+    it('signale deux prises de la même voix dans un groupe', () => {
+      const pack = withTakes(
+        {
+          id: 'x-a',
+          file: 'audio/x-a.m4a',
+          voice: 'A',
+          speed: 'normal',
+          durationMs: 900,
+          group: 'x',
+        },
+        {
+          id: 'x-a2',
+          file: 'audio/x-a2.m4a',
+          voice: 'A',
+          speed: 'normal',
+          durationMs: 900,
+          group: 'x',
+        },
+      );
+
+      expect(issueCodes(pack)).toEqual(['audio_group']);
+    });
+
+    it('signale un groupe qui mélange vitesse normale et lente', () => {
+      const pack = withTakes(
+        {
+          id: 'x-a',
+          file: 'audio/x-a.m4a',
+          voice: 'A',
+          speed: 'normal',
+          durationMs: 900,
+          group: 'x',
+        },
+        {
+          id: 'x-b',
+          file: 'audio/x-b.m4a',
+          voice: 'B',
+          speed: 'slow',
+          durationMs: 1400,
+          group: 'x',
+        },
+      );
+
+      expect(issueCodes(pack)).toEqual(['audio_group']);
+    });
+  });
+});
+
+describe('audioTakes', () => {
+  it('donne à chaque prise d’un groupe toutes les voix du groupe, voix A d’abord', () => {
+    const takes = audioTakes([
+      {
+        id: 'x-b',
+        file: 'audio/x-b.m4a',
+        voice: 'B',
+        speed: 'normal',
+        durationMs: 950,
+        group: 'x',
+      },
+      {
+        id: 'x-a',
+        file: 'audio/x-a.m4a',
+        voice: 'A',
+        speed: 'normal',
+        durationMs: 900,
+        group: 'x',
+      },
+    ]);
+
+    expect(takes.get('x-a')).toEqual(['x-a', 'x-b']);
+    expect(takes.get('x-b')).toEqual(['x-a', 'x-b']);
+  });
+
+  it('laisse un audio sans groupe seul avec lui-même', () => {
+    const takes = audioTakes(buildPack().audios);
+
+    expect(takes.get('aud-a')).toEqual(['aud-a']);
   });
 });
 

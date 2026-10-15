@@ -5,7 +5,8 @@
  *
  * - Les dessins des mots illustrés sont lus dans `illustrations/<réf>.svg`, à côté du classeur.
  * - La version du pack augmente seulement si son contenu change (une version publiée ne change jamais).
- * - La liste des enregistrements à faire est écrite dans `enregistrements.csv`, à côté du classeur.
+ * - Une liste d'enregistrements par voix, à côté du classeur : `enregistrements-homme.csv` et
+ *   `enregistrements-femme.csv` (ADR 0016).
  * Ensuite : npm run audio:placeholders, npm run content:build, npm run content:validate.
  */
 import { execFileSync } from 'node:child_process';
@@ -13,7 +14,7 @@ import { existsSync, mkdirSync, readdirSync, readFileSync, writeFileSync } from 
 import { basename, dirname, join, relative } from 'node:path';
 import { isDeepStrictEqual } from 'node:util';
 
-import { importUnit, type Recording } from '@gbe/content-tools';
+import { importUnit, type Recording, VOICE_NAMES } from '@gbe/content-tools';
 import { validatePack } from '@gbe/content-schema';
 import { format, resolveConfig } from 'prettier';
 import readXlsxFile from 'read-excel-file/node';
@@ -38,14 +39,14 @@ function measureMs(file: string): number | undefined {
   }
 }
 
-/** Liste des enregistrements, lisible dans Excel (séparateur « ; » des réglages français). */
+/** Liste des enregistrements d'une voix, lisible dans Excel (séparateur « ; » des réglages français). */
 function recordingsCsv(recordings: readonly Recording[]): string {
   const cell = (value: string) => `"${value.replace(/"/g, '""')}"`;
   const rows = [
     ['Fichier', 'Voix', 'Vitesse', 'Fon', 'Français'],
     ...recordings.map((r) => [
       r.file.replace('audio/', ''),
-      r.voice,
+      VOICE_NAMES[r.voice],
       r.speed === 'slow' ? 'lente' : 'normale',
       r.fon,
       r.fr,
@@ -108,8 +109,11 @@ async function main(source: string): Promise<void> {
     packFile,
     await format(JSON.stringify(pack), { ...prettierConfig, filepath: packFile }),
   );
-  const csvFile = join(sourceDir, 'enregistrements.csv');
-  writeFileSync(csvFile, recordingsCsv(result.recordings));
+  const csvFiles = (['A', 'B'] as const).map((voice) => {
+    const file = join(sourceDir, `enregistrements-${VOICE_NAMES[voice]}.csv`);
+    writeFileSync(file, recordingsCsv(result.recordings.filter((r) => r.voice === voice)));
+    return relative(ROOT, file);
+  });
 
   const exercises = pack.unit.lessons.reduce((n, lesson) => n + lesson.exercises.length, 0);
   const status = pack.validated ? 'validé' : 'non validé';
@@ -118,7 +122,7 @@ async function main(source: string): Promise<void> {
     `  ${pack.unit.lessons.length} leçons, ${exercises} exercices, ${pack.items.length} mots et phrases`,
   );
   console.log(
-    `  ${result.recordings.length} enregistrements listés dans ${relative(ROOT, csvFile)}`,
+    `  ${result.recordings.length} enregistrements, une liste par voix : ${csvFiles.join(', ')}`,
   );
   console.log(
     'Ensuite : npm run audio:placeholders && npm run content:build && npm run content:validate',

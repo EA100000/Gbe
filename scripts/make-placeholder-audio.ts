@@ -35,8 +35,9 @@ for (const dir of listPackDirs()) {
     if (existsSync(target) && !force) continue;
     mkdirSync(dirname(target), { recursive: true });
     const seconds = (audio.durationMs / 1000).toFixed(3);
-    // Voix B un peu plus grave ; vitesse lente = deux bips.
-    const base = frequencyFor(audio.id) * (audio.voice === 'B' ? 0.75 : 1);
+    // Voix A, l'homme : un bip plus grave ; voix B, la femme : plus aigu (ADR 0016).
+    // Vitesse lente : deux bips.
+    const base = frequencyFor(audio.id) * (audio.voice === 'A' ? 0.75 : 1);
     const tone =
       audio.speed === 'slow'
         ? `sine=frequency=${base}:duration=${seconds},volume='if(lt(mod(t,0.5),0.35),1,0)':eval=frame`

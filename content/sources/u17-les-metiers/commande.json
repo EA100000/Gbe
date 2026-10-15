@@ -89,7 +89,7 @@
     {
       "lesson": "l03",
       "ref": "je-suis-enseignant",
-      "fr": "Je suis enseignant."
+      "fr": "Je suis enseignant(e)."
     },
     {
       "lesson": "l03",
@@ -104,7 +104,7 @@
     {
       "lesson": "l03",
       "ref": "je-suis-etudiant",
-      "fr": "Je suis étudiant."
+      "fr": "Je suis étudiant(e)."
     }
   ],
   "story": {

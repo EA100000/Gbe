@@ -101,7 +101,7 @@ export const GUIDE: readonly string[] = [
   'Choix : 2 à 4 réponses possibles à la question de l’histoire, dont au moins une bonne. Dans « Explication », mettez les mots fon entre [crochets] ; si vous la laissez vide, l’application affiche le sens en français.',
   'Vous pouvez ajouter, retirer ou modifier des lignes. Ne changez pas les noms des feuilles ni les titres des colonnes. La colonne « Remarques » est pour vous : elle n’est pas importée.',
   'Quand vous avez fini et relu tous les deux, écrivez « oui » dans « Validé par les deux experts », feuille Unité.',
-  'Ensuite, nous vous envoyons la liste des enregistrements : chaque mot et chaque phrase en vitesse normale et lente (voix A), les répliques de l’histoire (voix A pour l’apprenant, voix B pour la vendeuse).',
+  'Ensuite, nous vous envoyons la liste des enregistrements. Vous enregistrez tous les deux chaque mot et chaque phrase, en vitesse normale puis lente : l’appli fera entendre tantôt la voix d’homme, tantôt la voix de femme. Dans l’histoire, chaque personnage garde sa voix : l’apprenant, la voix d’homme ; la vendeuse, la voix de femme. Chacun écoute ensuite les enregistrements de l’autre et les valide.',
 ];
 
 /** Ligne d'information de la feuille Unité, lue par les experts et ignorée à l'import. */

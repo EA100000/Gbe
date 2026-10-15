@@ -36,6 +36,7 @@ export const RichTextSchema = z
   )
   .min(1);
 
+/** Les deux voix des experts : A, la voix d'homme ; B, la voix de femme (ADR 0016). */
 export const VoiceSchema = z.enum(['A', 'B']);
 export const SpeedSchema = z.enum(['normal', 'slow']);
 
@@ -46,6 +47,11 @@ export const AudioSchema = z.object({
   voice: VoiceSchema,
   speed: SpeedSchema,
   durationMs: z.number().int().positive(),
+  /**
+   * Prises interchangeables du même texte, dites par l'autre voix : même groupe, même vitesse.
+   * L'appli alterne entre elles. Absent : l'audio est seul (une seule voix).
+   */
+  group: IdSchema.optional(),
 });
 
 export const IllustrationSchema = z.object({
