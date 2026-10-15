@@ -27,7 +27,7 @@
     "packs:publish": "tsx scripts/publish-packs.ts",
     "packs:upload": "tsx --env-file-if-exists=.env scripts/upload-packs.ts",
     "packs:serve": "tsx scripts/serve-packs.ts",
-    "web:export": "cd apps/mobile && npx expo export --platform web --output-dir dist",
+    "web:export": "cd apps/mobile && npx expo export --platform web --output-dir dist --clear",
     "e2e:web": "npm run web:export && playwright test -c e2e/playwright.config.ts",
     "api:dev": "npm run dev --workspace apps/api",
     "api:build": "npm run build --workspace apps/api",

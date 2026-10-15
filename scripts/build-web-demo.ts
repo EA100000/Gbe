@@ -30,7 +30,9 @@ function dataUri(path: string): string {
   return `data:${mime};base64,${readFileSync(path).toString('base64')}`;
 }
 
-execFileSync('npx', ['expo', 'export', '--platform', 'web', '--output-dir', 'dist'], {
+// --clear : Metro garde en cache les variables EXPO_PUBLIC_* d'une compilation précédente
+// (une adresse de serveur de test, par exemple) ; la démo doit partir de l'environnement actuel.
+execFileSync('npx', ['expo', 'export', '--platform', 'web', '--output-dir', 'dist', '--clear'], {
   cwd: MOBILE,
   stdio: 'inherit',
   env: { ...process.env, CI: '1', EXPO_OFFLINE: '1' },
@@ -73,7 +75,7 @@ if (resetStyle === undefined) throw new Error('Styles de base introuvables dans 
 
 // Remplacements par fonction : le code intégré contient des « $ » que String.replace interpréterait.
 const page = [
-  '<title>Gbè</title>',
+  '<title>Tourismo</title>',
   resetStyle.replace(
     '</style>',
     () => `  /* Démo : largeur de téléphone centrée sur grand écran, fond explicite. */
@@ -81,8 +83,11 @@ const page = [
       #root { max-width: 440px; margin: 0 auto; background: #FFFFFF; box-shadow: 0 0 0 1px #E7E1D7; }
     </style>`,
   ),
-  '<noscript>Active JavaScript pour essayer Gbè.</noscript>',
+  '<noscript>Active JavaScript pour essayer Tourismo.</noscript>',
   '<div id="root"></div>',
+  // L'hébergeur peut servir la page sous n'importe quel chemin (« /index.html », « /<id>/ ») :
+  // le routeur de l'appli doit partir de « / », qui mène au démarrage ou au chemin.
+  `<script>try { if (location.pathname !== '/') history.replaceState(null, '', '/'); } catch (e) {}</script>`,
   `<script>${escapeForInlineScript(bundle)}</script>`,
   '',
 ].join('\n');

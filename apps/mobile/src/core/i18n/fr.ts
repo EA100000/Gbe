@@ -19,7 +19,7 @@ export const fr = {
   'onboarding.step': 'Étape {n} sur {total}',
   'onboarding.back': 'Retour',
   'onboarding.continue': 'Continuer',
-  'reason.intro': 'Moi, c’est Gbè. Dis-moi ce qui t’amène.',
+  'reason.intro': 'Moi, c’est Tourismo. Dis-moi ce qui t’amène.',
   'reason.title': 'Pourquoi apprends-tu le fon ?',
   'reason.famille': 'Parler avec ma famille',
   'reason.racines': 'Renouer avec mes racines',
@@ -175,13 +175,13 @@ export const fr = {
   'profile.delete': 'Supprimer mon compte',
   // Écran 11 mis à jour pour la bêta (validé le 14/10/2026).
   'profile.report': 'Signaler un problème',
-  'profile.reportHint': 'Par e-mail à l’équipe de Gbè',
-  'profile.version': 'Gbè {version}',
-  'profile.versionBeta': 'Gbè {version} · version bêta',
+  'profile.reportHint': 'Par e-mail à l’équipe de Tourismo',
+  'profile.version': 'Tourismo {version}',
+  'profile.versionBeta': 'Tourismo {version} · version bêta',
   // Provisoire : contenu de l'e-mail de signalement (pas dans la maquette).
-  'report.subject': 'Gbè {version} : un problème',
+  'report.subject': 'Tourismo {version} : un problème',
   'report.body':
-    'Décris ce qui s’est passé (écran, ce que tu faisais, ce que tu attendais) :\n\n\n—\nGbè {version} · {system}',
+    'Décris ce qui s’est passé (écran, ce que tu faisais, ce que tu attendais) :\n\n\n—\nTourismo {version} · {system}',
   'report.android': 'Android (API {api})',
   'report.ios': 'iOS {version}',
 
@@ -234,7 +234,7 @@ export const fr = {
   // Écran 19 (proposition validée le 14/10/2026) : erreur inattendue.
   'error.title': 'Oups, un souci !',
   'error.body':
-    'Gbè a rencontré un problème inattendu. Ta progression est bien enregistrée sur ce téléphone.',
+    'Tourismo a rencontré un problème inattendu. Ta progression est bien enregistrée sur ce téléphone.',
   'error.retry': 'Réessayer',
   'error.home': 'Retour au chemin',
   'error.hint': 'Si ça recommence, ferme puis rouvre l’appli.',
@@ -276,7 +276,7 @@ export const fr = {
   'reminder.switch': 'Me rappeler chaque jour',
   'reminder.everyDay': 'Chaque jour à {time}',
   'reminder.off': 'Désactivé',
-  'reminder.blocked': 'Les notifications de Gbè sont bloquées sur ce téléphone.',
+  'reminder.blocked': 'Les notifications de Tourismo sont bloquées sur ce téléphone.',
   'reminder.openSettings': 'Ouvrir les réglages',
   'reminder.when': 'À quelle heure ?',
   'reminder.preset.morning': 'Matin',
@@ -286,7 +286,7 @@ export const fr = {
   'reminder.hour': '{h} h',
   'reminder.otherTime': 'Autre heure…',
   'reminder.preview': 'Aperçu',
-  'reminder.previewFrom': 'Gbè · {time}',
+  'reminder.previewFrom': 'Tourismo · {time}',
   'reminder.notif.title': 'C’est l’heure de ta leçon !',
   'reminder.notif.streak.one': 'Quelques minutes suffisent pour garder ta série de {n} jour.',
   'reminder.notif.streak.other': 'Quelques minutes suffisent pour garder ta série de {n} jours.',

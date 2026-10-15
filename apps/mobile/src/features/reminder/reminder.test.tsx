@@ -165,7 +165,7 @@ describe('écran 15 depuis le profil', () => {
     await render(<ReminderScreen origin="profile" />);
 
     expect(
-      await screen.findByText('Les notifications de Gbè sont bloquées sur ce téléphone.'),
+      await screen.findByText('Les notifications de Tourismo sont bloquées sur ce téléphone.'),
     ).toBeOnTheScreen();
     expect(screen.queryByTestId('reminder-switch')).toBeNull();
     await fireEvent.press(screen.getByTestId('reminder-settings'));

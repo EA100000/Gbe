@@ -31,8 +31,8 @@ describe('signalement d’un problème', () => {
     const [address, query = ''] = url.replace('mailto:', '').split('?');
     const params = new URLSearchParams(query);
     expect(address).toBe('equipe@gbe.app');
-    expect(params.get('subject')).toBe('Gbè 0.1.0 : un problème');
-    expect(params.get('body')).toContain('Gbè 0.1.0 · Android (API 34)');
+    expect(params.get('subject')).toBe('Tourismo 0.1.0 : un problème');
+    expect(params.get('body')).toContain('Tourismo 0.1.0 · Android (API 34)');
   });
 
   it('considère les versions 0.x comme des bêtas', () => {
@@ -78,6 +78,6 @@ describe('profil : bêta', () => {
   it('affiche la version de l’appli', async () => {
     await render(<ProfileScreen />);
 
-    expect(screen.getByTestId('profile-version')).toHaveTextContent(/^Gbè \d+\.\d+\.\d+/);
+    expect(screen.getByTestId('profile-version')).toHaveTextContent(/^Tourismo \d+\.\d+\.\d+/);
   });
 });
