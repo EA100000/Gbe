@@ -8,7 +8,7 @@
 ## Contexte
 
 Une seule unité existe (5 leçons, non relues). Le cahier en prévoit trois pour la première version,
-et le paiement par unité (ADR 0015) suppose un flux régulier d'unités. Le frein n'est pas le code
+et le paiement par unité, prévu plus tard, suppose un flux régulier d'unités. Le frein n'est pas le code
 (une unité est un pack, ADR 0002 et 0010) mais l'écriture du fon par les deux experts. Écrire un
 `pack.json` à la main est hors de leur portée, et l'atelier web représente plusieurs semaines.
 

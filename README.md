@@ -166,4 +166,4 @@ Le code de l'appli et de l'API est prêt pour une bêta fermée. Ce qui reste ne
 Les règles provisoires et les écarts à la maquette sont consignés dans `docs/adr/` : règles du jeu
 (0003), API (0005, 0006), packs (0007), bêta (0008), Ligue (0009), plusieurs unités (0010), code de
 récupération (0011), rappel quotidien (0012), vies, sortie de leçon et erreurs (0013), classeur des
-experts (0014).
+experts (0014), démarrage en trois étapes (0015).

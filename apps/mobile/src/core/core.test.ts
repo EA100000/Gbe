@@ -60,7 +60,7 @@ describe('dépôt des réglages', () => {
     expect(await repo.load()).toEqual(DEFAULT_SETTINGS);
   });
 
-  it('relit l’objectif, le pseudo et le rappel enregistrés', async () => {
+  it('relit l’objectif, le pseudo, le rappel et les réponses du démarrage', async () => {
     const repo = createSettingsRepository(memoryDatabase());
     const saved = {
       onboarded: true,
@@ -68,6 +68,8 @@ describe('dépôt des réglages', () => {
       pseudo: 'Lion sage',
       reminder: { enabled: true, hour: 7 },
       reminderOffered: true,
+      learningReason: 'couple' as const,
+      selfLevel: 'quelques-mots' as const,
     };
     await repo.save(saved);
     expect(await repo.load()).toEqual(saved);

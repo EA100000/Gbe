@@ -17,6 +17,11 @@ function watchErrors(page: Page): string[] {
 
 async function startAsNewLearner(page: Page) {
   await page.goto('/');
+  await expect(page.getByText('Pourquoi apprends-tu le fon ?')).toBeVisible();
+  await page.getByTestId('reason-famille').click();
+  await page.getByTestId('reason-continue').click();
+  await page.getByTestId('level-decouverte').click();
+  await page.getByTestId('level-continue').click();
   await expect(page.getByText('Combien de temps par jour ?')).toBeVisible();
   await page.getByTestId('goal-serious').click();
   await page.getByTestId('welcome-start').click();
@@ -77,7 +82,8 @@ test('le profil affiche un pseudo et permet de supprimer son compte', async ({ p
   await expect(page.getByText('Supprimer ton compte ?')).toBeVisible();
   await page.getByTestId('delete-confirm').click();
 
-  await expect(page.getByText('Combien de temps par jour ?')).toBeVisible();
+  // Retour au tout premier écran du démarrage.
+  await expect(page.getByText('Pourquoi apprends-tu le fon ?')).toBeVisible();
   expect(errors).toEqual([]);
 });
 

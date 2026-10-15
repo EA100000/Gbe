@@ -3,10 +3,14 @@ import {
   DEFAULT_REMINDER_HOUR,
   isReminderHour,
   isDailyGoalId,
+  isLearningReason,
+  isSelfLevel,
   isValidPseudo,
   parseGameEvent,
   type DailyGoalId,
   type GameEvent,
+  type LearningReason,
+  type SelfLevel,
 } from '@gbe/domain';
 
 import type { Database } from './database';
@@ -33,6 +37,9 @@ export interface Settings {
   reminder: { enabled: boolean; hour: number };
   /** Le rappel a déjà été proposé après la première leçon (on ne le propose qu'une fois). */
   reminderOffered: boolean;
+  /** Réponses du démarrage (écrans 1a et 1b), gardées sur le téléphone ; `null` sans réponse. */
+  learningReason: LearningReason | null;
+  selfLevel: SelfLevel | null;
 }
 
 export const DEFAULT_SETTINGS: Settings = {
@@ -41,6 +48,8 @@ export const DEFAULT_SETTINGS: Settings = {
   pseudo: null,
   reminder: { enabled: false, hour: DEFAULT_REMINDER_HOUR },
   reminderOffered: false,
+  learningReason: null,
+  selfLevel: null,
 };
 
 /** Clés des réglages dans le stockage (SQLite ou navigateur). */
@@ -51,6 +60,8 @@ export const SETTING_KEYS = [
   'reminderEnabled',
   'reminderHour',
   'reminderOffered',
+  'learningReason',
+  'selfLevel',
 ] as const;
 export type SettingKey = (typeof SETTING_KEYS)[number];
 
@@ -63,6 +74,8 @@ export function settingsToRaw(settings: Settings): Record<SettingKey, string | n
     reminderEnabled: String(settings.reminder.enabled),
     reminderHour: String(settings.reminder.hour),
     reminderOffered: String(settings.reminderOffered),
+    learningReason: settings.learningReason,
+    selfLevel: settings.selfLevel,
   };
 }
 
@@ -102,6 +115,8 @@ export function settingsFromRaw(raw: Partial<Record<SettingKey, string | null>>)
       hour: isReminderHour(hour) ? hour : DEFAULT_REMINDER_HOUR,
     },
     reminderOffered: raw.reminderOffered === 'true',
+    learningReason: isLearningReason(raw.learningReason) ? raw.learningReason : null,
+    selfLevel: isSelfLevel(raw.selfLevel) ? raw.selfLevel : null,
   };
 }
 

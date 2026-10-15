@@ -1,3 +1,3 @@
-import { WelcomeScreen } from '../features/onboarding/WelcomeScreen';
+import { ReasonScreen } from '../features/onboarding/ReasonScreen';
 
-export default WelcomeScreen;
+export default ReasonScreen;

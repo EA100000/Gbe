@@ -14,7 +14,7 @@ import {
 import { credentialStore, recoveryCodeStore } from '../../core/sync/credentials';
 import { ServerContext, type Server } from '../../core/sync/serverContext';
 import { fakeClock, setupStores } from '../../test-utils/fixtures';
-import { WelcomeScreen } from '../onboarding/WelcomeScreen';
+import { ReasonScreen } from '../onboarding/ReasonScreen';
 import { ProfileScreen } from '../profile/ProfileScreen';
 import { RecoverAccountScreen } from './RecoverAccountScreen';
 import { RecoveryCodeScreen } from './RecoveryCodeScreen';
@@ -76,11 +76,11 @@ beforeEach(async () => {
 });
 
 describe('liens vers la récupération', () => {
-  it('propose « J’ai déjà un compte » sur l’accueil quand l’appli a un serveur', async () => {
+  it('propose « J’ai déjà un compte » dès le premier écran quand l’appli a un serveur', async () => {
     // Préparer
     await setupStores();
     // Agir
-    await render(<WelcomeScreen />, { wrapper: withServer(fakeServer()) });
+    await render(<ReasonScreen />, { wrapper: withServer(fakeServer()) });
     await fireEvent.press(screen.getByTestId('welcome-recover'));
     // Vérifier
     expect(router.push).toHaveBeenCalledWith('/recuperer');
@@ -89,7 +89,7 @@ describe('liens vers la récupération', () => {
   it('cache ce lien sans serveur (appli hors-ligne)', async () => {
     await setupStores();
 
-    await render(<WelcomeScreen />, { wrapper: withServer(null) });
+    await render(<ReasonScreen />, { wrapper: withServer(null) });
 
     expect(screen.queryByTestId('welcome-recover')).toBeNull();
   });
