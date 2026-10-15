@@ -1,0 +1,78 @@
+{
+  "unit": {
+    "id": "u02",
+    "pack": "u02-nombres",
+    "order": 2,
+    "title": "Nombres",
+    "subtitle": "Compter jusqu’à cent et parler de quantités"
+  },
+  "lessons": [
+    {
+      "ref": "l01",
+      "type": "leçon",
+      "title": "De six à dix",
+      "summary": "Tu comptes de six à dix en fon."
+    },
+    {
+      "ref": "l02",
+      "type": "leçon",
+      "title": "Les dizaines",
+      "summary": "Tu sais dire vingt, trente, quarante, cinquante et cent."
+    },
+    {
+      "ref": "l03",
+      "type": "leçon",
+      "title": "Combien en veux-tu ?",
+      "summary": "Tu demandes et tu dis une quantité."
+    },
+    {
+      "ref": "l04",
+      "type": "révision",
+      "title": "Révision de l’unité",
+      "summary": "Tu as révisé toute l’unité 2."
+    },
+    { "ref": "histoire", "type": "histoire", "title": "Compter la monnaie" }
+  ],
+  "words": [
+    { "lesson": "l01", "ref": "n6", "fr": "six" },
+    { "lesson": "l01", "ref": "n7", "fr": "sept" },
+    { "lesson": "l01", "ref": "n8", "fr": "huit" },
+    { "lesson": "l01", "ref": "n9", "fr": "neuf" },
+    { "lesson": "l01", "ref": "n10", "fr": "dix" },
+    { "lesson": "l02", "ref": "n20", "fr": "vingt" },
+    { "lesson": "l02", "ref": "n30", "fr": "trente" },
+    { "lesson": "l02", "ref": "n40", "fr": "quarante" },
+    { "lesson": "l02", "ref": "n50", "fr": "cinquante" },
+    { "lesson": "l02", "ref": "n100", "fr": "cent" }
+  ],
+  "sentences": [
+    { "lesson": "l03", "ref": "combien-en-veux-tu", "fr": "Combien en veux-tu ?" },
+    { "lesson": "l03", "ref": "j-en-veux-deux", "fr": "J’en veux deux." },
+    { "lesson": "l03", "ref": "donne-m-en-trois", "fr": "Donne-m’en trois." },
+    { "lesson": "l03", "ref": "il-y-en-a-combien", "fr": "Il y en a combien ?" },
+    { "lesson": "l03", "ref": "ca-fait-dix", "fr": "Ça fait dix." }
+  ],
+  "story": {
+    "title": "Acheter des tomates",
+    "setting": "Au marché",
+    "prompt": "Que dis-tu en recevant ta monnaie ?",
+    "success": "Bien compté !",
+    "lines": [
+      { "speaker": "vendeuse", "fr": "Bienvenue ! Combien de tomates veux-tu ?" },
+      { "speaker": "apprenant", "fr": "J’en veux cinq." },
+      {
+        "speaker": "vendeuse",
+        "fr": "Ça fait cent francs.",
+        "audioOnly": true,
+        "hint": "Écoute bien : combien ça coûte ?"
+      },
+      { "speaker": "apprenant", "fr": "Voici deux cents francs." },
+      { "speaker": "vendeuse", "fr": "Je te rends cent francs." }
+    ],
+    "choices": [
+      { "meaning": "merci", "correct": true },
+      { "meaning": "c’est trop cher", "correct": false },
+      { "meaning": "j’en veux deux", "correct": false }
+    ]
+  }
+}

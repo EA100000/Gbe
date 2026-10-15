@@ -1,0 +1,80 @@
+{
+  "unit": {
+    "id": "u03",
+    "pack": "u03-au-marche",
+    "order": 3,
+    "title": "Au marché",
+    "subtitle": "Acheter, demander et négocier"
+  },
+  "lessons": [
+    {
+      "ref": "l01",
+      "type": "leçon",
+      "title": "Fruits et légumes",
+      "summary": "Tu nommes six fruits et légumes du marché."
+    },
+    {
+      "ref": "l02",
+      "type": "leçon",
+      "title": "Le panier de la semaine",
+      "summary": "Tu nommes six produits de base."
+    },
+    {
+      "ref": "l03",
+      "type": "leçon",
+      "title": "Négocier",
+      "summary": "Tu demandes, tu négocies et tu achètes."
+    },
+    {
+      "ref": "l04",
+      "type": "révision",
+      "title": "Révision de l’unité",
+      "summary": "Tu as révisé toute l’unité 3."
+    },
+    { "ref": "histoire", "type": "histoire", "title": "Acheter des ignames" }
+  ],
+  "words": [
+    { "lesson": "l01", "ref": "tomate", "fr": "tomate", "image": true },
+    { "lesson": "l01", "ref": "piment", "fr": "piment", "image": true },
+    { "lesson": "l01", "ref": "oignon", "fr": "oignon", "image": true },
+    { "lesson": "l01", "ref": "banane", "fr": "banane", "image": true },
+    { "lesson": "l01", "ref": "orange", "fr": "orange", "image": true },
+    { "lesson": "l01", "ref": "mais", "fr": "maïs", "image": true },
+    { "lesson": "l02", "ref": "poisson", "fr": "poisson", "image": true },
+    { "lesson": "l02", "ref": "riz", "fr": "riz", "image": true },
+    { "lesson": "l02", "ref": "haricot", "fr": "haricot", "image": true },
+    { "lesson": "l02", "ref": "huile", "fr": "huile", "image": true },
+    { "lesson": "l02", "ref": "sel", "fr": "sel", "image": true },
+    { "lesson": "l02", "ref": "igname", "fr": "igname", "image": true }
+  ],
+  "sentences": [
+    { "lesson": "l03", "ref": "c-est-trop-cher", "fr": "C’est trop cher." },
+    { "lesson": "l03", "ref": "baisse-un-peu", "fr": "Baisse un peu le prix." },
+    { "lesson": "l03", "ref": "je-prends-ca", "fr": "Je prends ça." },
+    { "lesson": "l03", "ref": "tu-as-du-piment", "fr": "Tu as du piment ?" },
+    { "lesson": "l03", "ref": "un-kilo-de-riz", "fr": "Donne-moi un kilo de riz." }
+  ],
+  "story": {
+    "title": "Acheter des ignames",
+    "setting": "Au marché",
+    "prompt": "Que dis-tu pour conclure l’achat ?",
+    "success": "Affaire conclue !",
+    "lines": [
+      { "speaker": "vendeuse", "fr": "Bienvenue ! Que veux-tu ?" },
+      { "speaker": "apprenant", "fr": "Je veux des ignames. Combien ça coûte ?" },
+      {
+        "speaker": "vendeuse",
+        "fr": "Mille francs les trois.",
+        "audioOnly": true,
+        "hint": "Écoute le prix des ignames."
+      },
+      { "speaker": "apprenant", "fr": "C’est trop cher. Baisse un peu le prix." },
+      { "speaker": "vendeuse", "fr": "Bon, huit cents francs." }
+    ],
+    "choices": [
+      { "meaning": "je prends ça", "correct": true },
+      { "meaning": "tu as du piment ?", "correct": false },
+      { "meaning": "au revoir", "correct": false }
+    ]
+  }
+}

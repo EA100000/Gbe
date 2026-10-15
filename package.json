@@ -21,6 +21,8 @@
     "audio:placeholders": "tsx scripts/make-placeholder-audio.ts",
     "check": "npm run format:check && npm run lint && npm run typecheck && npm run test && npm run content:validate && npm run native:check",
     "content:build": "tsx scripts/build-packs.ts",
+    "content:workbook": "tsx scripts/content-workbook.ts",
+    "content:import": "tsx scripts/import-unit.ts",
     "demo:web": "tsx scripts/build-web-demo.ts",
     "packs:publish": "tsx scripts/publish-packs.ts",
     "packs:upload": "tsx --env-file-if-exists=.env scripts/upload-packs.ts",
@@ -49,9 +51,11 @@
     "globals": "^16.0.0",
     "jest": "^29.7.0",
     "prettier": "^3.6.0",
+    "read-excel-file": "9.3.10",
     "tsx": "^4.20.0",
     "typescript": "~6.0.3",
-    "typescript-eslint": "^8.71.0"
+    "typescript-eslint": "^8.71.0",
+    "write-excel-file": "4.1.1"
   },
   "overrides": {
     "react-native-svg": "15.15.4"
