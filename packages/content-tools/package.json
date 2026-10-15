@@ -1,0 +1,17 @@
+{
+  "name": "@gbe/content-tools",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Outils de contenu de Gbè (Node seulement) : classeur des experts et import en pack",
+  "main": "src/index.ts",
+  "types": "src/index.ts",
+  "scripts": {
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "test": "jest",
+    "test:coverage": "jest --coverage"
+  },
+  "dependencies": {
+    "@gbe/content-schema": "*",
+    "zod": "^4.1.0"
+  }
+}

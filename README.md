@@ -90,6 +90,21 @@ docs/adr/                 décisions d'architecture (dont les écarts à la maqu
 - **Règles pures.** Les écrans affichent et délèguent ; toute décision (juste/faux, XP, vies, série)
   vient de `packages/domain`, testé à 100 % des lignes.
 
+## Ajouter une unité (classeur des experts)
+
+Les experts écrivent le fon dans un classeur Excel, une unité par fichier (`docs/adr/0014`).
+
+```bash
+npm run content:workbook -- --commande content/sources/u02-nombres/commande.json  # classeur à envoyer
+npm run content:import -- content/sources/u02-nombres/u02-nombres.xlsx           # classeur rempli → pack
+npm run audio:placeholders && npm run content:build && npm run content:validate
+```
+
+`commande.json` décrit le plan en français (leçons, mots, phrases, histoire). L'import liste les
+erreurs par feuille et par ligne, génère les exercices et écrit `enregistrements.csv` : les fichiers
+audio à enregistrer, avec le texte à lire. Les dessins des mots illustrés vont dans
+`content/sources/<pack>/illustrations/<réf>.svg`.
+
 ## Remplacer le contenu de test
 
 1. Les experts valident chaque mot et chaque phrase (orthographe, tons, variété de fon).
@@ -145,8 +160,10 @@ Le code de l'appli et de l'API est prêt pour une bêta fermée. Ce qui reste ne
 - **Serveur** : un VPS, un domaine et `docs/DEPLOIEMENT.md` (API, packs, HTTPS, sauvegardes).
 - **Google Play** : compte développeur, fiche, puis test fermé (12 testeurs pendant 14 jours).
 - **Expo SDK 58** : mise à jour dès la sortie de la version stable (en bêta au 14/10/2026).
-- **Atelier des experts** (`apps/backoffice`, prévu au cahier) : mis de côté pour l'instant.
+- **Atelier des experts** (`apps/backoffice`, prévu au cahier) : remplacé pour l'instant par un
+  classeur Excel et un import automatique (0014). Bons de commande des unités 2 et 3 prêts.
 
 Les règles provisoires et les écarts à la maquette sont consignés dans `docs/adr/` : règles du jeu
 (0003), API (0005, 0006), packs (0007), bêta (0008), Ligue (0009), plusieurs unités (0010), code de
-récupération (0011), rappel quotidien (0012), vies, sortie de leçon et erreurs (0013).
+récupération (0011), rappel quotidien (0012), vies, sortie de leçon et erreurs (0013), classeur des
+experts (0014).

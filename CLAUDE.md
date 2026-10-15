@@ -25,6 +25,7 @@ en cas de doute, le cahier fait foi et toute décision qui s'en écarte est cons
 - `packages/domain` : règles pures (correction, XP, série, vies, normalisation du fon). Aucun import React.
 - `packages/content-schema` : schémas Zod partagés (exercices, packs).
 - `packages/ui` : design system (couleurs, typographies, composants, mascotte Galet).
+- `packages/content-tools` : classeur des experts et import en pack (Node seulement, `docs/adr/0014`).
 - `database/` : migrations SQL (générées par drizzle-kit depuis `apps/api/src/db/schema.ts`).
   `infra/` : Dockerfiles. `content/` : sources des leçons.
 - Fichiers audio et packs : stockage compatible S3 + CDN, fichiers immuables et versionnés.
@@ -92,6 +93,8 @@ npm run test:coverage            # idem avec couverture (domain ≥ 90 %)
 npm run content:validate         # contrôle bloquant des packs (schéma, NFC, audios, empreintes)
 npm run native:check             # modules natifs : une seule copie, à la version du SDK Expo
 npm run content:build            # réécrit les manifestes et la liste des packs embarqués
+npm run content:workbook -- --commande <commande.json>  # classeur .xlsx à envoyer aux experts
+npm run content:import -- <classeur.xlsx>                # classeur rempli → pack + enregistrements
 npm run audio:placeholders       # bips de remplacement pour les audios manquants (ffmpeg)
 npm run packs:publish            # dist-packs/ : packs validés (+ --allow-unvalidated pour la bêta)
 npm run packs:serve              # sert dist-packs/ en local (port 8090)
