@@ -1,0 +1,158 @@
+{
+  "unit": {
+    "id": "u11",
+    "pack": "u11-le-temps-qu-il-fait",
+    "order": 11,
+    "title": "Le temps qu’il fait",
+    "subtitle": "Parler de la pluie et de la chaleur",
+    "grammar": "décrire un état"
+  },
+  "lessons": [
+    {
+      "ref": "l01",
+      "type": "leçon",
+      "title": "Le ciel",
+      "summary": "Tu nommes la pluie, les nuages et le vent."
+    },
+    {
+      "ref": "l02",
+      "type": "leçon",
+      "title": "Chaud ou frais",
+      "summary": "Tu parles de la chaleur et des saisons."
+    },
+    {
+      "ref": "l03",
+      "type": "leçon",
+      "title": "Quel temps fait-il ?",
+      "summary": "Tu décris le temps qu’il fait."
+    },
+    {
+      "ref": "l04",
+      "type": "révision",
+      "title": "Révision de l’unité",
+      "summary": "Tu as révisé toute l’unité 11."
+    },
+    {
+      "ref": "histoire",
+      "type": "histoire",
+      "title": "La pluie au marché"
+    }
+  ],
+  "words": [
+    {
+      "lesson": "l01",
+      "ref": "pluie",
+      "fr": "pluie",
+      "image": true
+    },
+    {
+      "lesson": "l01",
+      "ref": "nuage",
+      "fr": "nuage",
+      "image": true
+    },
+    {
+      "lesson": "l01",
+      "ref": "vent",
+      "fr": "vent",
+      "image": true
+    },
+    {
+      "lesson": "l01",
+      "ref": "orage",
+      "fr": "orage",
+      "image": true
+    },
+    {
+      "lesson": "l02",
+      "ref": "chaud",
+      "fr": "chaud"
+    },
+    {
+      "lesson": "l02",
+      "ref": "frais",
+      "fr": "frais"
+    },
+    {
+      "lesson": "l02",
+      "ref": "saison-des-pluies",
+      "fr": "saison des pluies"
+    },
+    {
+      "lesson": "l02",
+      "ref": "saison-seche",
+      "fr": "saison sèche"
+    }
+  ],
+  "sentences": [
+    {
+      "lesson": "l03",
+      "ref": "il-pleut",
+      "fr": "Il pleut."
+    },
+    {
+      "lesson": "l03",
+      "ref": "il-fait-chaud",
+      "fr": "Il fait chaud."
+    },
+    {
+      "lesson": "l03",
+      "ref": "il-fait-frais",
+      "fr": "Il fait frais."
+    },
+    {
+      "lesson": "l03",
+      "ref": "le-vent-souffle",
+      "fr": "Le vent souffle."
+    },
+    {
+      "lesson": "l03",
+      "ref": "la-pluie-arrive",
+      "fr": "La pluie arrive."
+    }
+  ],
+  "story": {
+    "title": "Vite, la pluie !",
+    "setting": "Au marché",
+    "prompt": "Que réponds-tu ?",
+    "success": "À l’abri !",
+    "lines": [
+      {
+        "speaker": "vendeuse",
+        "fr": "Regarde le ciel ! La pluie arrive."
+      },
+      {
+        "speaker": "apprenant",
+        "fr": "Oui, il y a des nuages."
+      },
+      {
+        "speaker": "vendeuse",
+        "fr": "Range vite tes affaires !",
+        "audioOnly": true,
+        "hint": "Écoute son conseil."
+      },
+      {
+        "speaker": "apprenant",
+        "fr": "Merci ! Il fait frais maintenant."
+      },
+      {
+        "speaker": "vendeuse",
+        "fr": "Rentre bien !"
+      }
+    ],
+    "choices": [
+      {
+        "meaning": "merci",
+        "correct": true
+      },
+      {
+        "meaning": "il fait chaud",
+        "correct": false
+      },
+      {
+        "meaning": "bon appétit",
+        "correct": false
+      }
+    ]
+  }
+}

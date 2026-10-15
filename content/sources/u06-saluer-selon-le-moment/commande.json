@@ -1,0 +1,154 @@
+{
+  "unit": {
+    "id": "u06",
+    "pack": "u06-saluer-selon-le-moment",
+    "order": 6,
+    "title": "Saluer selon le moment",
+    "subtitle": "Saluer le matin, le soir et à l’arrivée",
+    "grammar": "les réponses attendues aux salutations"
+  },
+  "lessons": [
+    {
+      "ref": "l01",
+      "type": "leçon",
+      "title": "Du matin au soir",
+      "summary": "Tu salues selon le moment de la journée."
+    },
+    {
+      "ref": "l02",
+      "type": "leçon",
+      "title": "Les vœux du quotidien",
+      "summary": "Tu souhaites bon courage, bon voyage et bon appétit."
+    },
+    {
+      "ref": "l03",
+      "type": "leçon",
+      "title": "Répondre aux salutations",
+      "summary": "Tu réponds comme on l’attend."
+    },
+    {
+      "ref": "l04",
+      "type": "révision",
+      "title": "Révision de l’unité",
+      "summary": "Tu as révisé toute l’unité 6."
+    },
+    {
+      "ref": "histoire",
+      "type": "histoire",
+      "title": "Le matin au marché"
+    }
+  ],
+  "words": [
+    {
+      "lesson": "l01",
+      "ref": "bonjour-matin",
+      "fr": "bonjour (le matin)"
+    },
+    {
+      "lesson": "l01",
+      "ref": "bonsoir",
+      "fr": "bonsoir"
+    },
+    {
+      "lesson": "l01",
+      "ref": "bonne-nuit",
+      "fr": "bonne nuit"
+    },
+    {
+      "lesson": "l01",
+      "ref": "bonne-arrivee",
+      "fr": "bonne arrivée"
+    },
+    {
+      "lesson": "l02",
+      "ref": "bon-courage",
+      "fr": "bon courage"
+    },
+    {
+      "lesson": "l02",
+      "ref": "bon-voyage",
+      "fr": "bon voyage"
+    },
+    {
+      "lesson": "l02",
+      "ref": "bon-appetit",
+      "fr": "bon appétit"
+    },
+    {
+      "lesson": "l02",
+      "ref": "a-tout-a-l-heure",
+      "fr": "à tout à l’heure"
+    }
+  ],
+  "sentences": [
+    {
+      "lesson": "l03",
+      "ref": "as-tu-bien-dormi",
+      "fr": "As-tu bien dormi ?"
+    },
+    {
+      "lesson": "l03",
+      "ref": "j-ai-bien-dormi",
+      "fr": "J’ai bien dormi."
+    },
+    {
+      "lesson": "l03",
+      "ref": "comment-va-la-maison",
+      "fr": "Comment va la maison ?"
+    },
+    {
+      "lesson": "l03",
+      "ref": "tout-le-monde-va-bien",
+      "fr": "Tout le monde va bien."
+    },
+    {
+      "lesson": "l03",
+      "ref": "merci-pour-l-accueil",
+      "fr": "Merci pour l’accueil."
+    }
+  ],
+  "story": {
+    "title": "Bonjour, Maman Rose",
+    "setting": "Au marché",
+    "prompt": "Que réponds-tu ?",
+    "success": "Bien salué !",
+    "lines": [
+      {
+        "speaker": "vendeuse",
+        "fr": "Bonjour ! As-tu bien dormi ?"
+      },
+      {
+        "speaker": "apprenant",
+        "fr": "J’ai bien dormi. Et toi ?"
+      },
+      {
+        "speaker": "vendeuse",
+        "fr": "Ça va. Comment va la maison ?",
+        "audioOnly": true,
+        "hint": "Écoute : que demande-t-elle ?"
+      },
+      {
+        "speaker": "apprenant",
+        "fr": "Tout le monde va bien."
+      },
+      {
+        "speaker": "vendeuse",
+        "fr": "Bon courage pour la journée !"
+      }
+    ],
+    "choices": [
+      {
+        "meaning": "merci",
+        "correct": true
+      },
+      {
+        "meaning": "bonne nuit",
+        "correct": false
+      },
+      {
+        "meaning": "bon appétit",
+        "correct": false
+      }
+    ]
+  }
+}

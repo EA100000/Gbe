@@ -1,0 +1,159 @@
+{
+  "unit": {
+    "id": "u05",
+    "pack": "u05-la-famille",
+    "order": 5,
+    "title": "La famille",
+    "subtitle": "Présenter ses proches",
+    "grammar": "le possessif (mon, ton)"
+  },
+  "lessons": [
+    {
+      "ref": "l01",
+      "type": "leçon",
+      "title": "Les parents",
+      "summary": "Tu nommes les membres de ta famille proche."
+    },
+    {
+      "ref": "l02",
+      "type": "leçon",
+      "title": "Frères, sœurs et grands-parents",
+      "summary": "Tu nommes tes frères, sœurs et grands-parents."
+    },
+    {
+      "ref": "l03",
+      "type": "leçon",
+      "title": "Ma famille",
+      "summary": "Tu présentes ta famille."
+    },
+    {
+      "ref": "l04",
+      "type": "révision",
+      "title": "Révision de l’unité",
+      "summary": "Tu as révisé toute l’unité 5."
+    },
+    {
+      "ref": "histoire",
+      "type": "histoire",
+      "title": "La famille de la vendeuse"
+    }
+  ],
+  "words": [
+    {
+      "lesson": "l01",
+      "ref": "pere",
+      "fr": "père"
+    },
+    {
+      "lesson": "l01",
+      "ref": "mere",
+      "fr": "mère"
+    },
+    {
+      "lesson": "l01",
+      "ref": "enfant",
+      "fr": "enfant"
+    },
+    {
+      "lesson": "l01",
+      "ref": "famille",
+      "fr": "famille"
+    },
+    {
+      "lesson": "l02",
+      "ref": "grand-frere",
+      "fr": "grand frère"
+    },
+    {
+      "lesson": "l02",
+      "ref": "grande-soeur",
+      "fr": "grande sœur"
+    },
+    {
+      "lesson": "l02",
+      "ref": "cadet",
+      "fr": "petit frère ou petite sœur"
+    },
+    {
+      "lesson": "l02",
+      "ref": "grand-mere",
+      "fr": "grand-mère"
+    },
+    {
+      "lesson": "l02",
+      "ref": "grand-pere",
+      "fr": "grand-père"
+    }
+  ],
+  "sentences": [
+    {
+      "lesson": "l03",
+      "ref": "c-est-mon-pere",
+      "fr": "C’est mon père."
+    },
+    {
+      "lesson": "l03",
+      "ref": "c-est-ma-mere",
+      "fr": "C’est ma mère."
+    },
+    {
+      "lesson": "l03",
+      "ref": "j-ai-deux-enfants",
+      "fr": "J’ai deux enfants."
+    },
+    {
+      "lesson": "l03",
+      "ref": "as-tu-des-freres",
+      "fr": "As-tu des frères et sœurs ?"
+    },
+    {
+      "lesson": "l03",
+      "ref": "ma-famille-va-bien",
+      "fr": "Ma famille va bien."
+    }
+  ],
+  "story": {
+    "title": "Les enfants de Maman Rose",
+    "setting": "Au marché",
+    "prompt": "Que réponds-tu ?",
+    "success": "Bien dit !",
+    "lines": [
+      {
+        "speaker": "vendeuse",
+        "fr": "Voici mes enfants !"
+      },
+      {
+        "speaker": "apprenant",
+        "fr": "Ils sont beaux ! Combien d’enfants as-tu ?"
+      },
+      {
+        "speaker": "vendeuse",
+        "fr": "J’ai trois enfants.",
+        "audioOnly": true,
+        "hint": "Écoute : combien d’enfants a-t-elle ?"
+      },
+      {
+        "speaker": "apprenant",
+        "fr": "Moi, j’ai deux enfants."
+      },
+      {
+        "speaker": "vendeuse",
+        "fr": "Salue ta famille pour moi !"
+      }
+    ],
+    "choices": [
+      {
+        "meaning": "merci",
+        "correct": true
+      },
+      {
+        "meaning": "c’est trop cher",
+        "correct": false
+      },
+      {
+        "meaning": "j’habite à Cotonou",
+        "correct": false
+      }
+    ]
+  }
+}

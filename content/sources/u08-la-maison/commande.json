@@ -1,0 +1,162 @@
+{
+  "unit": {
+    "id": "u08",
+    "pack": "u08-la-maison",
+    "order": 8,
+    "title": "La maison",
+    "subtitle": "Accueillir quelqu’un chez soi",
+    "grammar": "l’impératif"
+  },
+  "lessons": [
+    {
+      "ref": "l01",
+      "type": "leçon",
+      "title": "Les pièces",
+      "summary": "Tu nommes les pièces de la maison."
+    },
+    {
+      "ref": "l02",
+      "type": "leçon",
+      "title": "Les meubles",
+      "summary": "Tu nommes les meubles."
+    },
+    {
+      "ref": "l03",
+      "type": "leçon",
+      "title": "Bienvenue chez moi",
+      "summary": "Tu accueilles quelqu’un chez toi."
+    },
+    {
+      "ref": "l04",
+      "type": "révision",
+      "title": "Révision de l’unité",
+      "summary": "Tu as révisé toute l’unité 8."
+    },
+    {
+      "ref": "histoire",
+      "type": "histoire",
+      "title": "La vendeuse en visite"
+    }
+  ],
+  "words": [
+    {
+      "lesson": "l01",
+      "ref": "chambre",
+      "fr": "chambre",
+      "image": true
+    },
+    {
+      "lesson": "l01",
+      "ref": "cuisine",
+      "fr": "cuisine",
+      "image": true
+    },
+    {
+      "lesson": "l01",
+      "ref": "cour",
+      "fr": "cour",
+      "image": true
+    },
+    {
+      "lesson": "l01",
+      "ref": "porte",
+      "fr": "porte",
+      "image": true
+    },
+    {
+      "lesson": "l02",
+      "ref": "lit",
+      "fr": "lit",
+      "image": true
+    },
+    {
+      "lesson": "l02",
+      "ref": "chaise",
+      "fr": "chaise",
+      "image": true
+    },
+    {
+      "lesson": "l02",
+      "ref": "table",
+      "fr": "table",
+      "image": true
+    },
+    {
+      "lesson": "l02",
+      "ref": "natte",
+      "fr": "natte",
+      "image": true
+    }
+  ],
+  "sentences": [
+    {
+      "lesson": "l03",
+      "ref": "entre",
+      "fr": "Entre !"
+    },
+    {
+      "lesson": "l03",
+      "ref": "assieds-toi",
+      "fr": "Assieds-toi."
+    },
+    {
+      "lesson": "l03",
+      "ref": "ferme-la-porte",
+      "fr": "Ferme la porte."
+    },
+    {
+      "lesson": "l03",
+      "ref": "voici-ma-chambre",
+      "fr": "Voici ma chambre."
+    },
+    {
+      "lesson": "l03",
+      "ref": "fais-comme-chez-toi",
+      "fr": "Fais comme chez toi."
+    }
+  ],
+  "story": {
+    "title": "Maman Rose chez toi",
+    "setting": "À la maison",
+    "prompt": "Que lui dis-tu pour qu’elle se sente bien ?",
+    "success": "Quel accueil !",
+    "lines": [
+      {
+        "speaker": "vendeuse",
+        "fr": "Bonsoir ! Je peux entrer ?"
+      },
+      {
+        "speaker": "apprenant",
+        "fr": "Bonne arrivée ! Entre, assieds-toi."
+      },
+      {
+        "speaker": "vendeuse",
+        "fr": "Merci. Ta maison est belle.",
+        "audioOnly": true,
+        "hint": "Écoute : que dit-elle de ta maison ?"
+      },
+      {
+        "speaker": "apprenant",
+        "fr": "Merci ! Tu veux de l’eau ?"
+      },
+      {
+        "speaker": "vendeuse",
+        "fr": "Oui, merci."
+      }
+    ],
+    "choices": [
+      {
+        "meaning": "fais comme chez toi",
+        "correct": true
+      },
+      {
+        "meaning": "ferme la porte",
+        "correct": false
+      },
+      {
+        "meaning": "j’ai faim",
+        "correct": false
+      }
+    ]
+  }
+}

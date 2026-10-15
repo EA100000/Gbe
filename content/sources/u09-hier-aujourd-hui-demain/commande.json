@@ -1,0 +1,154 @@
+{
+  "unit": {
+    "id": "u09",
+    "pack": "u09-hier-aujourd-hui-demain",
+    "order": 9,
+    "title": "Hier, aujourd’hui, demain",
+    "subtitle": "Situer un événement dans le temps",
+    "grammar": "parler de l’avenir"
+  },
+  "lessons": [
+    {
+      "ref": "l01",
+      "type": "leçon",
+      "title": "Les jours",
+      "summary": "Tu situes hier, aujourd’hui et demain."
+    },
+    {
+      "ref": "l02",
+      "type": "leçon",
+      "title": "La semaine",
+      "summary": "Tu parles des jours, des semaines et des mois."
+    },
+    {
+      "ref": "l03",
+      "type": "leçon",
+      "title": "Quand ?",
+      "summary": "Tu dis quand tu viens."
+    },
+    {
+      "ref": "l04",
+      "type": "révision",
+      "title": "Révision de l’unité",
+      "summary": "Tu as révisé toute l’unité 9."
+    },
+    {
+      "ref": "histoire",
+      "type": "histoire",
+      "title": "Le jour de marché"
+    }
+  ],
+  "words": [
+    {
+      "lesson": "l01",
+      "ref": "aujourd-hui",
+      "fr": "aujourd’hui"
+    },
+    {
+      "lesson": "l01",
+      "ref": "demain",
+      "fr": "demain"
+    },
+    {
+      "lesson": "l01",
+      "ref": "hier",
+      "fr": "hier"
+    },
+    {
+      "lesson": "l01",
+      "ref": "apres-demain",
+      "fr": "après-demain"
+    },
+    {
+      "lesson": "l02",
+      "ref": "jour",
+      "fr": "jour"
+    },
+    {
+      "lesson": "l02",
+      "ref": "semaine",
+      "fr": "semaine"
+    },
+    {
+      "lesson": "l02",
+      "ref": "mois",
+      "fr": "mois"
+    },
+    {
+      "lesson": "l02",
+      "ref": "jour-de-marche",
+      "fr": "jour de marché"
+    }
+  ],
+  "sentences": [
+    {
+      "lesson": "l03",
+      "ref": "a-demain",
+      "fr": "À demain !"
+    },
+    {
+      "lesson": "l03",
+      "ref": "je-viens-demain",
+      "fr": "Je viens demain."
+    },
+    {
+      "lesson": "l03",
+      "ref": "je-suis-venu-hier",
+      "fr": "Je suis venu hier."
+    },
+    {
+      "lesson": "l03",
+      "ref": "c-est-quand",
+      "fr": "C’est quand ?"
+    },
+    {
+      "lesson": "l03",
+      "ref": "le-marche-c-est-demain",
+      "fr": "Le marché, c’est demain."
+    }
+  ],
+  "story": {
+    "title": "Rendez-vous au marché",
+    "setting": "Au marché",
+    "prompt": "Que réponds-tu en partant ?",
+    "success": "Rendez-vous pris !",
+    "lines": [
+      {
+        "speaker": "vendeuse",
+        "fr": "Tu viens au marché demain ?"
+      },
+      {
+        "speaker": "apprenant",
+        "fr": "Non, je viens après-demain."
+      },
+      {
+        "speaker": "vendeuse",
+        "fr": "Après-demain, c’est jour de marché !",
+        "audioOnly": true,
+        "hint": "Écoute : quel jour est-ce, après-demain ?"
+      },
+      {
+        "speaker": "apprenant",
+        "fr": "Très bien, à après-demain !"
+      },
+      {
+        "speaker": "vendeuse",
+        "fr": "Je t’attends."
+      }
+    ],
+    "choices": [
+      {
+        "meaning": "au revoir",
+        "correct": true
+      },
+      {
+        "meaning": "j’ai faim",
+        "correct": false
+      },
+      {
+        "meaning": "assieds-toi",
+        "correct": false
+      }
+    ]
+  }
+}

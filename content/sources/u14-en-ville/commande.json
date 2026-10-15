@@ -1,0 +1,162 @@
+{
+  "unit": {
+    "id": "u14",
+    "pack": "u14-en-ville",
+    "order": 14,
+    "title": "En ville",
+    "subtitle": "Trouver un lieu",
+    "grammar": "où ?"
+  },
+  "lessons": [
+    {
+      "ref": "l01",
+      "type": "leçon",
+      "title": "Les lieux utiles",
+      "summary": "Tu nommes l’école, l’hôpital, la boutique et la pharmacie."
+    },
+    {
+      "ref": "l02",
+      "type": "leçon",
+      "title": "Autres lieux",
+      "summary": "Tu nommes l’église, la mosquée, la banque et le marché."
+    },
+    {
+      "ref": "l03",
+      "type": "leçon",
+      "title": "Où est… ?",
+      "summary": "Tu demandes où se trouve un lieu."
+    },
+    {
+      "ref": "l04",
+      "type": "révision",
+      "title": "Révision de l’unité",
+      "summary": "Tu as révisé toute l’unité 14."
+    },
+    {
+      "ref": "histoire",
+      "type": "histoire",
+      "title": "Chercher la pharmacie"
+    }
+  ],
+  "words": [
+    {
+      "lesson": "l01",
+      "ref": "ecole",
+      "fr": "école",
+      "image": true
+    },
+    {
+      "lesson": "l01",
+      "ref": "hopital",
+      "fr": "hôpital",
+      "image": true
+    },
+    {
+      "lesson": "l01",
+      "ref": "boutique",
+      "fr": "boutique",
+      "image": true
+    },
+    {
+      "lesson": "l01",
+      "ref": "pharmacie",
+      "fr": "pharmacie",
+      "image": true
+    },
+    {
+      "lesson": "l02",
+      "ref": "eglise",
+      "fr": "église",
+      "image": true
+    },
+    {
+      "lesson": "l02",
+      "ref": "mosquee",
+      "fr": "mosquée",
+      "image": true
+    },
+    {
+      "lesson": "l02",
+      "ref": "banque",
+      "fr": "banque",
+      "image": true
+    },
+    {
+      "lesson": "l02",
+      "ref": "marche",
+      "fr": "marché",
+      "image": true
+    }
+  ],
+  "sentences": [
+    {
+      "lesson": "l03",
+      "ref": "ou-est-le-marche",
+      "fr": "Où est le marché ?"
+    },
+    {
+      "lesson": "l03",
+      "ref": "c-est-ici",
+      "fr": "C’est ici."
+    },
+    {
+      "lesson": "l03",
+      "ref": "c-est-la-bas",
+      "fr": "C’est là-bas."
+    },
+    {
+      "lesson": "l03",
+      "ref": "c-est-loin",
+      "fr": "C’est loin ?"
+    },
+    {
+      "lesson": "l03",
+      "ref": "c-est-tout-pres",
+      "fr": "C’est tout près."
+    }
+  ],
+  "story": {
+    "title": "Où est la pharmacie ?",
+    "setting": "En ville",
+    "prompt": "Que lui réponds-tu ?",
+    "success": "Trouvé !",
+    "lines": [
+      {
+        "speaker": "vendeuse",
+        "fr": "Tu cherches quelque chose ?"
+      },
+      {
+        "speaker": "apprenant",
+        "fr": "Oui, où est la pharmacie ?"
+      },
+      {
+        "speaker": "vendeuse",
+        "fr": "C’est tout près, derrière l’école.",
+        "audioOnly": true,
+        "hint": "Écoute : où est la pharmacie ?"
+      },
+      {
+        "speaker": "apprenant",
+        "fr": "C’est tout près ? Super !"
+      },
+      {
+        "speaker": "vendeuse",
+        "fr": "Oui, juste là-bas."
+      }
+    ],
+    "choices": [
+      {
+        "meaning": "merci",
+        "correct": true
+      },
+      {
+        "meaning": "c’est loin",
+        "correct": false
+      },
+      {
+        "meaning": "j’ai faim",
+        "correct": false
+      }
+    ]
+  }
+}

@@ -1,0 +1,162 @@
+{
+  "unit": {
+    "id": "u16",
+    "pack": "u16-les-animaux",
+    "order": 16,
+    "title": "Les animaux",
+    "subtitle": "Nommer les animaux de la cour",
+    "grammar": "le pluriel"
+  },
+  "lessons": [
+    {
+      "ref": "l01",
+      "type": "leçon",
+      "title": "Les animaux de la cour",
+      "summary": "Tu nommes la poule, la chèvre, le mouton et le porc."
+    },
+    {
+      "ref": "l02",
+      "type": "leçon",
+      "title": "Autour de la maison",
+      "summary": "Tu nommes le chien, le chat, le canard et l’oiseau."
+    },
+    {
+      "ref": "l03",
+      "type": "leçon",
+      "title": "Combien de poules ?",
+      "summary": "Tu parles de plusieurs animaux."
+    },
+    {
+      "ref": "l04",
+      "type": "révision",
+      "title": "Révision de l’unité",
+      "summary": "Tu as révisé toute l’unité 16."
+    },
+    {
+      "ref": "histoire",
+      "type": "histoire",
+      "title": "Au marché aux bêtes"
+    }
+  ],
+  "words": [
+    {
+      "lesson": "l01",
+      "ref": "poule",
+      "fr": "poule",
+      "image": true
+    },
+    {
+      "lesson": "l01",
+      "ref": "chevre",
+      "fr": "chèvre",
+      "image": true
+    },
+    {
+      "lesson": "l01",
+      "ref": "mouton",
+      "fr": "mouton",
+      "image": true
+    },
+    {
+      "lesson": "l01",
+      "ref": "porc",
+      "fr": "porc",
+      "image": true
+    },
+    {
+      "lesson": "l02",
+      "ref": "chien",
+      "fr": "chien",
+      "image": true
+    },
+    {
+      "lesson": "l02",
+      "ref": "chat",
+      "fr": "chat",
+      "image": true
+    },
+    {
+      "lesson": "l02",
+      "ref": "canard",
+      "fr": "canard",
+      "image": true
+    },
+    {
+      "lesson": "l02",
+      "ref": "oiseau",
+      "fr": "oiseau",
+      "image": true
+    }
+  ],
+  "sentences": [
+    {
+      "lesson": "l03",
+      "ref": "les-poules-sont-dans-la-cour",
+      "fr": "Les poules sont dans la cour."
+    },
+    {
+      "lesson": "l03",
+      "ref": "j-ai-deux-chevres",
+      "fr": "J’ai deux chèvres."
+    },
+    {
+      "lesson": "l03",
+      "ref": "le-chien-aboie",
+      "fr": "Le chien aboie."
+    },
+    {
+      "lesson": "l03",
+      "ref": "combien-coute-la-poule",
+      "fr": "Combien coûte la poule ?"
+    },
+    {
+      "lesson": "l03",
+      "ref": "je-veux-trois-poules",
+      "fr": "Je veux trois poules."
+    }
+  ],
+  "story": {
+    "title": "Trois poules",
+    "setting": "Au marché",
+    "prompt": "Que dis-tu pour conclure ?",
+    "success": "Affaire conclue !",
+    "lines": [
+      {
+        "speaker": "vendeuse",
+        "fr": "Tu veux une poule ?"
+      },
+      {
+        "speaker": "apprenant",
+        "fr": "Oui, je veux trois poules."
+      },
+      {
+        "speaker": "vendeuse",
+        "fr": "Trois poules, ça fait six mille francs.",
+        "audioOnly": true,
+        "hint": "Écoute le prix."
+      },
+      {
+        "speaker": "apprenant",
+        "fr": "C’est trop cher ! Baisse un peu."
+      },
+      {
+        "speaker": "vendeuse",
+        "fr": "Bon, cinq mille."
+      }
+    ],
+    "choices": [
+      {
+        "meaning": "je prends ça",
+        "correct": true
+      },
+      {
+        "meaning": "le chien aboie",
+        "correct": false
+      },
+      {
+        "meaning": "à demain",
+        "correct": false
+      }
+    ]
+  }
+}

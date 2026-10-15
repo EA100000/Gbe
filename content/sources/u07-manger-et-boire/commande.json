@@ -1,0 +1,168 @@
+{
+  "unit": {
+    "id": "u07",
+    "pack": "u07-manger-et-boire",
+    "order": 7,
+    "title": "Manger et boire",
+    "subtitle": "Dire qu’on a faim et commander un plat",
+    "grammar": "avoir faim, avoir soif"
+  },
+  "lessons": [
+    {
+      "ref": "l01",
+      "type": "leçon",
+      "title": "Au repas",
+      "summary": "Tu nommes les plats du quotidien."
+    },
+    {
+      "ref": "l02",
+      "type": "leçon",
+      "title": "Les boissons",
+      "summary": "Tu nommes ce qu’on boit."
+    },
+    {
+      "ref": "l03",
+      "type": "leçon",
+      "title": "À table",
+      "summary": "Tu dis que tu as faim ou soif."
+    },
+    {
+      "ref": "l04",
+      "type": "révision",
+      "title": "Révision de l’unité",
+      "summary": "Tu as révisé toute l’unité 7."
+    },
+    {
+      "ref": "histoire",
+      "type": "histoire",
+      "title": "Manger au marché"
+    }
+  ],
+  "words": [
+    {
+      "lesson": "l01",
+      "ref": "pate",
+      "fr": "pâte de maïs",
+      "image": true
+    },
+    {
+      "lesson": "l01",
+      "ref": "sauce",
+      "fr": "sauce",
+      "image": true
+    },
+    {
+      "lesson": "l01",
+      "ref": "poisson",
+      "fr": "poisson",
+      "image": true
+    },
+    {
+      "lesson": "l01",
+      "ref": "viande",
+      "fr": "viande",
+      "image": true
+    },
+    {
+      "lesson": "l01",
+      "ref": "bouillie",
+      "fr": "bouillie",
+      "image": true
+    },
+    {
+      "lesson": "l02",
+      "ref": "eau",
+      "fr": "eau",
+      "image": true
+    },
+    {
+      "lesson": "l02",
+      "ref": "jus",
+      "fr": "jus de fruit",
+      "image": true
+    },
+    {
+      "lesson": "l02",
+      "ref": "lait",
+      "fr": "lait",
+      "image": true
+    },
+    {
+      "lesson": "l02",
+      "ref": "verre",
+      "fr": "verre",
+      "image": true
+    }
+  ],
+  "sentences": [
+    {
+      "lesson": "l03",
+      "ref": "j-ai-faim",
+      "fr": "J’ai faim."
+    },
+    {
+      "lesson": "l03",
+      "ref": "j-ai-soif",
+      "fr": "J’ai soif."
+    },
+    {
+      "lesson": "l03",
+      "ref": "donne-moi-a-boire",
+      "fr": "Donne-moi à boire."
+    },
+    {
+      "lesson": "l03",
+      "ref": "c-est-bon",
+      "fr": "C’est bon !"
+    },
+    {
+      "lesson": "l03",
+      "ref": "je-suis-rassasie",
+      "fr": "Je suis rassasié."
+    }
+  ],
+  "story": {
+    "title": "Le repas de midi",
+    "setting": "Au marché",
+    "prompt": "Que réponds-tu ?",
+    "success": "Bon appétit !",
+    "lines": [
+      {
+        "speaker": "vendeuse",
+        "fr": "Bienvenue ! Tu as faim ?"
+      },
+      {
+        "speaker": "apprenant",
+        "fr": "Oui, j’ai faim. Donne-moi de la pâte et du poisson."
+      },
+      {
+        "speaker": "vendeuse",
+        "fr": "Ça fait cinq cents francs.",
+        "audioOnly": true,
+        "hint": "Écoute le prix."
+      },
+      {
+        "speaker": "apprenant",
+        "fr": "Voilà. Donne-moi aussi de l’eau."
+      },
+      {
+        "speaker": "vendeuse",
+        "fr": "Bon appétit !"
+      }
+    ],
+    "choices": [
+      {
+        "meaning": "merci",
+        "correct": true
+      },
+      {
+        "meaning": "j’ai soif",
+        "correct": false
+      },
+      {
+        "meaning": "bonne nuit",
+        "correct": false
+      }
+    ]
+  }
+}

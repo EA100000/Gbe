@@ -1,0 +1,134 @@
+{
+  "unit": {
+    "id": "u19",
+    "pack": "u19-une-journee-a-cotonou",
+    "order": 19,
+    "title": "Une journée à Cotonou",
+    "subtitle": "Une longue histoire qui reprend toute la section",
+    "grammar": "écouter sans le texte"
+  },
+  "lessons": [
+    {
+      "ref": "l01",
+      "type": "leçon",
+      "title": "Le matin",
+      "summary": "Tu racontes le début de ta journée."
+    },
+    {
+      "ref": "l02",
+      "type": "leçon",
+      "title": "En ville",
+      "summary": "Tu te débrouilles en ville."
+    },
+    {
+      "ref": "l03",
+      "type": "révision",
+      "title": "Révision avant l’histoire",
+      "summary": "Tu es prêt pour la grande histoire."
+    },
+    {
+      "ref": "histoire",
+      "type": "histoire",
+      "title": "Une journée à Cotonou"
+    }
+  ],
+  "words": [],
+  "sentences": [
+    {
+      "lesson": "l01",
+      "ref": "je-pars-au-marche",
+      "fr": "Je pars au marché ce matin."
+    },
+    {
+      "lesson": "l01",
+      "ref": "je-prends-un-taxi-moto",
+      "fr": "Je prends un taxi-moto."
+    },
+    {
+      "lesson": "l01",
+      "ref": "il-fait-deja-chaud",
+      "fr": "Il fait déjà chaud."
+    },
+    {
+      "lesson": "l02",
+      "ref": "ou-est-la-pharmacie",
+      "fr": "Où est la pharmacie ?"
+    },
+    {
+      "lesson": "l02",
+      "ref": "je-veux-ce-pagne",
+      "fr": "Je veux ce pagne."
+    },
+    {
+      "lesson": "l02",
+      "ref": "ca-fait-combien",
+      "fr": "Ça fait combien ?"
+    }
+  ],
+  "story": {
+    "title": "Une journée à Cotonou",
+    "setting": "Cotonou",
+    "prompt": "Que dis-tu en arrivant chez elle le soir ?",
+    "success": "Quelle belle journée !",
+    "lines": [
+      {
+        "speaker": "vendeuse",
+        "fr": "Bonjour ! Bien réveillé ?"
+      },
+      {
+        "speaker": "apprenant",
+        "fr": "Oui, très bien. Je pars au marché."
+      },
+      {
+        "speaker": "vendeuse",
+        "fr": "Il fait déjà chaud ! Prends de l’eau."
+      },
+      {
+        "speaker": "apprenant",
+        "fr": "Merci. Où est le marché des pagnes ?"
+      },
+      {
+        "speaker": "vendeuse",
+        "fr": "Va tout droit, puis tourne à droite.",
+        "audioOnly": true,
+        "hint": "Écoute le chemin."
+      },
+      {
+        "speaker": "apprenant",
+        "fr": "Je prends un taxi-moto, c’est loin."
+      },
+      {
+        "speaker": "vendeuse",
+        "fr": "Ce soir, viens manger chez moi."
+      },
+      {
+        "speaker": "apprenant",
+        "fr": "Je veux bien ! À ce soir."
+      },
+      {
+        "speaker": "vendeuse",
+        "fr": "N’oublie pas : on mange à sept heures.",
+        "audioOnly": true,
+        "hint": "Écoute : à quelle heure mange-t-on ?"
+      },
+      {
+        "speaker": "apprenant",
+        "fr": "À sept heures. Bonne journée !"
+      }
+    ],
+    "choices": [
+      {
+        "meaning": "bonsoir",
+        "correct": true
+      },
+      {
+        "meaning": "bonjour (le matin)",
+        "correct": false
+      },
+      {
+        "meaning": "bonne nuit",
+        "correct": false
+      }
+    ]
+  }
+}
