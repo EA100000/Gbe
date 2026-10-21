@@ -94,3 +94,49 @@ test('le guide des sons s’ouvre depuis la barre du bas', async ({ page }) => {
 
   await expect(page.getByText('Les sons du fon')).toBeVisible();
 });
+
+test('une erreur de la leçon se révise depuis l’onglet Réviser', async ({ page }) => {
+  const errors = watchErrors(page);
+  await startAsNewLearner(page);
+  await page.getByLabel('Leçon 1 : commencer').click();
+
+  // Première image ratée, puis réussie : « sin » part dans « Mes erreurs ».
+  await page.getByTestId('choice-hwe').click();
+  await page.getByTestId('check-button').click();
+  await page.getByTestId('feedback-button').click();
+  await page.getByTestId('choice-sin').click();
+  await page.getByTestId('check-button').click();
+  await page.getByTestId('feedback-button').click();
+  for (const answer of ['hwe', 'xwe', 'kwe']) {
+    await page.getByTestId(`choice-${answer}`).click();
+    await page.getByTestId('check-button').click();
+    await page.getByTestId('feedback-button').click();
+  }
+  for (let i = 0; i < 4; i += 1) {
+    await page.getByTestId(`pair-left-${i}`).click();
+    await page.getByTestId(`pair-right-${i}`).click();
+  }
+  await page.getByTestId('feedback-button').click();
+  await page.getByTestId('end-continue').click();
+
+  await page.getByTestId('tab-reviser').first().click();
+  await expect(page.getByText('1 erreur récente à revoir')).toBeVisible();
+  await page.getByTestId('review-start').click();
+  await expect(page.getByText('Entraînement')).toBeVisible();
+  // La séance commence par l'erreur, puis les mots à consolider : on répond juste à chaque image.
+  const ids: Record<string, string> = { eau: 'sin', soleil: 'hwe', maison: 'xwe', argent: 'kwe' };
+  const done = page.getByText('Révision terminée !').first();
+  for (let turn = 0; turn < 10 && !(await done.isVisible()); turn += 1) {
+    const prompt = (await page.getByText(/^Lequel veut dire « .+ » \?$/).textContent()) ?? '';
+    const fr = /« (.+) »/.exec(prompt)?.[1] ?? '';
+    await page.getByTestId(`choice-u01:${ids[fr] ?? ''}`).click();
+    await page.getByTestId('check-button').click();
+    await page.getByTestId('feedback-button').click();
+    await page.waitForTimeout(200);
+  }
+
+  await expect(done).toBeVisible();
+  await page.getByTestId('end-continue').click();
+  await expect(page.getByText('Aucune erreur à revoir pour le moment.')).toBeVisible();
+  expect(errors).toEqual([]);
+});

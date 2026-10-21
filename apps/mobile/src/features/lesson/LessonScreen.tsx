@@ -12,24 +12,49 @@ import { MatchPairsView } from './components/MatchPairsView';
 import { QuitLessonSheet } from './components/QuitLessonSheet';
 import { useLessonController } from './useLessonController';
 
+/** Ce dont l'affichage d'un exercice a besoin : fourni par une leçon ou une séance d'entraînement. */
+export type LessonLayoutProps = Pick<
+  ReturnType<typeof useLessonController>,
+  | 'state'
+  | 'exercise'
+  | 'progress'
+  | 'canCheck'
+  | 'feedback'
+  | 'content'
+  | 'playClip'
+  | 'act'
+  | 'quit'
+  | 'quitAsked'
+  | 'stay'
+  | 'leave'
+  | 'showOutOfHearts'
+> & {
+  /** Remplace les vies dans la barre du haut (séance d'entraînement : « Entraînement »). */
+  badge?: string;
+};
+
 /** Écrans 3, 4 et 5 de la maquette : un exercice à la fois, puis le panneau de correction. */
 export function LessonScreen({ lessonId }: { lessonId: string }) {
-  const {
-    state,
-    exercise,
-    progress,
-    canCheck,
-    feedback,
-    content,
-    playClip,
-    act,
-    quit,
-    quitAsked,
-    stay,
-    leave,
-    showOutOfHearts,
-  } = useLessonController(lessonId);
+  return <LessonLayout {...useLessonController(lessonId)} />;
+}
 
+/** Affichage d'un exercice et de sa correction ; aucune règle ici, tout vient du contrôleur. */
+export function LessonLayout({
+  state,
+  exercise,
+  progress,
+  canCheck,
+  feedback,
+  content,
+  playClip,
+  act,
+  quit,
+  quitAsked,
+  stay,
+  leave,
+  showOutOfHearts,
+  badge,
+}: LessonLayoutProps) {
   if (state === null || exercise === undefined) return <SafeAreaView style={styles.screen} />;
   const { phase } = state.session;
 
@@ -84,6 +109,7 @@ export function LessonScreen({ lessonId }: { lessonId: string }) {
         onPress={() => {
           if (feedback.button === 'continue') act({ type: 'next' });
           else if (feedback.button === 'retry') act({ type: 'retry' });
+          else if (feedback.button === 'later') act({ type: 'postpone' });
           else showOutOfHearts();
         }}
       />
@@ -120,7 +146,7 @@ export function LessonScreen({ lessonId }: { lessonId: string }) {
 
   return (
     <SafeAreaView style={styles.screen} edges={['top', 'bottom']}>
-      <LessonTopBar progress={progress} hearts={state.session.hearts} onQuit={quit} />
+      <LessonTopBar progress={progress} hearts={state.session.hearts} badge={badge} onQuit={quit} />
       <ScrollView contentContainerStyle={styles.content}>
         <ExerciseHeader tag={exercise.tag} prompt={exercise.promptFr} />
         {body}

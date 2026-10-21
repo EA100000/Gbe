@@ -16,6 +16,8 @@ export interface PairsBoard {
   /** Dernière association fausse, pour l'afficher en rouge. */
   wrong: { left: number; right: number } | null;
   mistakes: number;
+  /** Paires dont le mot fon a été mal associé au moins une fois (pour « Mes erreurs »). */
+  missed: readonly number[];
 }
 
 export type PairsTapResult = 'selected' | 'unselected' | 'match' | 'mismatch' | 'ignored';
@@ -29,6 +31,7 @@ export function createPairsBoard(pairCount: number, rng: Rng): PairsBoard {
     selected: null,
     wrong: null,
     mistakes: 0,
+    missed: [],
   };
 }
 
@@ -64,8 +67,9 @@ export function tapPair(
 
   const wrong =
     side === 'left' ? { left: pair, right: selected.pair } : { left: selected.pair, right: pair };
+  const missed = board.missed.includes(wrong.left) ? board.missed : [...board.missed, wrong.left];
   return {
-    board: { ...board, selected: null, wrong, mistakes: board.mistakes + 1 },
+    board: { ...board, selected: null, wrong, mistakes: board.mistakes + 1, missed },
     result: 'mismatch',
   };
 }

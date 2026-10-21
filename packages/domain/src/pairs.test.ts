@@ -87,3 +87,16 @@ describe('isBoardComplete', () => {
     expect(isBoardComplete(board)).toBe(true);
   });
 });
+
+describe('paires ratées', () => {
+  it('retient une fois le mot fon mal associé', () => {
+    let board = fresh();
+    board = tapPair(board, 'left', 0).board;
+    board = tapPair(board, 'right', 1).board;
+    board = tapPair(board, 'right', 2).board;
+    board = tapPair(board, 'left', 0).board;
+
+    expect(board.missed).toEqual([0]);
+    expect(board.mistakes).toBe(2);
+  });
+});

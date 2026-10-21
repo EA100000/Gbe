@@ -15,6 +15,7 @@ import {
   isBoardComplete,
   next,
   placeTile,
+  postpone,
   removeTile,
   retry,
   startSession,
@@ -48,6 +49,7 @@ export type LessonAction =
   | { type: 'check' }
   | { type: 'retry' }
   | { type: 'next' }
+  | { type: 'postpone' }
   | { type: 'place_tile'; tileId: number }
   | { type: 'remove_tile'; tileId: number }
   | { type: 'tap_pair'; side: PairSide; pair: number };
@@ -74,11 +76,13 @@ export function startLesson(
   hearts: number,
   startedAt: number,
   seed: number,
+  options: { heartCost?: boolean } = {},
 ): LessonViewState {
   const session = startSession(
     exercises.map((e) => e.id),
     hearts,
     startedAt,
+    options,
   );
   return withBoards({
     lessonId,
@@ -138,6 +142,11 @@ export function lessonReducer(state: LessonViewState, action: LessonAction): Les
         selectedChoice: null,
         sentence: state.sentence === null ? null : clearAnswer(state.sentence),
       };
+    }
+
+    case 'postpone': {
+      if (state.session.phase !== 'wrong' || state.session.heartCost) return state;
+      return withBoards({ ...state, session: postpone(state.session) });
     }
 
     case 'next': {

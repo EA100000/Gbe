@@ -42,16 +42,47 @@ export const ChestOpenedSchema = z.object({
   cauris: z.number().int().nonnegative(),
 });
 
+/** Où l'apprenant a répondu : leçon du chemin, révision ou écoute (ADR 0019). */
+export const AnswerModeSchema = z.enum(['lesson', 'review', 'listen']);
+export type AnswerMode = z.infer<typeof AnswerModeSchema>;
+
+/**
+ * Premier essai sur un mot ou une phrase du lexique : juste ou faux.
+ * Base de « Mes erreurs » et de la maîtrise des mots (ADR 0019).
+ */
+export const ItemAnsweredSchema = z.object({
+  ...base,
+  type: z.literal('item_answered'),
+  unitId: z.string().min(1),
+  itemId: z.string().min(1),
+  correct: z.boolean(),
+  mode: AnswerModeSchema,
+});
+
+/** Fin d'une séance d'entraînement : elle compte pour l'XP et la série, pas pour le chemin. */
+export const PracticeCompletedSchema = z.object({
+  ...base,
+  type: z.literal('practice_completed'),
+  mode: AnswerModeSchema.exclude(['lesson']),
+  xp: z.number().int().nonnegative(),
+  accuracy: z.number().min(0).max(1),
+  durationMs: z.number().int().nonnegative(),
+});
+
 export const GameEventSchema = z.discriminatedUnion('type', [
   LessonCompletedSchema,
   HeartLostSchema,
   ChestOpenedSchema,
+  ItemAnsweredSchema,
+  PracticeCompletedSchema,
 ]);
 
 export type GameEvent = z.infer<typeof GameEventSchema>;
 export type LessonCompletedEvent = z.infer<typeof LessonCompletedSchema>;
 export type HeartLostEvent = z.infer<typeof HeartLostSchema>;
 export type ChestOpenedEvent = z.infer<typeof ChestOpenedSchema>;
+export type ItemAnsweredEvent = z.infer<typeof ItemAnsweredSchema>;
+export type PracticeCompletedEvent = z.infer<typeof PracticeCompletedSchema>;
 
 export interface Progress {
   totalXp: number;
@@ -97,8 +128,17 @@ export function applyEvents(events: Iterable<GameEvent>): Progress {
         add(xpByDay, event.dayKey, event.xp);
         add(practiceMsByDay, event.dayKey, event.durationMs);
         break;
+      case 'practice_completed':
+        totalXp += event.xp;
+        activeDays.add(event.dayKey);
+        add(xpByDay, event.dayKey, event.xp);
+        add(practiceMsByDay, event.dayKey, event.durationMs);
+        break;
       case 'heart_lost':
         heartLossTimes.push(event.at);
+        break;
+      case 'item_answered':
+        // Lu par les règles de révision (review.ts), sans effet sur la progression.
         break;
       case 'chest_opened':
         if (!openedChests.has(event.chestId)) {

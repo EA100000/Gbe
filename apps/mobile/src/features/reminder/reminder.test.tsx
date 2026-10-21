@@ -188,6 +188,7 @@ describe('écran 15 après la première leçon', () => {
     await setupStores();
     await useProgressStore.getState().completeOnboarding('regular');
     useProgressStore.getState().setLastSummary({
+      kind: 'lesson',
       lessonId: 'u01-l01',
       xp: 15,
       accuracy: 0.9,

@@ -40,7 +40,16 @@ function StatCard({
   );
 }
 
-/** Écran 6 de la maquette : XP, précision, durée, série et histoire débloquée. */
+const TITLE = {
+  lesson: 'end.title',
+  review: 'end.titleReview',
+  listen: 'end.titleListen',
+} as const;
+
+/**
+ * Écran 6 de la maquette : XP, précision, durée, série et histoire débloquée.
+ * Après une séance d'entraînement, le titre change et « Continuer » ramène à l'onglet Réviser.
+ */
 export function LessonEndScreen() {
   const summary = useProgressStore((s) => s.lastSummary);
   const goHome = () => router.dismissTo('/');
@@ -64,12 +73,12 @@ export function LessonEndScreen() {
             <Illustration name="confetti" width={390} height={230} />
           </View>
           <View style={styles.halo} />
-          <Galet pose="fete" size={190} accessibilityLabel={t('end.title')} />
+          <Galet pose="fete" size={190} accessibilityLabel={t(TITLE[summary.kind])} />
         </View>
 
         <View style={styles.texts}>
           <UiText size={32} weight="extrabold" color={colors.yellowText} accessibilityRole="header">
-            {t('end.title')}
+            {t(TITLE[summary.kind])}
           </UiText>
           {summary.summaryFr !== null ? (
             <UiText size={16} color={colors.inkMuted} style={styles.center}>
@@ -146,7 +155,9 @@ export function LessonEndScreen() {
       <View style={styles.footer}>
         <ChunkyButton
           label={t('common.continue')}
-          onPress={continueAfterLesson}
+          onPress={
+            summary.kind === 'lesson' ? continueAfterLesson : () => router.dismissTo('/reviser')
+          }
           testID="end-continue"
         />
       </View>

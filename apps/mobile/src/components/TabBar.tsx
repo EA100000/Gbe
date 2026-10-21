@@ -7,6 +7,7 @@ import { appApiClient } from '../core/sync/backgroundSync';
 
 const TABS: Record<string, { icon: IconName; label: string }> = {
   index: { icon: 'tabPath', label: t('tabs.learn') },
+  reviser: { icon: 'tabReview', label: t('tabs.review') },
   sons: { icon: 'tabSounds', label: t('tabs.sounds') },
   ligue: { icon: 'tabLeague', label: t('tabs.league') },
   profil: { icon: 'tabProfile', label: t('tabs.profile') },
@@ -65,7 +66,7 @@ const styles = StyleSheet.create({
     borderTopColor: colors.borderSoft,
     backgroundColor: colors.white,
     paddingTop: 8,
-    paddingHorizontal: 8,
+    paddingHorizontal: 4,
   },
   tab: { flex: 1, alignItems: 'center', gap: 3, minHeight: 52 },
   iconBox: {
