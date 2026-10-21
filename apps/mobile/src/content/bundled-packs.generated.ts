@@ -46,3 +46,6 @@ export const bundledPacks: readonly BundledPack[] = [
     },
   },
 ];
+
+/** Programme du cours (content/programme.json) : validé par Zod au chargement. */
+export const bundledProgramme: unknown = require('../../../../content/programme.json');

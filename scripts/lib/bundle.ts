@@ -2,6 +2,7 @@
 import { join, relative } from 'node:path';
 
 import { MOBILE_BUNDLE_FILE } from './packs';
+import { PROGRAMME_JSON } from './programme';
 
 export interface BundledPackSource {
   dir: string;
@@ -41,6 +42,9 @@ export function renderBundleModule(packs: readonly BundledPackSource[]): string 
     'export const bundledPacks: readonly BundledPack[] = [',
     entries,
     '];',
+    '',
+    '/** Programme du cours (content/programme.json) : validé par Zod au chargement. */',
+    `export const bundledProgramme: unknown = require('${fromMobile(PROGRAMME_JSON)}');`,
     '',
   ].join('\n');
 }

@@ -100,7 +100,8 @@ npm run content:import -- content/sources/u02-nombres/u02-nombres.xlsx          
 npm run audio:placeholders && npm run content:build && npm run content:validate
 ```
 
-`commande.json` décrit le plan en français (leçons, mots, phrases, histoire). L'import liste les
+`commande.json` décrit le plan en français (leçons, mots, phrases, histoire). Il fait aussi apparaître
+l'unité « en préparation » sur le chemin : `content:build` écrit `content/programme.json` (ADR 0018). L'import liste les
 erreurs par feuille et par ligne, génère les exercices et écrit une liste par voix,
 `enregistrements-homme.csv` et `enregistrements-femme.csv` : les fichiers audio à enregistrer, avec
 le texte à lire. Chaque mot et chaque phrase est dit par les deux voix ; l'appli les alterne

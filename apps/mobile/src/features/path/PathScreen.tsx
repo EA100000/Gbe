@@ -6,11 +6,25 @@ import { StatBadge } from '../../components/StatBadge';
 import { TestContentBanner } from '../../components/TestContentBanner';
 import { t, tPlural } from '../../core/i18n';
 import { UnitSectionView } from './UnitSectionView';
+import { UpcomingUnitSheet } from './UpcomingUnitSheet';
+import { UpcomingUnitsView } from './UpcomingUnitsView';
 import { usePathController } from './usePathController';
 
-/** Écran 2 de la maquette : en-tête, puis chaque unité (bannière et chemin des leçons). */
+/**
+ * Écran 2 de la maquette : en-tête, puis chaque unité (bannière et chemin des leçons),
+ * puis la suite du programme (écran 23).
+ */
 export function PathScreen() {
-  const { sections, stats, open, openGuide } = usePathController();
+  const {
+    sections,
+    stats,
+    open,
+    openGuide,
+    programme,
+    upcomingSheet,
+    openUpcoming,
+    closeUpcoming,
+  } = usePathController();
 
   return (
     <SafeAreaView style={styles.screen} edges={['top']}>
@@ -54,7 +68,9 @@ export function PathScreen() {
             onOpenGuide={openGuide}
           />
         ))}
+        <UpcomingUnitsView programme={programme} onOpen={openUpcoming} />
       </ScrollView>
+      <UpcomingUnitSheet unit={upcomingSheet} onClose={closeUpcoming} />
     </SafeAreaView>
   );
 }

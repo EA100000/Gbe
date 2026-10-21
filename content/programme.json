@@ -1,0 +1,119 @@
+{
+  "formatVersion": 1,
+  "units": [
+    {
+      "id": "u01",
+      "order": 1,
+      "title": "Salutations",
+      "subtitle": "Dire bonjour, merci et au revoir"
+    },
+    {
+      "id": "u02",
+      "order": 2,
+      "title": "Nombres",
+      "subtitle": "Compter jusqu’à cent et parler de quantités"
+    },
+    {
+      "id": "u03",
+      "order": 3,
+      "title": "Au marché",
+      "subtitle": "Acheter, demander et négocier"
+    },
+    {
+      "id": "u04",
+      "order": 4,
+      "title": "Se présenter",
+      "subtitle": "Dire son nom, d’où l’on vient et où l’on habite"
+    },
+    {
+      "id": "u05",
+      "order": 5,
+      "title": "La famille",
+      "subtitle": "Présenter ses proches"
+    },
+    {
+      "id": "u06",
+      "order": 6,
+      "title": "Saluer selon le moment",
+      "subtitle": "Saluer le matin, le soir et à l’arrivée"
+    },
+    {
+      "id": "u07",
+      "order": 7,
+      "title": "Manger et boire",
+      "subtitle": "Dire qu’on a faim et commander un plat"
+    },
+    {
+      "id": "u08",
+      "order": 8,
+      "title": "La maison",
+      "subtitle": "Accueillir quelqu’un chez soi"
+    },
+    {
+      "id": "u09",
+      "order": 9,
+      "title": "Hier, aujourd’hui, demain",
+      "subtitle": "Situer un événement dans le temps"
+    },
+    {
+      "id": "u10",
+      "order": 10,
+      "title": "Les moments de la journée",
+      "subtitle": "Dire quand on fait quelque chose"
+    },
+    {
+      "id": "u11",
+      "order": 11,
+      "title": "Le temps qu’il fait",
+      "subtitle": "Parler de la pluie et de la chaleur"
+    },
+    {
+      "id": "u12",
+      "order": 12,
+      "title": "Le corps",
+      "subtitle": "Dire où l’on a mal"
+    },
+    {
+      "id": "u13",
+      "order": 13,
+      "title": "Les vêtements",
+      "subtitle": "Dire ce qu’on porte"
+    },
+    {
+      "id": "u14",
+      "order": 14,
+      "title": "En ville",
+      "subtitle": "Trouver un lieu"
+    },
+    {
+      "id": "u15",
+      "order": 15,
+      "title": "Se déplacer",
+      "subtitle": "Guider un taxi-moto"
+    },
+    {
+      "id": "u16",
+      "order": 16,
+      "title": "Les animaux",
+      "subtitle": "Nommer les animaux de la cour"
+    },
+    {
+      "id": "u17",
+      "order": 17,
+      "title": "Les métiers",
+      "subtitle": "Dire ce qu’on fait dans la vie"
+    },
+    {
+      "id": "u18",
+      "order": 18,
+      "title": "Aimer et vouloir",
+      "subtitle": "Dire ce qu’on aime ou ce qu’on refuse"
+    },
+    {
+      "id": "u19",
+      "order": 19,
+      "title": "Une journée à Cotonou",
+      "subtitle": "Une longue histoire qui reprend toute la section"
+    }
+  ]
+}

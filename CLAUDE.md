@@ -92,7 +92,7 @@ npm test                         # Jest : domain, content-schema, appli mobile, 
 npm run test:coverage            # idem avec couverture (domain ≥ 90 %)
 npm run content:validate         # contrôle bloquant des packs (schéma, NFC, audios, empreintes)
 npm run native:check             # modules natifs : une seule copie, à la version du SDK Expo
-npm run content:build            # réécrit les manifestes et la liste des packs embarqués
+npm run content:build            # manifestes, packs embarqués et content/programme.json
 npm run content:workbook -- --commande <commande.json>  # classeur .xlsx à envoyer aux experts
 npm run content:import -- <classeur.xlsx>                # classeur rempli → pack + enregistrements
 npm run audio:placeholders       # bips de remplacement pour les audios manquants (ffmpeg)
