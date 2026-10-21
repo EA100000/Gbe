@@ -140,3 +140,28 @@ test('une erreur de la leçon se révise depuis l’onglet Réviser', async ({ p
   await expect(page.getByText('Aucune erreur à revoir pour le moment.')).toBeVisible();
   expect(errors).toEqual([]);
 });
+
+test('une séance d’écoute se joue jusqu’au bout, sans perdre de vie', async ({ page }) => {
+  const errors = watchErrors(page);
+  await startAsNewLearner(page);
+  await playFirstLesson(page);
+  await page.getByTestId('end-continue').click();
+
+  await page.getByTestId('tab-reviser').first().click();
+  await page.getByTestId('listen-start').click();
+  await expect(page.getByText('Qu’as-tu entendu ?')).toBeVisible();
+  // Sur le web, rien ne se joue sans geste : on touche « Réécouter ».
+  await page.getByTestId('listen-play').click();
+  const done = page.getByText('Écoute terminée !').first();
+  for (let turn = 0; turn < 20 && !(await done.isVisible()); turn += 1) {
+    await page
+      .getByTestId(/^listen-choice-/)
+      .first()
+      .click();
+    await page.getByTestId('check-button').click();
+    await page.getByTestId('feedback-button').click();
+    await page.waitForTimeout(150);
+  }
+  await expect(done).toBeVisible();
+  expect(errors).toEqual([]);
+});

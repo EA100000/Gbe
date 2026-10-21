@@ -31,7 +31,33 @@ import {
  * État de l'écran de leçon, piloté par des actions.
  * Fonctions pures : toute la logique se teste sans React ni téléphone.
  */
-export type LessonExercise = ImageChoiceExercise | BuildSentenceExercise | MatchPairsExercise;
+/**
+ * « Écouter et choisir » (écran 25, ADR 0020) : on entend un mot et on le choisit parmi d'autres.
+ * Exercice construit par l'appli pour l'entraînement, jamais lu dans un pack.
+ */
+export interface ListenChoiceExercise {
+  id: string;
+  type: 'listen_choice';
+  tag?: { kind: 'listen'; labelFr: string };
+  promptFr: string;
+  /** Audio à vitesse normale du mot à reconnaître, puis lent s'il existe. */
+  audio: string;
+  slowAudio?: string;
+  choices: readonly string[];
+  answer: string;
+}
+
+/** Exercices d'une leçon du pack que cet écran sait jouer. */
+export type PackLessonExercise = ImageChoiceExercise | BuildSentenceExercise | MatchPairsExercise;
+
+export type LessonExercise =
+  ImageChoiceExercise | BuildSentenceExercise | MatchPairsExercise | ListenChoiceExercise;
+
+/** Exercices où l'on choisit une réponse parmi plusieurs (images, écoute). */
+const isChoice = (
+  exercise: LessonExercise | undefined,
+): exercise is ImageChoiceExercise | ListenChoiceExercise =>
+  exercise?.type === 'image_choice' || exercise?.type === 'listen_choice';
 
 export interface LessonViewState {
   lessonId: string;
@@ -99,7 +125,7 @@ export function startLesson(
 export function canCheck(state: LessonViewState): boolean {
   const exercise = currentExercise(state);
   if (state.session.phase !== 'answering' || exercise === undefined) return false;
-  if (exercise.type === 'image_choice') return state.selectedChoice !== null;
+  if (isChoice(exercise)) return state.selectedChoice !== null;
   if (exercise.type === 'build_sentence') return (state.sentence?.answer.length ?? 0) > 0;
   return false;
 }
@@ -110,7 +136,7 @@ export function lessonReducer(state: LessonViewState, action: LessonAction): Les
 
   switch (action.type) {
     case 'select_choice':
-      if (!answering || exercise?.type !== 'image_choice') return state;
+      if (!answering || !isChoice(exercise)) return state;
       return exercise.choices.includes(action.itemId)
         ? { ...state, selectedChoice: action.itemId }
         : state;
@@ -126,11 +152,13 @@ export function lessonReducer(state: LessonViewState, action: LessonAction): Les
     case 'check': {
       if (!canCheck(state) || exercise === undefined) return state;
       const correct =
-        exercise.type === 'image_choice'
-          ? gradeImageChoice(exercise, state.selectedChoice).correct
-          : exercise.type === 'build_sentence' && state.sentence !== null
-            ? gradeSentenceBoard(state.sentence, exercise).correct
-            : false;
+        exercise.type === 'listen_choice'
+          ? state.selectedChoice === exercise.answer
+          : exercise.type === 'image_choice'
+            ? gradeImageChoice(exercise, state.selectedChoice).correct
+            : exercise.type === 'build_sentence' && state.sentence !== null
+              ? gradeSentenceBoard(state.sentence, exercise).correct
+              : false;
       return { ...state, session: submitAnswer(state.session, correct) };
     }
 

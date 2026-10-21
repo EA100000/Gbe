@@ -27,6 +27,8 @@ const ICONS = {
     '<circle cx="6" cy="18" r="2.5" fill="none" stroke="currentColor" stroke-width="2.2"/><circle cx="18" cy="6" r="2.5" fill="none" stroke="currentColor" stroke-width="2.2"/></svg>',
   ),
   tabReview: stroke('M19.5 9A8 8 0 0 0 5 7.5M4.5 3.5v4h4M4.5 15A8 8 0 0 0 19 16.5M19.5 20.5v-4h-4'),
+  headphones:
+    '<svg viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4 14v-2a8 8 0 0 1 16 0v2"/><rect x="3.5" y="13.5" width="4" height="6.5" rx="1.8"/><rect x="16.5" y="13.5" width="4" height="6.5" rx="1.8"/></g></svg>',
   tabSounds: stroke('M4 10v4M8 7v10M12 4v16M16 8v8M20 10.5v3'),
   tabLeague: stroke(
     'M8 4h8v5a4 4 0 0 1-8 0zM8 6H5.5a2.5 2.5 0 0 0 2.5 4M16 6h2.5a2.5 2.5 0 0 1-2.5 4M12 13v4M8.5 20h7',

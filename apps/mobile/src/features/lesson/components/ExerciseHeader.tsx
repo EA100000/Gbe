@@ -2,14 +2,22 @@ import type { ExerciseTag } from '@gbe/content-schema';
 import { Icon, UiText, colors } from '@gbe/ui';
 import { StyleSheet, View } from 'react-native';
 
-/** Étiquette (« Nouveau mot », « Révision · les nombres ») et consigne de l'exercice. */
-export function ExerciseHeader({ tag, prompt }: { tag?: ExerciseTag; prompt: string }) {
+const ICON = { new: 'sparkle', review: 'refresh', listen: 'headphones' } as const;
+
+/** Étiquette (« Nouveau mot », « Révision · les nombres », « Écoute ») et consigne de l'exercice. */
+export function ExerciseHeader({
+  tag,
+  prompt,
+}: {
+  tag?: ExerciseTag | { kind: 'listen'; labelFr: string } | undefined;
+  prompt: string;
+}) {
   const tone = tag?.kind === 'review' ? colors.redDark : colors.blue;
   return (
     <View style={styles.header}>
       {tag !== undefined ? (
         <View style={styles.tag}>
-          <Icon name={tag.kind === 'review' ? 'refresh' : 'sparkle'} size={18} color={tone} />
+          <Icon name={ICON[tag.kind]} size={18} color={tone} />
           <UiText size={13} weight="extrabold" color={tone} style={styles.tagText}>
             {tag.labelFr.toLocaleUpperCase('fr-FR')}
           </UiText>

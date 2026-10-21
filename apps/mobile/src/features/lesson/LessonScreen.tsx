@@ -7,6 +7,7 @@ import { BuildSentenceView } from './components/BuildSentenceView';
 import { ExerciseHeader } from './components/ExerciseHeader';
 import { FeedbackPanel } from './components/FeedbackPanel';
 import { ImageChoiceView } from './components/ImageChoiceView';
+import { ListenChoiceView } from './components/ListenChoiceView';
 import { LessonTopBar } from './components/LessonTopBar';
 import { MatchPairsView } from './components/MatchPairsView';
 import { QuitLessonSheet } from './components/QuitLessonSheet';
@@ -71,6 +72,18 @@ export function LessonLayout({
           act({ type: 'select_choice', itemId });
           playClip(content.itemsById.get(itemId)?.audio?.normal);
         }}
+      />
+    );
+  } else if (exercise.type === 'listen_choice') {
+    body = (
+      <ListenChoiceView
+        exercise={exercise}
+        items={content.itemsById}
+        selected={state.selectedChoice}
+        phase={phase}
+        onSelect={(itemId) => act({ type: 'select_choice', itemId })}
+        onPlay={() => playClip(exercise.audio)}
+        onPlaySlow={() => playClip(exercise.slowAudio)}
       />
     );
   } else if (exercise.type === 'build_sentence' && state.sentence !== null) {

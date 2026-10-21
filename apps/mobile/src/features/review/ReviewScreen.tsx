@@ -105,6 +105,27 @@ export function ReviewScreen() {
           />
         </View>
 
+        <View style={[styles.card, styles.listenCard]} testID="review-listen">
+          <View style={[styles.cardIcon, { backgroundColor: colors.blueLight }]}>
+            <Icon name="headphones" size={26} color={colors.blue} />
+          </View>
+          <View style={styles.flex}>
+            <UiText size={19} weight="extrabold" accessibilityRole="header">
+              {t('listen.title')}
+            </UiText>
+            <UiText size={15} color={colors.inkMuted}>
+              {t('listen.cardBody')}
+            </UiText>
+          </View>
+          <ChunkyButton
+            label={t('listen.go')}
+            onPress={c.startListening}
+            disabled={!c.canListen}
+            variant="blue"
+            testID="listen-start"
+          />
+        </View>
+
         {c.weak.length > 0 ? (
           <View style={styles.weak}>
             <UiText size={17} weight="extrabold" accessibilityRole="header">
@@ -134,6 +155,7 @@ const styles = StyleSheet.create({
     backgroundColor: colors.white,
   },
   cardHead: { flexDirection: 'row', alignItems: 'center', gap: 12 },
+  listenCard: { flexDirection: 'row', alignItems: 'center' },
   cardIcon: {
     width: 48,
     height: 48,

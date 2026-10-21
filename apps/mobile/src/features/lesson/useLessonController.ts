@@ -24,10 +24,15 @@ import { useProgressStore, useProgressView } from '../../core/progress/progressS
 import { useNow } from '../../core/useNow';
 import { answeredItem, firstTryAnswers } from './answers';
 import { buildFeedback } from './feedback';
-import { canCheck, currentExercise, type LessonAction, type LessonExercise } from './lessonMachine';
+import {
+  canCheck,
+  currentExercise,
+  type LessonAction,
+  type PackLessonExercise,
+} from './lessonMachine';
 import { useLessonStore } from './lessonStore';
 
-const isLessonExercise = (e: Exercise): e is LessonExercise =>
+const isLessonExercise = (e: Exercise): e is PackLessonExercise =>
   e.type === 'image_choice' || e.type === 'build_sentence' || e.type === 'match_pairs';
 
 /**
