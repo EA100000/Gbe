@@ -13,7 +13,7 @@ export type AnsweredRef =
 
 /**
  * Premiers essais révélés par une action (ADR 0019) :
- * - choix d'image ou phrase : la réponse vérifiée, si l'exercice n'avait pas encore été raté ;
+ * - choix d'image, écoute ou phrase : la réponse vérifiée, si l'exercice n'avait pas encore été raté ;
  * - paires : à la dernière paire trouvée, chaque mot fon, juste s'il n'a jamais été mal associé.
  */
 export function firstTryAnswers(before: LessonViewState, after: LessonViewState): AnsweredRef[] {
@@ -24,9 +24,11 @@ export function firstTryAnswers(before: LessonViewState, after: LessonViewState)
 
   switch (exercise.type) {
     case 'image_choice':
+    case 'listen_choice':
     case 'build_sentence': {
       if ((before.session.wrongAttempts[exercise.id] ?? 0) > 0) return [];
-      if (exercise.type === 'image_choice') return [{ kind: 'item', id: exercise.answer, correct }];
+      if (exercise.type !== 'build_sentence')
+        return [{ kind: 'item', id: exercise.answer, correct }];
       return exercise.audio === undefined ? [] : [{ kind: 'audio', id: exercise.audio, correct }];
     }
     case 'match_pairs': {

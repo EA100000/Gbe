@@ -108,6 +108,25 @@ function answerFeedback(
         button: wrongButton,
       };
     }
+    case 'listen_choice': {
+      const item = items.get(exercise.answer);
+      if (item === undefined) return null;
+      const heard: RichSegment[] = [{ fon: item.fon }];
+      if (correct) {
+        return {
+          tone: 'correct',
+          title: [{ fr: t('listen.correct') }],
+          body: [{ fr: t('listen.itWas') }, ...heard, { fr: t('listen.meaning', { fr: item.fr }) }],
+          button: 'continue',
+        };
+      }
+      return {
+        tone: 'wrong',
+        title: [{ fr: t('listen.itWas') }, ...heard],
+        body: [{ fr: `${t('listen.meaningAlone', { fr: item.fr })}${t(cost)}` }],
+        button: wrongButton,
+      };
+    }
     case 'match_pairs':
       return {
         tone: 'correct',

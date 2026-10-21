@@ -56,7 +56,13 @@ export function useReviewController() {
           ];
     });
     const picked = pickReviewItems(present);
+    // Écouter : au moins deux mots déjà rencontrés qui ont un enregistrement.
+    const audible = present.filter((s) => {
+      const audio = word(s.key)?.audio?.normal;
+      return audio !== undefined && content?.audioSources.has(audio) === true;
+    });
     return {
+      canListen: audible.length >= 2,
       hasHistory: present.length > 0,
       mistakeCount: mistakes.length,
       mistakeWords: mistakes.slice(0, SHOWN_MISTAKES).flatMap((s) => word(s.key)?.fon ?? []),
@@ -70,6 +76,7 @@ export function useReviewController() {
   return {
     ...view,
     start: () => router.push('/revision'),
+    startListening: () => router.push('/ecoute'),
     listen: (audio: string | undefined) => playClip(audio),
   };
 }
