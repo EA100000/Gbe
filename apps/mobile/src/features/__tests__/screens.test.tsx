@@ -126,6 +126,7 @@ describe('Leçon terminée', () => {
   it('affiche XP, précision, durée, série et histoire débloquée', async () => {
     await setupStores();
     useProgressStore.getState().setLastSummary({
+      kind: 'lesson',
       lessonId: 'u01-l04',
       xp: 15,
       accuracy: 0.9,

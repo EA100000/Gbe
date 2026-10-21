@@ -21,8 +21,9 @@ import type { Repositories, Settings } from '../db/repositories';
 import { DEFAULT_SETTINGS } from '../db/repositories';
 import { freshRng } from '../random';
 
-/** Bilan affiché par l'écran « Leçon terminée ». */
+/** Bilan affiché par l'écran « Leçon terminée » (ou « Révision terminée », « Écoute terminée »). */
 export interface LessonEndSummary {
+  kind: 'lesson' | 'review' | 'listen';
   lessonId: string;
   xp: number;
   accuracy: number;

@@ -9,8 +9,11 @@ export interface Feedback {
   tone: 'correct' | 'wrong';
   title: readonly RichSegment[];
   body: readonly RichSegment[] | null;
-  /** `outOfHearts` : la leçon s'arrête, « Continuer » mène à l'écran 16 (plus de vies). */
-  button: 'continue' | 'retry' | 'outOfHearts';
+  /**
+   * `outOfHearts` : la leçon s'arrête, « Continuer » mène à l'écran 16 (plus de vies).
+   * `later` : séance d'entraînement, « Continuer » passe à la suite et l'exercice revient plus loin.
+   */
+  button: 'continue' | 'retry' | 'outOfHearts' | 'later';
 }
 
 function meaning(item: LexiconItem): RichSegment[] {
@@ -58,6 +61,10 @@ function answerFeedback(
   const exercise = currentExercise(state);
   if (exercise === undefined) return null;
   const correct = phase === 'correct';
+  // Entraînement : pas de vie perdue, on continue et l'exercice revient plus loin (ADR 0019).
+  const practice = !state.session.heartCost;
+  const cost = practice ? 'lesson.noHeartLost' : 'lesson.loseHeart';
+  const wrongButton = practice ? 'later' : 'retry';
 
   switch (exercise.type) {
     case 'image_choice': {
@@ -78,8 +85,8 @@ function answerFeedback(
       return {
         tone: 'wrong',
         title: [{ fr: t('lesson.image.wrong') }],
-        body: body === null ? null : [...body, { fr: `.${t('lesson.loseHeart')}` }],
-        button: 'retry',
+        body: body === null ? null : [...body, { fr: `.${t(cost)}` }],
+        button: wrongButton,
       };
     }
     case 'build_sentence': {
@@ -98,7 +105,7 @@ function answerFeedback(
         tone: 'wrong',
         title: [{ fr: t('lesson.build.wrong') }],
         body: [{ fon: answer }],
-        button: 'retry',
+        button: wrongButton,
       };
     }
     case 'match_pairs':

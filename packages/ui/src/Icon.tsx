@@ -26,6 +26,7 @@ const ICONS = {
     '</svg>',
     '<circle cx="6" cy="18" r="2.5" fill="none" stroke="currentColor" stroke-width="2.2"/><circle cx="18" cy="6" r="2.5" fill="none" stroke="currentColor" stroke-width="2.2"/></svg>',
   ),
+  tabReview: stroke('M19.5 9A8 8 0 0 0 5 7.5M4.5 3.5v4h4M4.5 15A8 8 0 0 0 19 16.5M19.5 20.5v-4h-4'),
   tabSounds: stroke('M4 10v4M8 7v10M12 4v16M16 8v8M20 10.5v3'),
   tabLeague: stroke(
     'M8 4h8v5a4 4 0 0 1-8 0zM8 6H5.5a2.5 2.5 0 0 0 2.5 4M16 6h2.5a2.5 2.5 0 0 1-2.5 4M12 13v4M8.5 20h7',
@@ -100,6 +101,8 @@ const ICONS = {
   flame: `<svg viewBox="0 0 24 24"><path d="M12 2.5c1.2 3.6 5.5 5.8 5.5 10.6A5.5 5.5 0 0 1 6.5 13c0-2.7 1.6-4.4 2.7-5.4.3 1.8 1.3 2.8 2.2 3.1C11 8.2 10.8 5.2 12 2.5z" fill="${colors.red}"/><path d="M12 13c.7 1.3 2.2 2 2.2 3.8a2.2 2.2 0 0 1-4.4 0c0-1 .6-1.6 1-2 .1.6.5 1 .9 1.1-.2-1-.1-2 .3-2.9z" fill="${colors.yellow}"/></svg>`,
   cauris: `<svg viewBox="0 0 24 24"><ellipse cx="12" cy="12" rx="7.5" ry="10" fill="${colors.yellow}"/><path d="M12 5v14M9.6 8h2.4M9.6 11h2.4M9.6 14h2.4M12 9.5h2.4M12 12.5h2.4M12 15.5h2.4" stroke="${colors.ink}" stroke-width="1.4" fill="none"/></svg>`,
   bolt: `<svg viewBox="0 0 24 24"><path d="M13.5 2L4 14h7l-1.5 8L20 10h-7z" fill="${colors.yellow}"/></svg>`,
+  /** Cible des erreurs à revoir (onglet Réviser), en rouge. */
+  mistakes: `<svg viewBox="0 0 24 24"><g fill="none" stroke="${colors.redDark}" stroke-width="2.4"><circle cx="12" cy="12" r="8.5"/><circle cx="12" cy="12" r="4.5"/></g><circle cx="12" cy="12" r="1" fill="${colors.redDark}"/></svg>`,
   target: `<svg viewBox="0 0 24 24"><g fill="none" stroke="${colors.blue}" stroke-width="2.4"><circle cx="12" cy="12" r="8.5"/><circle cx="12" cy="12" r="4"/></g></svg>`,
   clock: `<svg viewBox="0 0 24 24"><g fill="none" stroke="${colors.redDark}" stroke-width="2.4" stroke-linecap="round"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></g></svg>`,
   courseFon: `<svg viewBox="0 0 100 100"><polygon points="${SUN_POINTS}" fill="${colors.yellow}"/><circle cx="50" cy="50" r="25" fill="${colors.red}"/><circle cx="50" cy="50" r="11" fill="${colors.white}"/></svg>`,

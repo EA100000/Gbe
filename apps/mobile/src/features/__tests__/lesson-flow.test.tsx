@@ -33,7 +33,12 @@ describe('une leçon complète, hors-ligne', () => {
     expect(screen.getByTestId('feedback-wrong')).toBeOnTheScreen();
     expect(screen.getByText('Pas tout à fait…')).toBeOnTheScreen();
     expect(screen.getByLabelText('4 vies restantes')).toBeOnTheScreen();
-    expect(useProgressStore.getState().events.map((e) => e.type)).toEqual(['heart_lost']);
+    expect(
+      useProgressStore
+        .getState()
+        .events.map((e) => e.type)
+        .sort(),
+    ).toEqual(['heart_lost', 'item_answered']);
 
     // « Réessayer », puis bonne réponse : panneau bleu
     await fireEvent.press(screen.getByTestId('feedback-button'));
@@ -59,7 +64,26 @@ describe('une leçon complète, hors-ligne', () => {
 
     // Fin : leçon enregistrée, bilan prêt, écran de fin demandé
     const { events, lastSummary } = useProgressStore.getState();
-    expect(events.map((e) => e.type)).toEqual(['heart_lost', 'lesson_completed']);
+    expect(events.map((e) => e.type).filter((type) => type !== 'item_answered')).toEqual([
+      'heart_lost',
+      'lesson_completed',
+    ]);
+    // Premiers essais (ADR 0019) : « sin » raté, les autres images et les quatre paires justes.
+    const answers = events.flatMap((e) =>
+      e.type === 'item_answered' ? [`${e.itemId}:${String(e.correct)}`] : [],
+    );
+    expect(answers.sort()).toEqual(
+      [
+        'sin:false',
+        'hwe:true',
+        'xwe:true',
+        'kwe:true',
+        'sin:true',
+        'hwe:true',
+        'xwe:true',
+        'kwe:true',
+      ].sort(),
+    );
     expect(lastSummary).toMatchObject({
       lessonId: 'u01-l01',
       accuracy: 0.8,

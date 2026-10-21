@@ -15,9 +15,14 @@ import { useClipPlayer } from '../../core/audio/useClipPlayer';
 import { lessonAudioIds } from '../../core/content/content';
 import { useContentForLesson } from '../../core/content/contentStore';
 import { t } from '../../core/i18n';
-import { heartLostEvent, lessonCompletedEvent } from '../../core/progress/eventFactory';
+import {
+  heartLostEvent,
+  itemAnsweredEvent,
+  lessonCompletedEvent,
+} from '../../core/progress/eventFactory';
 import { useProgressStore, useProgressView } from '../../core/progress/progressStore';
 import { useNow } from '../../core/useNow';
+import { answeredItem, firstTryAnswers } from './answers';
 import { buildFeedback } from './feedback';
 import { canCheck, currentExercise, type LessonAction, type LessonExercise } from './lessonMachine';
 import { useLessonStore } from './lessonStore';
@@ -83,6 +88,7 @@ export function useLessonController(lessonId: string) {
     const unlocked = unlockedId === null ? undefined : content.lessonsById.get(unlockedId);
     await record([event]);
     setLastSummary({
+      kind: 'lesson',
       lessonId,
       xp: result.xp,
       accuracy: result.accuracy,
@@ -106,6 +112,14 @@ export function useLessonController(lessonId: string) {
       if (after.session.heartsLost > before.session.heartsLost) {
         void record([heartLostEvent(clock, lessonId)]);
       }
+      // Premiers essais, pour « Mes erreurs » et la maîtrise des mots (ADR 0019).
+      const answers = firstTryAnswers(before, after).flatMap((ref) => {
+        const item = answeredItem(content, ref);
+        return item === null
+          ? []
+          : [itemAnsweredEvent(clock, { ...item, correct: ref.correct, mode: 'lesson' })];
+      });
+      if (answers.length > 0) void record(answers);
       if (before.session.phase === 'answering' && after.session.phase !== 'answering') {
         AccessibilityInfo.announceForAccessibility(
           t(after.session.phase === 'correct' ? 'common.correct' : 'common.wrong'),
@@ -113,7 +127,7 @@ export function useLessonController(lessonId: string) {
       }
       if (after.session.phase === 'finished') void finish();
     },
-    [clock, dispatch, finish, lessonId, record],
+    [clock, content, dispatch, finish, lessonId, record],
   );
 
   const leave = useCallback(() => {

@@ -147,3 +147,49 @@ describe('parseGameEvent', () => {
     expect(parseGameEvent(lessonCompleted({ accuracy: 1.5 }))).toBeNull();
   });
 });
+
+describe('entraînement (ADR 0019)', () => {
+  it('compte l’XP et la série d’une séance d’entraînement, pas une leçon terminée', () => {
+    const progress = applyEvents([
+      {
+        id: 'p1',
+        type: 'practice_completed',
+        at: T0,
+        dayKey: '2026-10-13',
+        mode: 'review',
+        xp: 12,
+        accuracy: 0.8,
+        durationMs: 90_000,
+      },
+    ]);
+
+    expect(progress.totalXp).toBe(12);
+    expect([...progress.activeDays]).toEqual(['2026-10-13']);
+    expect(progress.practiceMsByDay.get('2026-10-13')).toBe(90_000);
+    expect(progress.completedLessons.size).toBe(0);
+  });
+
+  it('lit une réponse à un mot sans changer la progression', () => {
+    const event = parseGameEvent({
+      id: 'r1',
+      type: 'item_answered',
+      at: T0,
+      dayKey: '2026-10-13',
+      unitId: 'u01',
+      itemId: 'sin',
+      correct: false,
+      mode: 'listen',
+    });
+
+    expect(event?.type).toBe('item_answered');
+    expect(applyEvents(event === null ? [] : [event]).totalXp).toBe(0);
+  });
+
+  it('refuse une séance d’entraînement en mode « leçon »', () => {
+    const event = { id: 'p', type: 'practice_completed', at: T0, dayKey: '2026-10-13' };
+
+    expect(
+      parseGameEvent({ ...event, mode: 'lesson', xp: 1, accuracy: 1, durationMs: 1 }),
+    ).toBeNull();
+  });
+});

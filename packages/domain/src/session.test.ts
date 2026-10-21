@@ -2,6 +2,7 @@ import {
   completeWithoutHeartCost,
   currentExerciseId,
   next,
+  postpone,
   retry,
   sessionProgress,
   startSession,
@@ -145,5 +146,47 @@ describe('summarizeSession', () => {
 
   it('ne donne jamais une durée négative', () => {
     expect(summarizeSession(start(), T0 - 1000).durationMs).toBe(0);
+  });
+});
+
+describe('séance d’entraînement sans coût de vie', () => {
+  it('démarre même sans vie et ne retire rien sur une erreur', () => {
+    const session = startSession(['e1'], 0, T0, { heartCost: false });
+
+    const after = submitAnswer(session, false);
+
+    expect(session.phase).toBe('answering');
+    expect(after).toMatchObject({ phase: 'wrong', hearts: 0, heartsLost: 0 });
+    expect(after.wrongAttempts).toEqual({ e1: 1 });
+  });
+});
+
+describe('postpone (entraînement)', () => {
+  const practice = () => startSession(['e1', 'e2'], 0, T0, { heartCost: false });
+
+  it('renvoie l’exercice raté en fin de séance et passe au suivant', () => {
+    const after = postpone(submitAnswer(practice(), false));
+
+    expect(after.exerciseIds).toEqual(['e2', 'e1']);
+    expect(currentExerciseId(after)).toBe('e2');
+    expect(after.phase).toBe('answering');
+  });
+
+  it('ne renvoie qu’une fois le même exercice, puis termine', () => {
+    let session = submitAnswer(practice(), true);
+    session = next(session);
+    session = postpone(submitAnswer(session, false));
+    expect(session.exerciseIds).toEqual(['e1', 'e2']);
+    expect(currentExerciseId(session)).toBe('e2');
+
+    session = postpone(submitAnswer(session, false));
+
+    expect(session.phase).toBe('finished');
+  });
+
+  it('ne fait rien dans une leçon qui coûte des vies', () => {
+    const wrong = submitAnswer(start(), false);
+
+    expect(postpone(wrong)).toBe(wrong);
   });
 });

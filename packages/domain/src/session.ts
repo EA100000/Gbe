@@ -18,6 +18,10 @@ export interface LessonSession {
   firstTryCorrect: number;
   heartsLost: number;
   startedAt: number;
+  /** Faux : séance d'entraînement, une erreur ne coûte pas de vie (ADR 0019). */
+  heartCost: boolean;
+  /** Exercices déjà renvoyés en fin de séance après une erreur (une fois chacun). */
+  postponed: readonly string[];
 }
 
 export interface LessonResult {
@@ -31,12 +35,16 @@ export function startSession(
   exerciseIds: readonly string[],
   hearts: number,
   startedAt: number,
+  options: { heartCost?: boolean } = {},
 ): LessonSession {
   if (exerciseIds.length === 0) throw new Error('Une leçon doit contenir au moins un exercice');
+  const heartCost = options.heartCost ?? true;
   return {
     exerciseIds,
     index: 0,
-    phase: hearts > 0 ? 'answering' : 'out_of_hearts',
+    phase: hearts > 0 || !heartCost ? 'answering' : 'out_of_hearts',
+    heartCost,
+    postponed: [],
     hearts,
     wrongAttempts: {},
     firstTryCorrect: 0,
@@ -67,13 +75,15 @@ export function submitAnswer(session: LessonSession, correct: boolean): LessonSe
     };
   }
 
+  const wrongAttempts = { ...session.wrongAttempts, [id]: wrongCount(session, id) + 1 };
+  if (!session.heartCost) return { ...session, phase: 'wrong', wrongAttempts };
   const hearts = Math.max(0, session.hearts - 1);
   return {
     ...session,
     phase: hearts === 0 ? 'out_of_hearts' : 'wrong',
     hearts,
     heartsLost: session.heartsLost + 1,
-    wrongAttempts: { ...session.wrongAttempts, [id]: wrongCount(session, id) + 1 },
+    wrongAttempts,
   };
 }
 
@@ -95,6 +105,23 @@ export function completeWithoutHeartCost(session: LessonSession, mistakes: numbe
 /** Après une erreur : on retente le même exercice. */
 export function retry(session: LessonSession): LessonSession {
   return session.phase === 'wrong' ? { ...session, phase: 'answering' } : session;
+}
+
+/**
+ * Séance d'entraînement, après une erreur : on continue, et l'exercice raté revient en fin de
+ * séance (une seule fois ; la seconde erreur passe simplement à la suite).
+ */
+export function postpone(session: LessonSession): LessonSession {
+  const id = currentExerciseId(session);
+  if (session.phase !== 'wrong' || session.heartCost || id === undefined) return session;
+  if (session.postponed.includes(id)) {
+    const index = session.index + 1;
+    return index >= session.exerciseIds.length
+      ? { ...session, index, phase: 'finished' }
+      : { ...session, index, phase: 'answering' };
+  }
+  const exerciseIds = [...session.exerciseIds.filter((_, i) => i !== session.index), id];
+  return { ...session, exerciseIds, phase: 'answering', postponed: [...session.postponed, id] };
 }
 
 /** Après une réussite : exercice suivant, ou fin de leçon. */
