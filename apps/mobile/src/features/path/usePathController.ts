@@ -4,12 +4,15 @@ import {
   chestsToOpen,
   type PathLessonNode,
   type PathNode,
+  type PlannedUnit,
+  programmeOverview,
 } from '@gbe/domain';
 import type { Unit } from '@gbe/content-schema';
 import { router, useFocusEffect } from 'expo-router';
-import { useCallback, useEffect, useMemo } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 
 import { useContentStore } from '../../core/content/contentStore';
+import { plannedUnits } from '../../core/content/programme';
 import { chestOpenedEvent } from '../../core/progress/eventFactory';
 import { useProgressStore, useProgressView } from '../../core/progress/progressStore';
 import { useNow } from '../../core/useNow';
@@ -25,8 +28,11 @@ export interface UnitSection {
   nodes: PathNode[];
 }
 
-/** Données et actions de l'écran « Chemin des leçons » : toutes les unités, à la suite. */
-export function usePathController() {
+/**
+ * Données et actions de l'écran « Chemin des leçons » : toutes les unités, à la suite,
+ * puis la suite du programme, « en préparation » (écran 23).
+ */
+export function usePathController(planned: readonly PlannedUnit[] = plannedUnits) {
   const contents = useContentStore((s) => s.contents);
   const clock = useProgressStore((s) => s.clock);
   const record = useProgressStore((s) => s.record);
@@ -70,6 +76,17 @@ export function usePathController() {
     }
   }, [sections, progress.openedChests, record, clock]);
 
+  const programme = useMemo(
+    () =>
+      programmeOverview(
+        planned,
+        contents.map((c) => c.pack.unit),
+      ),
+    [planned, contents],
+  );
+  const [openedUpcoming, setOpenedUpcoming] = useState<string | null>(null);
+  const upcomingSheet = programme.upcoming.find((u) => u.id === openedUpcoming) ?? null;
+
   const noHearts = hearts.count === 0;
   const open = useCallback(
     (node: PathLessonNode) => {
@@ -89,5 +106,9 @@ export function usePathController() {
     stats: { streak: streak.current, cauris: progress.cauris, hearts: hearts.count },
     open,
     openGuide: () => router.navigate('/sons'),
+    programme,
+    upcomingSheet,
+    openUpcoming: (unitId: string) => setOpenedUpcoming(unitId),
+    closeUpcoming: () => setOpenedUpcoming(null),
   };
 }

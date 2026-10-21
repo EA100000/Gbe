@@ -68,6 +68,19 @@ export const fr = {
   'path.unitLocked': 'Unité {n} · {title}, verrouillée : termine d’abord l’unité {previous}',
   'path.unitLockedHint': 'Termine l’unité {previous} pour l’ouvrir',
   'path.start': 'Commencer',
+  'path.upcoming.title': 'La suite du programme',
+  'path.upcoming.summary.one':
+    'Section {section} · {n} unité prête sur {total}. Les autres sont en cours d’écriture et d’enregistrement.',
+  'path.upcoming.summary.other':
+    'Section {section} · {n} unités prêtes sur {total}. Les autres sont en cours d’écriture et d’enregistrement.',
+  'path.upcoming.progress.one': '{n} unité prête sur {total}',
+  'path.upcoming.progress.other': '{n} unités prêtes sur {total}',
+  'path.upcoming.badge': 'En préparation',
+  'path.upcoming.label': 'Unité {n}, {title} : en préparation',
+  'path.upcoming.sheetKicker': 'Unité {n} · En préparation',
+  'path.upcoming.sheetBody':
+    '{subtitle}. Nos deux experts, une femme et un homme, écrivent cette unité en fon, l’enregistrent, puis la relisent. Elle s’ouvrira ici dès qu’elle sera validée.',
+  'path.upcoming.sheetClose': 'Compris',
   'path.lesson.done': 'Leçon {n}, terminée : la refaire',
   'path.lesson.current': 'Leçon {n} : commencer',
   'path.lesson.locked': 'Leçon {n}, verrouillée',

@@ -16,3 +16,4 @@ export * from './league';
 export * from './recovery-code';
 export * from './reminder';
 export * from './onboarding';
+export * from './programme';
